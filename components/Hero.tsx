@@ -62,7 +62,7 @@ export default function Hero() {
             Mythic, cinematic, kingdom‑themed music experience
           </p>
         </FadeIn>
-              <FadeIn delayM={600} durationMs={1400} y={20}>
+              <FadeIn delayMs={600} durationMs={1400} y={20}>
           <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center">
             <a
               href="#music"
