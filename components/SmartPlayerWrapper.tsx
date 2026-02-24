@@ -1,27 +1,29 @@
 "use client";
 
+import { ReactNode, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import SmartPlayerBar from "./SmartPlayerBar";
 
-export default function SmartPlayerWrapper({ children }) {
+type Props = {
+    children: ReactNode;
+};
+
+export default function SmartPlayerWrapper({ children }: Props) {
     const pathname = usePathname();
     const [mounted, setMounted] = useState(false);
 
-    // Prevent hydration mismatch by waiting for client mount
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    const showPlayer =
-        pathname === "/" ||
-        pathname === "/music" ||
-        pathname.startsWith("/music/");
+    // Optional: routes on which you want to hide the bar
+    const hideOnRoutes: string[] = []; // e.g., ["/privacy", "/terms"]
+    const shouldHide = pathname ? hideOnRoutes.includes(pathname) : false;
 
     return (
         <>
             {children}
-            {mounted && showPlayer && <SmartPlayerBar />}
+            {mounted && !shouldHide && <SmartPlayerBar />}
         </>
     );
 }

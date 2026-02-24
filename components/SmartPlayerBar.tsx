@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { singleReleases } from "@/lib/releases";
-import Link from "next/link";
+// If not used, you can remove this import:
+// import Link from "next/link";
 
 export default function SmartPlayerBar() {
     const singles = singleReleases();
@@ -14,6 +15,8 @@ export default function SmartPlayerBar() {
     const [isFading, setIsFading] = useState(false);
 
     useEffect(() => {
+        if (singles.length === 0) return;
+
         const interval = setInterval(() => {
             setIsFading(true);
 
@@ -27,7 +30,6 @@ export default function SmartPlayerBar() {
     }, [singles.length]);
 
     const current = singles[index];
-
     if (!current) return null;
 
     return (
