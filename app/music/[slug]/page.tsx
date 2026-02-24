@@ -22,9 +22,12 @@ export async function generateMetadata({
     };
 }
 
-export default async function SongPage({ params }) {
-    const { slug } = await params;
-    const release = getReleaseBySlug(slug);
+export default async function SongPage({
+    params,
+}: {
+    params: { slug: string }
+    }) {
+    const release = getReleaseBySlug(params.slug);
 
     if (!release) notFound();
 
