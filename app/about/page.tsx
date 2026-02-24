@@ -1,6 +1,6 @@
 "use client";
 
-import FadeIn from "./FadeIn";
+import FadeIn from "../../components/FadeIn";
 
 export default function AboutSection() {
     return (

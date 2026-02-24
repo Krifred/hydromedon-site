@@ -1,27 +1,24 @@
-import { getReleaseBySlug } from "@/lib/releases";
+import MusicTabs from "@/components/MusicTabs";
+import { singleReleases, albumReleases, videoReleases } from "@/lib/releases";
 
-export default async function SongPage({
-    params,
-}: {
-    params: { slug: string }
-}) {
-    const { slug } = params;
-    const release = getReleaseBySlug(slug);
-
-    if (!release) {
-        return <div className="text-white p-10">Release not found.</div>;
-    }
-
+export default function MusicPage() {
     return (
         <main className="min-h-screen bg-black text-white">
-            <section className="max-w-3xl mx-auto px-4 py-16">
-                <h1 className="text-4xl font-bold text-yellow-400 mb-6">
-                    { "Music Library" }
+            <section className="max-w-4xl mx-auto px-4 py-16 text-center">
+                <h1 className="text-4xl font-bold text-yellow-400 mb-4">
+                    Music Library
                 </h1>
 
-                <p className="text-gray-300 mb-8">{release.description}</p>
+                <p className="text-gray-300 mb-10">
+                    Singles, albums, and videos from the Biblical Graffiti universe.
+                </p>
 
-                {/* Add whatever content you want here */}
+                {/* ⭐ UPDATED SPACING HERE */}
+                <div className="flex justify-center gap-10 mb-12">
+                    <MusicTabs singles={singleReleases()} albums={albumReleases()} videos={videoReleases()} />
+                </div>
+
+                {/* Your content below */}
             </section>
         </main>
     );

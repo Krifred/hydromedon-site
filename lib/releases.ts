@@ -546,7 +546,7 @@ Through valleys deep, You are my light `
 
     {
         slug: "your-peace-surpasses-all-understanding",
-        title: "Your Peace Surpasses All Understanding",
+        title: "Your Peace",
         type: "Single",
         releaseDate: "2026-03-20",
         year: "2026",
@@ -692,14 +692,14 @@ And I will trust the fight to You `
             "Biblical Graffiti is a concept album weaving together themes of faith, transformation, and spiritual journey.",
         themes: ["Faith", "Transformation", "Journey"],
         tracks: [
-            { title: "Armor of Light", duration: "4:32" },
-            { title: "Beauty for Ashes", duration: "5:01" },
-            { title: "Change Me, Mold Me, Make Me New", duration: "6:14" },
-            { title: "Make a Way", duration: "4:48" },
-            { title: "The Lord Bless You and Keep You", duration: "3:56" },
+            { title: "Armor of Light", duration: "9:00" },
+            { title: "Beauty for Ashes", duration: "6:48" },
+            { title: "Change Me, Mold Me, Make Me New", duration: "5:53" },
+            { title: "Make a Way", duration: "4:38" },
+            { title: "The Lord Bless You and Keep You", duration: "4:43" },
             { title: "Under Your Wings", duration: "5:22" },
             { title: "Your Peace Surpasses All Understanding", duration: "6:02" },
-            { title: "Arise O Lord", duration: "4:10" }
+            { title: "Arise O Lord", duration: "5:47" }
         ]
     }
 ];
