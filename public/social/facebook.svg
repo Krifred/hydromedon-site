@@ -1,0 +1,20 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="gold-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.831
+                0 0 0 0 0.686
+                0 0 0 0 0.216
+                0 0 0 0.8 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#gold-glow)" fill="#D4AF37">
+    <rect x="64" y="128" width="384" height="256" rx="64" />
+    <path d="M232 196L328 256L232 316V196Z" fill="#0A0A0A"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="gold-glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="0 0 0 0 0.831
+                0 0 0 0 0.686
+                0 0 0 0 0.216
+                0 0 0 0.8 0" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#gold-glow)" fill="#D4AF37">
+    <!-- Shadow layer -->
+    <path opacity="0.55" d="M304 128V280C292 272 276 268 260 268C220 268 188 298 188 340C188 382 220 412 260 412C304 412 336 380 336 332V196C352 210 372 220 392 224V180C372 176 352 166 336 152C320 138 310 124 304 112V128Z"/>
+    <!-- Main note -->
+    <path d="M288 120V272C276 264 260 260 244 260C204 260 172 290 172 332C172 374 204 404 244 404C288 404 320 372 320 324V188C336 202 356 212 376 216V172C356 168 336 158 320 144C304 130 294 116 288 104V120Z"/>
+  </g>
+</svg>
