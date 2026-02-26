@@ -38,7 +38,7 @@ export const releases: Release[] = [
         cover: "/covers/armor-of-light.jpg",
         hyperfollow: "",
         spotify: "",
-        youtube: "https://youtu.be/nlaqCtY2a-c?si=ehjPTyU_fiQTAseu",
+        youtube: "https://youtu.be/nlaqCtY2a-c?si=nvx5Kadt32XLhb68",
         subtitle: "Official single video.",
         description: "A call to stand strong in faith and light.",
         themes: ["Video", "Cinematic"],
