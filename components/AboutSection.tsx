@@ -5,7 +5,7 @@ import FadeIn from "./FadeIn";
 import { useMotionSection } from "./useMotionSection";
 
 export default function AboutSection() {
-    const sectionRef = useRef<HTMLElement>(null);
+    const sectionRef = useRef<HTMLElement>(null!);
 
     // ✨ Reveal fits the core identity / manifesto tone
     useMotionSection(sectionRef, {
