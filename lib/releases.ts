@@ -35,7 +35,7 @@ export const releases: Release[] = [
         type: "Video",
         releaseDate: "2025-12-13",
         year: "2025",
-        cover: "/covers/armor-of-light.jpg",
+        cover: "/covers/armor-of-light-video.jpg",
         hyperfollow: "",
         spotify: "",
         youtube: "https://youtu.be/nlaqCtY2a-c?si=nvx5Kadt32XLhb68",
@@ -724,4 +724,17 @@ export function videoReleases(): Release[] {
 export function songReleases(): Release[] {
     return singleReleases();
 }
-``
+export function getLatestReleased(
+    items: Release[],
+    now: Date = new Date()
+): Release | undefined {
+    return items
+        // ✅ Exclude future-dated releases
+        .filter(r => new Date(r.releaseDate) <= now)
+        // ✅ Sort newest → oldest
+        .sort(
+            (a, b) =>
+                new Date(b.releaseDate).getTime() -
+                new Date(a.releaseDate).getTime()
+        )[0];
+}
