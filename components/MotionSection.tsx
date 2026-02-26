@@ -21,7 +21,7 @@ export default function MotionSection({
     preset?: MotionPreset;
     children: ReactNode;
 }) {
-    const ref = useRef<HTMLElement>(null);
+    const ref = useRef<HTMLElement>(null!);
     const [active, setActive] = useState(false);
 
     const thresholds = useMemo(() => {

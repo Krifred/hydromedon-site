@@ -5,7 +5,7 @@ import FadeIn from "./FadeIn";
 import { useMotionSection } from "./useMotionSection";
 
 export default function ContactSection() {
-    const sectionRef = useRef<HTMLElement>(null);
+    const sectionRef = useRef<HTMLElement>(null!);
 
     // 🌙 Soft motion — calm landing at the end of the page
     useMotionSection(sectionRef, {

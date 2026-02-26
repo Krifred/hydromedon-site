@@ -17,7 +17,7 @@ export default function MusicGrid({
     id?: string;
     preset?: "soft" | "spotlight" | "reveal";
 }) {
-    const sectionRef = useRef<HTMLElement>(null);
+    const sectionRef = useRef<HTMLElement>(null!);
 
     useMotionSection(sectionRef, { preset, once: true });
 

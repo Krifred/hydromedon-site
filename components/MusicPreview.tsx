@@ -37,7 +37,7 @@ function nextUpcoming(items: Release[], now: Date): Release | undefined {
 }
 
 export default function MusicPreview() {
-    const sectionRef = useRef<HTMLElement>(null);
+    const sectionRef = useRef<HTMLElement>(null!);
 
     // 🎬 Motion: spotlight feels right for “featured / latest”
     useMotionSection(sectionRef, {
