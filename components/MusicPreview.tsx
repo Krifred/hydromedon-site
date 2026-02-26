@@ -1,9 +1,16 @@
 "use client";
 
+import { useRef } from "react";
 import FadeIn from "./FadeIn";
-import { singleReleases, albumReleases, videoReleases, Release } from "@/lib/releases";
+import {
+    singleReleases,
+    albumReleases,
+    videoReleases,
+    Release,
+} from "@/lib/releases";
 import MusicCard from "./MusicCard";
 import Link from "next/link";
+import { useMotionSection } from "./useMotionSection";
 
 function isFutureRelease(r: Release, now: Date) {
     return new Date(r.releaseDate).getTime() > now.getTime();
@@ -14,7 +21,8 @@ function latestReleased(items: Release[], now: Date): Release | undefined {
         .filter((r) => new Date(r.releaseDate).getTime() <= now.getTime())
         .sort(
             (a, b) =>
-                new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()
+                new Date(b.releaseDate).getTime() -
+                new Date(a.releaseDate).getTime()
         )[0];
 }
 
@@ -23,34 +31,45 @@ function nextUpcoming(items: Release[], now: Date): Release | undefined {
         .filter((r) => new Date(r.releaseDate).getTime() > now.getTime())
         .sort(
             (a, b) =>
-                new Date(a.releaseDate).getTime() - new Date(b.releaseDate).getTime()
+                new Date(a.releaseDate).getTime() -
+                new Date(b.releaseDate).getTime()
         )[0];
 }
 
 export default function MusicPreview() {
+    const sectionRef = useRef<HTMLElement>(null);
+
+    // 🎬 Motion: spotlight feels right for “featured / latest”
+    useMotionSection(sectionRef, {
+        preset: "spotlight",
+        once: true,
+    });
+
     const singles = singleReleases();
     const albums = albumReleases();
     const videos = videoReleases();
 
     const now = new Date();
 
-    // ✅ Latest = latest already released (never future)
-    // ✅ If nothing has released yet, show next upcoming + Coming Soon badge
     const latestSingle = latestReleased(singles, now) ?? nextUpcoming(singles, now);
     const latestVideo = latestReleased(videos, now) ?? nextUpcoming(videos, now);
-
-    // Keep your existing Featured Album choice to avoid “style/behavior” changes,
-    // but add Coming Soon if it’s future-dated.
     const featuredAlbum = albums[0];
 
-    const latestSingleComingSoon = latestSingle ? isFutureRelease(latestSingle, now) : false;
-    const latestVideoComingSoon = latestVideo ? isFutureRelease(latestVideo, now) : false;
-    const featuredAlbumComingSoon = featuredAlbum ? isFutureRelease(featuredAlbum, now) : false;
+    const latestSingleComingSoon = latestSingle
+        ? isFutureRelease(latestSingle, now)
+        : false;
+    const latestVideoComingSoon = latestVideo
+        ? isFutureRelease(latestVideo, now)
+        : false;
+    const featuredAlbumComingSoon = featuredAlbum
+        ? isFutureRelease(featuredAlbum, now)
+        : false;
 
     return (
         <section
             id="music"
-            className="relative max-w-6xl mx-auto px-4 py-20 text-gray-200"
+            ref={sectionRef}
+            className="motion-section relative max-w-6xl mx-auto px-4 py-20 text-gray-200"
         >
             <div className="mx-auto max-w-3xl px-6 text-center mb-12">
                 <FadeIn delayMs={0}>
@@ -58,6 +77,7 @@ export default function MusicPreview() {
                         Music
                     </h2>
                 </FadeIn>
+
                 <FadeIn delayMs={180}>
                     <p className="text-sm text-gray-400">
                         A glimpse into the Biblical Graffiti universe. Explore the full

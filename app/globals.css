@@ -1,30 +1,46 @@
-@import "tailwindcss"; 
+@import "tailwindcss";
+
+/* ============================================================
+   Root theme variables
+   ============================================================ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-.font-cinzel {
-  font-family: "Cinzel", serif;
-}
-
-.font-inter {
-  font-family: "Inter", sans-serif;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Inter", sans-serif;
+/* ============================================================
+   Fonts
+   ============================================================ */
+
+.font-cinzel {
+    font-family: "Cinzel", serif;
 }
+
+.font-inter {
+    font-family: "Inter", sans-serif;
+}
+
+/* ============================================================
+   Base body styles
+   ============================================================ */
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: "Inter", sans-serif;
+}
+
+/* ============================================================
+   Reduced motion: FadeIn utility
+   ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
     [data-fadein] {
@@ -32,5 +48,96 @@ body {
         transform: none !important;
         filter: none !important;
         opacity: 1 !important;
+    }
+}
+
+/* ============================================================
+   Hero animation
+   ============================================================ */
+
+@keyframes hero-breathe {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 28px 70px rgba(0, 0, 0, 0.65));
+    }
+
+    50% {
+        transform: scale(1.015);
+        filter: drop-shadow(0 34px 90px rgba(212, 175, 55, 0.18));
+    }
+
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 28px 70px rgba(0, 0, 0, 0.65));
+    }
+}
+
+/* ============================================================
+   Hydromedon — Section transitions that feel like movements
+   ============================================================ */
+
+.motion-section {
+    --vp: 0; /* view progress 0..1 from IntersectionObserver */
+
+    position: relative;
+    overflow: clip;
+    will-change: transform, opacity, filter, clip-path;
+    /* Arrival motion */
+    transform: translateY(calc((1 - var(--vp)) * 28px));
+    opacity: calc(0.15 + (var(--vp) * 0.85));
+    filter: blur(calc((1 - var(--vp)) * 10px));
+    transition: transform 900ms cubic-bezier(.2,.8,.2,1), opacity 900ms ease, filter 900ms ease;
+}
+
+    .motion-section.is-active {
+        transform: translateY(0);
+        opacity: 1;
+        filter: blur(0);
+    }
+
+    /* Cinematic light sweep overlay */
+    .motion-section::before {
+        content: "";
+        pointer-events: none;
+        position: absolute;
+        inset: -20%;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: opacity 700ms ease, transform 900ms cubic-bezier(.2,.8,.2,1);
+        mix-blend-mode: screen;
+    }
+
+    .motion-section.is-active::before {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Presets */
+    .motion-section[data-preset="soft"]::before {
+        background: radial-gradient( 600px 160px at 18% 22%, rgba(212,175,55,0.13), rgba(212,175,55,0) 60% );
+    }
+
+    .motion-section[data-preset="spotlight"]::before {
+        background: radial-gradient( 680px 200px at 30% 24%, rgba(212,175,55,0.18), rgba(212,175,55,0) 62% ), radial-gradient( 520px 160px at 80% 40%, rgba(168,216,255,0.10), rgba(168,216,255,0) 60% );
+    }
+
+    .motion-section[data-preset="reveal"] {
+        clip-path: inset(8% 0 0 0 round 18px);
+        transition: clip-path 1100ms cubic-bezier(.2,.9,.15,1), transform 900ms cubic-bezier(.2,.8,.2,1), opacity 900ms ease, filter 900ms ease;
+    }
+
+    .motion-section.is-active[data-preset="reveal"] {
+        clip-path: inset(0 0 0 0 round 18px);
+    }
+
+/* Reduced motion: disable section movement */
+@media (prefers-reduced-motion: reduce) {
+    .motion-section,
+    .motion-section::before {
+        transition: none !important;
+        transform: none !important;
+        filter: none !important;
+        opacity: 1 !important;
+        clip-path: none !important;
     }
 }

@@ -5,11 +5,13 @@ import BehindtheName from "@/components/BehindtheName";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import SectionDivider from "@/components/SectionDivider";
 
 export default function Home() {
     return (
         <>
             <Header />
+
             <main
                 id="home"
                 className="relative min-h-screen bg-black"
@@ -20,12 +22,23 @@ export default function Home() {
                 {/* Page content */}
                 <div className="relative z-10">
                     <Hero />
+
                     <MusicPreview />
+
+                    <SectionDivider />
+
                     <BehindtheName />
+
+                    <SectionDivider />
+
                     <AboutSection />
+
+                    <SectionDivider />
+
                     <ContactSection />
                 </div>
             </main>
+
             <Footer />
         </>
     );
