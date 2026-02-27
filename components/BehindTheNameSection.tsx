@@ -4,7 +4,7 @@ import { useRef } from "react";
 import FadeIn from "./FadeIn";
 import { useMotionSection } from "./useMotionSection";
 
-export default function BehindTheName() {
+export default function BehindTheNameSection() {
     const sectionRef = useRef<HTMLElement>(null!);
 
     // 🌊 Soft motion fits reflective narrative tone

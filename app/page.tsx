@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import MusicPreview from "@/components/MusicPreview";
-import BehindtheName from "@/components/BehindtheName";
+import BehindTheName from "@/components/BehindTheNameSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -12,10 +12,7 @@ export default function Home() {
         <>
             <Header />
 
-            <main
-                id="home"
-                className="relative min-h-screen bg-black"
-            >
+            <main id="home" className="relative min-h-screen bg-black">
                 {/* Dark overlay for extra depth */}
                 <div className="pointer-events-none absolute inset-0 bg-black/70 z-0" />
 
@@ -23,11 +20,14 @@ export default function Home() {
                 <div className="relative z-10">
                     <Hero />
 
-                    <MusicPreview />
+                    {/* ✅ Needed for "/#latest" + active highlight */}
+                    <section id="latest" className="scroll-mt-28">
+                        <MusicPreview />
+                    </section>
 
                     <SectionDivider />
 
-                    <BehindtheName />
+                    <BehindTheName />
 
                     <SectionDivider />
 
@@ -35,7 +35,10 @@ export default function Home() {
 
                     <SectionDivider />
 
-                    <ContactSection />
+                    {/* ✅ Needed for "/#contact" + active highlight */}
+                    <section id="contact" className="scroll-mt-28">
+                        <ContactSection />
+                    </section>
                 </div>
             </main>
 

@@ -1,23 +1,13 @@
+// components/AboutSection.tsx
 "use client";
 
-import { useRef } from "react";
-import FadeIn from "./FadeIn";
-import { useMotionSection } from "./useMotionSection";
+import FadeIn from "@/components/FadeIn";
 
 export default function AboutSection() {
-    const sectionRef = useRef<HTMLElement>(null!);
-
-    // ✨ Reveal fits the core identity / manifesto tone
-    useMotionSection(sectionRef, {
-        preset: "reveal",
-        once: true,
-    });
-
     return (
         <section
             id="about"
-            ref={sectionRef}
-            className="motion-section max-w-4xl mx-auto px-4 py-24 text-gray-200"
+            className="scroll-mt-28 max-w-4xl mx-auto px-4 py-24 text-gray-200"
         >
             <div className="mx-auto max-w-3xl px-6">
                 <FadeIn delayMs={0}>
@@ -46,8 +36,8 @@ export default function AboutSection() {
                         unexpected grace that meets us in the depths. The music reflects
                         that tension: cinematic and intimate, ethereal and grounded, shaped
                         by the textures of dreampop, the reverence of sacred music, and the
-                        raw honesty of lament and prayer. Hydromedon does not exist to preach
-                        or proselytize. There is no agenda, no attempt to convince or
+                        raw honesty of lament and prayer. Hydromedon does not exist to
+                        preach or proselytize. There is no agenda, no attempt to convince or
                         correct. These songs are simply the overflow of lived experience —
                         the nights of wrestling, the mornings of fragile hope, the moments
                         when faith was held with trembling hands. They are confessions, not
@@ -74,13 +64,12 @@ export default function AboutSection() {
                     <p className="text-left leading-relaxed opacity-90">
                         Hydromedon is a reminder that lament is not the opposite of faith —
                         it is often the doorway to deeper trust. This is music for the
-                        broken, the searching, the weary, and the quietly courageous.
-                        Music for those who still believe, or want to believe, or are
-                        trying to believe again. Music for anyone who needs to hear that
-                        hope is not lost, and that dawn always follows the longest night.
-                        Hydromedon is not here to convert. Hydromedon is here to accompany,
-                        to witness, to testify, to sing in the dark until the light
-                        returns.
+                        broken, the searching, the weary, and the quietly courageous. Music
+                        for those who still believe, or want to believe, or are trying to
+                        believe again. Music for anyone who needs to hear that hope is not
+                        lost, and that dawn always follows the longest night. Hydromedon is
+                        not here to convert. Hydromedon is here to accompany, to witness, to
+                        testify, to sing in the dark until the light returns.
                     </p>
                 </FadeIn>
             </div>

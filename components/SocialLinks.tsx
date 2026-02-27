@@ -1,53 +1,19 @@
-"use client";
-
-import Image from "next/image";
-import Link from "next/link";
-
-const links = [
-    { name: "YouTube", href: "https://youtube.com/@hydromedon", icon: "/social/youtube-gold.svg" },
-    { name: "Spotify", href: "https://open.spotify.com/artist/...", icon: "/social/spotify-gold.svg" },
-    { name: "Instagram", href: "https://instagram.com/hydromedon", icon: "/social/instagram-gold.svg" },
-    { name: "TikTok", href: "https://tiktok.com/@hydromedon", icon: "/social/tiktok-gold.svg" },
-    { name: "Facebook", href: "https://facebook.com/hydromedon", icon: "/social/facebook-gold.svg" },
-    { name: "X", href: "https://x.com/hydromedon", icon: "/social/x-gold.svg" },
-];
+import YoutubeIcon from "./icons/YoutubeIcon";
+import SpotifyIcon from "./icons/SpotifyIcon";
+import TikTokIcon from "./icons/TikTokIcon";
+import XIcon from "./icons/XIcon";
+import FacebookIcon from "./icons/FacebookIcon";
+import InstagramIcon from "./icons/InstagramIcon";
 
 export default function SocialLinks() {
     return (
-        <div className="flex items-center justify-center gap-6 mt-8">
-            {links.map((item) => (
-                <Link
-                    key={item.name}
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={item.name}
-                    className="
-            transition-transform transition-shadow duration-300
-            hover:-translate-y-1
-            hover:scale-[1.03]
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-yellow-500/60
-            focus-visible:ring-offset-2
-            focus-visible:ring-offset-black
-          "
-                >
-                    <Image
-                        src={item.icon}
-                        alt={item.name}
-                        width={36}
-                        height={36}
-                        className="
-              drop-shadow-[0_0_10px_rgba(212,175,55,0.45)]
-              hover:drop-shadow-[0_0_16px_rgba(212,175,55,0.85)]
-              transition-all duration-300
-              motion-reduce:transform-none
-              motion-reduce:transition-none
-            "
-                    />
-                </Link>
-            ))}
+        <div className="flex gap-6 justify-center mb-0 mt-4">
+            <a href="https://youtube.com/@hydromedon" target="_blank"><YoutubeIcon /></a>
+            <a href="https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM" target="_blank"><SpotifyIcon /></a>
+            <a href="https://tiktok.com/@hydromedon" target="_blank"><TikTokIcon /></a>
+            <a href="https://x.com/hydromedon" target="_blank"><XIcon /></a>
+            <a href="https://www.facebook.com/Hydromedon/" target="_blank"><FacebookIcon /></a>
+            <a href="https://instagram.com/hydromedon" target="_blank"><InstagramIcon /></a>
         </div>
     );
 }
