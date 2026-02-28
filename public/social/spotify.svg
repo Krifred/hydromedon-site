@@ -13,7 +13,7 @@
       </feMerge>
     </filter>
   </defs>
-  <g filter="url(#gold-glow)" stroke="#D4AF37" stroke-width="26" stroke-linecap="round">
+  <g filter="url(#gold-glow)" stroke="#D4AF37" strokeWidth="26" strokeLinecap="round">
     <circle cx="256" cy="256" r="176" fill="none"/>
     <path d="M164 220C224 204 288 208 348 230" />
     <path d="M176 268C226 254 286 258 336 276" />

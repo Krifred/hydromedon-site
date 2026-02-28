@@ -18,13 +18,13 @@ export default function ContactSection() {
         en: {
             title: "Stay in the Light",
             subtitle:
-                "Receive new releases, behind‑the‑song reflections, and moments of encouragement.",
+                "Receive new releases and behind‑the‑song reflections.",
             privacy: "No spam. Unsubscribe anytime.",
         },
         fr: {
             title: "Reste dans la Lumière",
             subtitle:
-                "Reçois les dernieres publications, les réflexions derrière les chansons, et des pensées d’encouragement.",
+                "Recevez l'annonce des lancements et les pensées derrière les chansons.",
             privacy: "Aucun spam. Désabonnement en tout temps.",
         },
     }[lang];

@@ -7,7 +7,7 @@ import InstagramIcon from "./icons/InstagramIcon";
 
 export default function SocialLinks() {
     return (
-        <div className="flex gap-6 justify-center mb-0 mt-4">
+        <div className="flex gap-2 justify-center mb-0 mt-4">
             <a href="https://youtube.com/@hydromedon" target="_blank"><YoutubeIcon /></a>
             <a href="https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM" target="_blank"><SpotifyIcon /></a>
             <a href="https://tiktok.com/@hydromedon" target="_blank"><TikTokIcon /></a>
