@@ -97,11 +97,12 @@ export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     }, [componentContext]);
 
     return (
-        <AnalyticsContext.Provider value= {{ setComponentContext }
-}>
+        <AnalyticsContext.Provider value = {{ setComponentContext }
+} >
     { children }
     </AnalyticsContext.Provider>
-  );
+);
+
 }
 
 export function useAnalytics() {
