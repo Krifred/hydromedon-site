@@ -74,7 +74,7 @@ export default async function SongPage({
     if (!release) notFound();
 
     return (
-        <main>
+        <main className="min-h-screen bg-black text-white">
             <section className="max-w-5xl mx-auto px-4 py-8">
                 <Breadcrumbs release={release} />
 
