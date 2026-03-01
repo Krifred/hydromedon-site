@@ -9,7 +9,11 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 
-const MEASUREMENT_ID = "G-P4J0RB4GCZ";
+const MEASUREMENT_ID =
+    window.location.hostname === "hydromedon.com"
+        ? "G-6T99R5RGEF"   // production
+        : "G-P4J0RB4GCZ"; // vercel
+
 
 declare global {
     interface Window {
@@ -89,7 +93,7 @@ export function AnalyticsProvider({
             const link = (event.target as HTMLElement)?.closest("a");
             if (!link) return;
 
-            // Respect modified clicks
+            // Respect modified clicks (new tab, etc.)
             if (
                 event.metaKey ||
                 event.ctrlKey ||
@@ -104,9 +108,7 @@ export function AnalyticsProvider({
             if (!href) return;
 
             const isSpotify = href.includes("open.spotify.com");
-            const isYouTube =
-                href.includes("youtube.com") || href.includes("youtu.be");
-
+            const isYouTube = href.includes("youtube.com") || href.includes("youtu.be");
             if (!isSpotify && !isYouTube) return;
 
             event.preventDefault();
@@ -122,10 +124,30 @@ export function AnalyticsProvider({
                 link_url: url.toString(),
                 component: componentContext,
                 campaign,
-
                 transport_type: "beacon",
                 event_callback: () => {
                     window.location.href = url.toString();
                 },
             });
 
+            // Fallback in case gtag is blocked or slow:
+            // navigate after a short delay even if event_callback doesn't fire
+            setTimeout(() => {
+                window.location.href = url.toString();
+            }, 350);
+        }
+
+        document.addEventListener("click", handleClick);
+        return () => document.removeEventListener("click", handleClick);
+    }, [componentContext, campaign]);
+
+    return (
+        <AnalyticsContext.Provider value={{ setComponentContext }}>
+            {children}
+        </AnalyticsContext.Provider>
+    );
+}
+
+export function useAnalytics() {
+    return useContext(AnalyticsContext);
+}
