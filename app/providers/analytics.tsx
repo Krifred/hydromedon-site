@@ -1,111 +1,125 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useMemo,
+    useState,
+} from "react";
+import { usePathname } from "next/navigation";
 
-const MEASUREMENT_ID = "G-6T99RSRGEF";
+const MEASUREMENT_ID = "G-P4J0RB4GCZ";
 
-// Extend window type so TS accepts gtag()
 declare global {
-  interface Window {
-    gtag?: (...args: any[]) => void;
-  }
+    interface Window {
+        gtag?: (...args: any[]) => void;
+        dataLayer?: any[];
+    }
 }
 
 type AnalyticsContextType = {
-  setComponentContext: (component: string) => void;
+    setComponentContext: (component: string) => void;
 };
 
 const AnalyticsContext = createContext<AnalyticsContextType>({
-  setComponentContext: () => {},
+    setComponentContext: () => { },
 });
 
-export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
-  const [componentContext, setComponentContext] = useState<string>("");
+export function AnalyticsProvider({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    const pathname = usePathname();
+    const [componentContext, setComponentContext] = useState("unknown_component");
 
-  // Load GA4
-  useEffect(() => {
-    if (!window.gtag) {
-      const script1 = document.createElement("script");
-      script1.async = true;
-      script1.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
-      document.head.appendChild(script1);
+    /* ---------------------------
+       Load GA4 once
+       --------------------------- */
+    useEffect(() => {
+        if (window.gtag) return;
 
-      const script2 = document.createElement("script");
-      script2.innerHTML = `
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', '${MEASUREMENT_ID}');
-      `;
-      document.head.appendChild(script2);
-    }
-  }, []);
+        const script1 = document.createElement("script");
+        script1.async = true;
+        script1.src = `https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`;
+        document.head.appendChild(script1);
 
-  // Build UTM campaign from pathname
-  function getCampaignFromPath() {
-    const path = window.location.pathname;
-
-    if (path === "/") return "homepage";
-
-    const parts = path.split("/").filter(Boolean);
-
-    if (parts.length >= 2) {
-      const category = parts[0];
-      const slug = parts[1].replace(/-/g, "_");
-      return `${category}_${slug}`;
-    }
-
-    return parts[0].replace(/-/g, "_");
-  }
-
-  // Inject UTMs into outbound links
-  useEffect(() => {
-    function handleClick(event: MouseEvent) {
-      const link = (event.target as HTMLElement).closest("a");
-      if (!link) return;
-
-      const href = link.href;
-
-      const isSpotify = href.includes("open.spotify.com");
-      const isYouTube =
-        href.includes("youtube.com") || href.includes("youtu.be");
-
-      if (!isSpotify && !isYouTube) return;
-
-      const campaign = getCampaignFromPath();
-      const medium = componentContext || "unknown_component";
-
-      const url = new URL(href);
-      url.searchParams.set("utm_source", "website");
-      url.searchParams.set("utm_medium", medium);
-      url.searchParams.set("utm_campaign", campaign);
-
-      link.href = url.toString();
-
-      if (isSpotify) {
-        window.gtag?.("event", "spotify_click", {
-          href: url.toString(),
-          component: medium,
-          campaign,
-        });
-      }
-      if (isYouTube) { window.gtag?.("event", "youtube_click", {href: url.toString(),
-          component: medium, campaign,
+        const script2 = document.createElement("script");
+        script2.innerHTML = `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${MEASUREMENT_ID}', {
+        send_page_view: false
       });
-          }
-      } 
-      document.addEventListener("click", handleClick);
-      return () => document.removeEventListener("click", handleClick);
-  }, [componentContext]);
+    `;
+        document.head.appendChild(script2);
+    }, []);
 
-    return (
-        <AnalyticsContext.Provider value= {{ setComponentContext }
-}>
-    { children }
-    </AnalyticsContext.Provider>
-  );
-}
+    /* ---------------------------
+       Track SPA page views
+       --------------------------- */
+    useEffect(() => {
+        if (!window.gtag) return;
 
-export function useAnalytics() {
-    return useContext(AnalyticsContext);
-}
+        window.gtag("event", "page_view", {
+            page_path: pathname,
+        });
+    }, [pathname]);
+
+    /* ---------------------------
+       Campaign name (stable)
+       --------------------------- */
+    const campaign = useMemo(() => {
+        if (pathname === "/") return "homepage";
+
+        const parts = pathname.split("/").filter(Boolean);
+        if (parts.length >= 2) {
+            return `${parts[0]}_${parts[1].replace(/-/g, "_")}`;
+        }
+        return parts[0].replace(/-/g, "_");
+    }, [pathname]);
+
+    /* ---------------------------
+       Outbound tracking
+       --------------------------- */
+    useEffect(() => {
+        function handleClick(event: MouseEvent) {
+            const link = (event.target as HTMLElement)?.closest("a");
+            if (!link) return;
+
+            // Respect modified clicks
+            if (
+                event.metaKey ||
+                event.ctrlKey ||
+                event.shiftKey ||
+                event.altKey ||
+                event.button !== 0
+            ) {
+                return;
+            }
+
+            const href = link.href;
+            if (!href) return;
+
+            const isSpotify = href.includes("open.spotify.com");
+            const isYouTube =
+                href.includes("youtube.com") || href.includes("youtu.be");
+
+            if (!isSpotify && !isYouTube) return;
+
+            event.preventDefault();
+
+            const url = new URL(href);
+            url.searchParams.set("utm_source", "website");
+            url.searchParams.set("utm_medium", componentContext);
+            url.searchParams.set("utm_campaign", campaign);
+
+            const eventName = isSpotify ? "spotify_click" : "youtube_click";
+
+            window.gtag?.("event", eventName, {
+                link_url: url.toString(),
+                component: componentContext,
+                campaign,
+                transport_type: "beacon",
