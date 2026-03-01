@@ -1,8 +1,8 @@
 import "./global.css";
 import type { ReactNode } from "react";
-import { AnalyticsProvider } from "./providers/analytics";
+import AnalyticsClient from "./providers/AnalyticsClient";
 
-export default function RootLayout({ 
+export default function RootLayout({
     children,
 }: {
     children: ReactNode;
@@ -10,7 +10,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body>
-                <AnalyticsProvider>{children}</AnalyticsProvider>
+                <AnalyticsClient>{children}</AnalyticsClient>
             </body>
         </html>
     );

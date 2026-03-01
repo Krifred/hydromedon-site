@@ -9,12 +9,6 @@ import {
 } from "react";
 import { usePathname } from "next/navigation";
 
-const MEASUREMENT_ID =
-    window.location.hostname === "hydromedon.com"
-        ? "G-6T99R5RGEF"   // production
-        : "G-P4J0RB4GCZ"; // vercel
-
-
 declare global {
     interface Window {
         gtag?: (...args: any[]) => void;
@@ -38,10 +32,15 @@ export function AnalyticsProvider({
     const pathname = usePathname();
     const [componentContext, setComponentContext] = useState("unknown_component");
 
+    // ✅ Safe for build + SSR
+    const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+
     /* ---------------------------
        Load GA4 once
        --------------------------- */
     useEffect(() => {
+        if (typeof window === "undefined") return;
+        if (!MEASUREMENT_ID) return;
         if (window.gtag) return;
 
         const script1 = document.createElement("script");
@@ -54,21 +53,22 @@ export function AnalyticsProvider({
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', '${MEASUREMENT_ID}', {
-        send_page_view: false
-      });
+      gtag('config', '${MEASUREMENT_ID}', { send_page_view: false });
     `;
         document.head.appendChild(script2);
-    }, []);
+    }, [MEASUREMENT_ID]);
 
     /* ---------------------------
        Track SPA page views
        --------------------------- */
     useEffect(() => {
+        if (typeof window === "undefined") return;
         if (!window.gtag) return;
 
         window.gtag("event", "page_view", {
             page_path: pathname,
+            page_location: window.location.href,
+            page_title: document.title,
         });
     }, [pathname]);
 
@@ -82,18 +82,21 @@ export function AnalyticsProvider({
         if (parts.length >= 2) {
             return `${parts[0]}_${parts[1].replace(/-/g, "_")}`;
         }
-        return parts[0].replace(/-/g, "_");
+
+        return parts[0]?.replace(/-/g, "_") ?? "unknown";
     }, [pathname]);
 
     /* ---------------------------
        Outbound tracking
        --------------------------- */
     useEffect(() => {
+        if (typeof window === "undefined") return;
+
         function handleClick(event: MouseEvent) {
             const link = (event.target as HTMLElement)?.closest("a");
             if (!link) return;
 
-            // Respect modified clicks (new tab, etc.)
+            // Respect modified clicks
             if (
                 event.metaKey ||
                 event.ctrlKey ||
@@ -108,7 +111,8 @@ export function AnalyticsProvider({
             if (!href) return;
 
             const isSpotify = href.includes("open.spotify.com");
-            const isYouTube = href.includes("youtube.com") || href.includes("youtu.be");
+            const isYouTube =
+                href.includes("youtube.com") || href.includes("youtu.be");
             if (!isSpotify && !isYouTube) return;
 
             event.preventDefault();
@@ -120,21 +124,35 @@ export function AnalyticsProvider({
 
             const eventName = isSpotify ? "spotify_click" : "youtube_click";
 
+            const openInNewTab =
+                link.getAttribute("target") === "_blank" ||
+                link.rel?.includes("noopener") ||
+                link.rel?.includes("noreferrer");
+
+            let navigated = false;
+
+            const navigate = () => {
+                if (navigated) return;
+                navigated = true;
+
+                if (openInNewTab) {
+                    window.open(url.toString(), "_blank", "noopener,noreferrer");
+                } else {
+                    window.location.href = url.toString();
+                }
+            };
+
+            const fallbackTimer = window.setTimeout(navigate, 500);
+
             window.gtag?.("event", eventName, {
                 link_url: url.toString(),
                 component: componentContext,
                 campaign,
-                transport_type: "beacon",
                 event_callback: () => {
-                    window.location.href = url.toString();
+                    window.clearTimeout(fallbackTimer);
+                    navigate();
                 },
             });
-
-            // Fallback in case gtag is blocked or slow:
-            // navigate after a short delay even if event_callback doesn't fire
-            setTimeout(() => {
-                window.location.href = url.toString();
-            }, 350);
         }
 
         document.addEventListener("click", handleClick);
