@@ -122,4 +122,10 @@ export function AnalyticsProvider({
                 link_url: url.toString(),
                 component: componentContext,
                 campaign,
+
                 transport_type: "beacon",
+                event_callback: () => {
+                    window.location.href = url.toString();
+                },
+            });
+
