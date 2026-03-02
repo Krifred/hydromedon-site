@@ -23,7 +23,7 @@ type NavItem =
     | { label: string; href: string; children?: never }
     | { label: string; children: { label: string; href: string }[]; href?: never };
 
-const ABOUT_SECTION_IDS = ["about", "behind-the-name", "statement-of-faith"] as const;
+const ABOUT_SECTION_IDS = ["about", "recommended-sites", "statement-of-faith"] as const;
 
 function getHashId(href: string) {
     const idx = href.indexOf("#");
