@@ -16,8 +16,8 @@ export default function SmallLogo() {
                 <Image
                     src="/icons/apple-touch-icon.png"
                     alt="Hydromedon"
-                    width={40}
-                    height={40}
+                    width={48}
+                    height={48}
                     className="opacity-80 hover:opacity-100 transition"
                 />
             </Link>
