@@ -22,7 +22,7 @@ export default function BehindTheNameSection() {
             <div className="mx-auto max-w-3xl px-6 text-center">
                 <FadeIn delayMs={0}>
                     <h2 className="text-center text-3xl md:text-4xl font-bold mb-6 text-yellow-400 tracking-tight drop-shadow-[0_0_18px_rgba(212,175,55,0.35)]">
-                        Behind the Name “Hydromedon”
+                        Recommended Sites
                     </h2>
                 </FadeIn>
 

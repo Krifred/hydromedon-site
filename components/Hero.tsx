@@ -4,41 +4,35 @@ import FadeIn from "./FadeIn";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
-
-
 export default function Hero() {
     const [fade, setFade] = useState(1);
     const hasScrolledRef = useRef(false);
     const [isBreathing, setIsBreathing] = useState(true);
     const prefersReducedMotionRef = useRef(false);
 
+    /* Scroll-based fade (content never disappears) */
     useEffect(() => {
-        // ✅ Ensure fully visible on first paint
         setFade(1);
 
         const handleScroll = () => {
             const y = window.scrollY;
 
-            // ✅ Do nothing until the user actually scrolls
             if (!hasScrolledRef.current) {
                 if (y === 0) return;
                 hasScrolledRef.current = true;
             }
 
             const max = 260;
-
-            // ✅ Clamp so content never fully disappears
             const value = Math.max(0.25, Math.min(1, 1 - y / max));
             setFade(value);
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
-
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    /* Breathing animation (stops on interaction) */
     useEffect(() => {
-        // Respect reduced motion
         const media = window.matchMedia("(prefers-reduced-motion: reduce)");
         prefersReducedMotionRef.current = media.matches;
 
@@ -61,14 +55,14 @@ export default function Hero() {
     }, []);
 
     return (
-        <section className="relative flex flex-col items-center justify-start min-h-[60vh] pt-10 pb-12 text-center overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.04)_0%,transparent_55%)]">
-            {/* Step 1: Subtle film grain / texture */}
+        <section className="relative flex flex-col items-center justify-start min-h-[60vh] pt-10 pb-12 text-center overflow-hidden">
+            {/* Cinematic vignette frame */}
             <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 z-0 opacity-[0.12] bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.03)_0%,transparent_40%)]"
+                className="pointer-events-none absolute inset-0 z-0 bg-hero-vignette"
             />
 
-            {/* Step 2: Foreground content */}
+            {/* Foreground content */}
             <div
                 className="relative z-10 flex flex-col items-center transition-[opacity,transform] duration-300 ease-out"
                 style={{
@@ -76,17 +70,19 @@ export default function Hero() {
                     transform: `translateY(${(1 - fade) * -12}px)`,
                 }}
             >
-                <div className="mb-0 relative flex items-center justify-center">
-                    {/* OUTER BLOOM */}
+                <div className="relative flex items-center justify-center">
+                    {/* OUTER SACRED HALO */}
                     <div
                         aria-hidden
-                        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.16)_0%,rgba(212,175,55,0.08)_32%,transparent_68%)] blur-3xl"
+                        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[1200px] w-[1200px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-hero-halo blur-3xl animate-halo-pulse"
+                        style={{ opacity: fade }}
                     />
 
-                    {/* INNER HALO */}
+                    {/* INNER FOCAL HALO */}
                     <div
                         aria-hidden
-                        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.30)_0%,rgba(212,175,55,0.12)_39%,transparent_65%)] blur-2xl"
+                        className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[760px] w-[760px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-hero-halo-inner blur-2xl"
+                        style={{ opacity: fade }}
                     />
 
                     {/* Logo */}
@@ -96,11 +92,10 @@ export default function Hero() {
                         width={840}
                         height={840}
                         priority
-
-                        className=
-                        {`relative z-10 -translate-y-1 drop-shadow-[0_28px_70px_rgba(0,0,0,0.65)] ${isBreathing ? "animate-[hero-breathe_16s_ease-in-out_infinite]" : ""
+                        className={`relative z-10 -translate-y-1 drop-shadow-[0_28px_70px_rgba(0,0,0,0.65)] ${isBreathing
+                                ? "animate-[hero-breathe_16s_ease-in-out_infinite]"
+                                : ""
                             }`}
-
                     />
                 </div>
 
