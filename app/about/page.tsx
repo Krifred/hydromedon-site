@@ -1,6 +1,6 @@
 // app/about/page.tsx
 import AboutSection from "@/components/AboutSection";
-import BehindTheName from "@/components/BehindTheNameSection";
+import RecommendedSitesSection from "@/components/RecommendedSitesSection";
 import StatementOfFaith from "@/components/StatementOfFaithSection";
 import SectionDivider from "@/components/SectionDivider";
 
@@ -9,7 +9,7 @@ export default function AboutPage() {
         <main className="relative bg-black text-gray-200">
             <AboutSection />
             <SectionDivider />
-            <BehindTheName />
+            <RecommendedSitesSection />
             <SectionDivider />
             <StatementOfFaith />
         </main>
