@@ -1,7 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import MusicPreview from "@/components/MusicPreview";
-import BehindTheName from "@/components/BehindTheNameSection";
+import RecommendedSites from "@/components/RecommendedSitesSection";
 import AboutSection from "@/components/AboutSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -27,7 +27,7 @@ export default function Home() {
 
                     <SectionDivider />
 
-                    <BehindTheName />
+                    <RecommendedSites />
 
                     <SectionDivider />
 
