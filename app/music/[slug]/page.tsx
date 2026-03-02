@@ -15,8 +15,10 @@ export async function generateStaticParams() {
     return releases.map((r) => ({ slug: r.slug }));
 }
 
-export async function generateMetadata({ params }) {
-    const { slug } = await params;
+export async function generateMetadata(
+    { params }: { params: { slug: string } }
+) {
+    const { slug } = params;
     const release = getReleaseBySlug(slug);
 
     return {
@@ -28,21 +30,31 @@ export async function generateMetadata({ params }) {
    Page
    ========================= */
 
-export default async function SongPage({ params }) {
-    const { slug } = await params;
+export default async function SongPage(
+    { params }: { params: { slug: string } }
+) {
+    const { slug } = params;
     const release = getReleaseBySlug(slug);
 
     if (!release) notFound();
 
-    // ⭐ THE FIX — hydrate lyrics + liner notes
     const hydrated = hydrateReleaseWithLyrics(release);
+
+    // ⭐ FIX: Prevent TS narrowing inside JSX
+    const releaseType: "Single" | "Album" | "Video" = hydrated.type;
+
+    // ⭐ FIX: Compute CTA once, outside JSX
+    const cta =
+        releaseType === "Video"
+            ? { href: hydrated.youtube, label: "▶ Watch on YouTube" }
+            : { href: hydrated.hyperfollow || hydrated.spotify, label: "▶ Listen on Spotify" };
 
     return (
         <main>
             <section className="max-w-5xl mx-auto px-4 py-8">
                 <Breadcrumbs release={hydrated} />
 
-                {hydrated.type === "Album" ? (
+                {releaseType === "Album" ? (
                     <>
                         {/* Title / Subtitle */}
                         <div className="text-left mt-6 mb-6">
@@ -74,35 +86,27 @@ export default async function SongPage({ params }) {
                                 />
 
                                 {/* Primary CTA */}
-                                {(() => {
-                                    const cta = hydrated.type === "Video"
-                                        ? { href: hydrated.youtube, label: "▶ Watch on YouTube" }
-                                        : { href: hydrated.hyperfollow || hydrated.spotify, label: "▶ Listen on Spotify" };
-
-                                    if (!cta?.href) return null;
-
-                                    return (
-                                        <a
-                                            href={cta.href}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="
-                                                mt-8 inline-flex items-center gap-3
-                                                rounded-full
-                                                bg-yellow-500 px-7 py-3
-                                                text-sm font-bold uppercase tracking-wide text-black
-                                                shadow-lg shadow-yellow-500/40
-                                                animate-pulse
-                                                transition
-                                                hover:bg-yellow-400 hover:scale-105 hover:shadow-yellow-400/60 hover:animate-none
-                                                focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black
-                                                active:scale-95
-                                            "
-                                        >
-                                            {cta.label}
-                                        </a>
-                                    );
-                                })()}
+                                {cta.href && (
+                                    <a
+                                        href={cta.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="
+                                            mt-8 inline-flex items-center gap-3
+                                            rounded-full
+                                            bg-yellow-500 px-7 py-3
+                                            text-sm font-bold uppercase tracking-wide text-black
+                                            shadow-lg shadow-yellow-500/40
+                                            animate-pulse
+                                            transition
+                                            hover:bg-yellow-400 hover:scale-105 hover:shadow-yellow-400/60 hover:animate-none
+                                            focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black
+                                            active:scale-95
+                                        "
+                                    >
+                                        {cta.label}
+                                    </a>
+                                )}
 
                                 {/* Secondary platform links */}
                                 <div className="mt-4 flex items-center justify-center gap-4 text-xs text-gray-400">
@@ -198,6 +202,29 @@ export default async function SongPage({ params }) {
                                 Released: {hydrated.releaseDate}
                             </div>
                         )}
+
+                        {/* Primary CTA for Singles/Videos */}
+                        {cta.href && (
+                            <a
+                                href={cta.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="
+                                    mt-4 inline-flex items-center gap-3
+                                    rounded-full
+                                    bg-yellow-500 px-7 py-3
+                                    text-sm font-bold uppercase tracking-wide text-black
+                                    shadow-lg shadow-yellow-500/40
+                                    animate-pulse
+                                    transition
+                                    hover:bg-yellow-400 hover:scale-105 hover:shadow-yellow-400/60 hover:animate-none
+                                    focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 focus:ring-offset-black
+                                    active:scale-95
+                                "
+                            >
+                                {cta.label}
+                            </a>
+                        )}
                     </div>
                 )}
             </section>
@@ -257,7 +284,6 @@ export default async function SongPage({ params }) {
                                                     </div>
                                                 </>
                                             )}
-
                                         </div>
                                     </FadeIn>
                                 ))}

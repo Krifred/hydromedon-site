@@ -1,38 +1,46 @@
+"use client";
+
+import { useEffect } from "react";
+import { useAnalytics } from "@/app/providers/analytics";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FadeIn from "@/components/FadeIn";
 
-export const dynamicParams = false;
-
 export default function RecommendedSitesPage() {
+    const { setComponentContext } = useAnalytics();
+
+    useEffect(() => {
+        setComponentContext("recommended_sites");
+    }, [setComponentContext]);
+
     const sites = [
         {
-            name: "The Ancient Way",
+            name: "The Bible Project",
             description:
-                "The Ancient Way offers teaching and resources rooted in the Jewish faith of Jesus, highlighting Torah, Sabbath, and the seven biblical festivals as God’s appointed times.",
-            url: "https://www.theancientway.org/",
+                "Short, beautifully animated explanations of Scripture, theology, and biblical themes.",
+            url: "https://bibleproject.com",
         },
         {
-            name: "Kavodah",
+            name: "Sovereign Grace Music",
             description:
-                "Kavodah offers soulful Messianic electronic music that blends modern soundscapes with worship inspired by the Psalms and a life of devotion to the King of the Universe..",
-            url: "https://www.kavodah.com/",
+                "Christ-centered worship music with rich theology and accessible arrangements.",
+            url: "https://sovereigngracemusic.org",
         },
         {
             name: "Daily Grace Co.",
             description:
-                "Bible studies, devotionals, and Christian lifestyle resources with a gentle, reflective aesthetic.",
+                "Bible studies, devotionals, and Christian lifestyle resources.",
             url: "https://thedailygraceco.com",
         },
         {
             name: "Seeds Family Worship",
             description:
-                "Scripture memory songs for kids and families—joyful, energetic, and rooted in the Word.",
+                "Scripture memory songs for kids and families.",
             url: "https://www.seedsfamilyworship.com",
         },
         {
             name: "Worship Tutorials",
             description:
-                "Guitar, vocal, and production resources for worship musicians, including tutorials, patches, and arrangements.",
+                "Guitar, vocal, and production resources for worship musicians.",
             url: "https://worshiptutorials.com",
         },
     ];
@@ -56,8 +64,7 @@ export default function RecommendedSitesPage() {
 
                     <p className="text-gray-300">
                         A curated collection of friendly, trusted, and spiritually aligned
-                        resources—ranging from Sunday school material to worship music,
-                        devotionals, and creative tools.
+                        resources.
                     </p>
                 </div>
 
@@ -80,6 +87,7 @@ export default function RecommendedSitesPage() {
                                     href={site.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    data-site-name={site.name}
                                     className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition"
                                 >
                                     Visit Site <span className="text-xs opacity-70">↗</span>

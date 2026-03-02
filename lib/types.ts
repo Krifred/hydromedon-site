@@ -74,6 +74,7 @@ export interface Release {
     /** Human-readable release date */
     releaseDate: string;
     year?: string;
+
     /** Cover artwork URL/path */
     cover?: string;
 
@@ -81,6 +82,7 @@ export interface Release {
     spotify?: string;
     youtube?: string;
     hyperfollow?: string;
+
     description?: string;
     themes?: string[];
 

@@ -24,15 +24,10 @@ const AnalyticsContext = createContext<AnalyticsContextType>({
     setComponentContext: () => { },
 });
 
-export function AnalyticsProvider({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
+export function AnalyticsProvider({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const [componentContext, setComponentContext] = useState("unknown_component");
 
-    // ✅ Safe for build + SSR
     const MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
     /* ---------------------------
@@ -50,11 +45,11 @@ export function AnalyticsProvider({
 
         const script2 = document.createElement("script");
         script2.innerHTML = `
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', '${MEASUREMENT_ID}', { send_page_view: false });
-    `;
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${MEASUREMENT_ID}', { send_page_view: false });
+        `;
         document.head.appendChild(script2);
     }, [MEASUREMENT_ID]);
 
@@ -87,7 +82,7 @@ export function AnalyticsProvider({
     }, [pathname]);
 
     /* ---------------------------
-       Outbound tracking
+       Outbound tracking (expanded)
        --------------------------- */
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -113,7 +108,13 @@ export function AnalyticsProvider({
             const isSpotify = href.includes("open.spotify.com");
             const isYouTube =
                 href.includes("youtube.com") || href.includes("youtu.be");
-            if (!isSpotify && !isYouTube) return;
+
+            const isExternal =
+                href.startsWith("http") &&
+                !href.includes(window.location.hostname);
+
+            // Only track outbound links
+            if (!isSpotify && !isYouTube && !isExternal) return;
 
             event.preventDefault();
 
@@ -122,7 +123,13 @@ export function AnalyticsProvider({
             url.searchParams.set("utm_medium", componentContext);
             url.searchParams.set("utm_campaign", campaign);
 
-            const eventName = isSpotify ? "spotify_click" : "youtube_click";
+            // Determine event name
+            let eventName = "outbound_click";
+            if (isSpotify) eventName = "spotify_click";
+            else if (isYouTube) eventName = "youtube_click";
+            else eventName = "recommended_site_click";
+
+            const siteName = link.dataset.siteName ?? null;
 
             const openInNewTab =
                 link.getAttribute("target") === "_blank" ||
@@ -146,6 +153,7 @@ export function AnalyticsProvider({
 
             window.gtag?.("event", eventName, {
                 link_url: url.toString(),
+                site_name: siteName,
                 component: componentContext,
                 campaign,
                 event_callback: () => {

@@ -9,9 +9,7 @@ import { lyricsByRelease } from "./lyrics";
  *
  * This keeps pages clean and centralizes content merging.
  */
-export function hydrateReleaseWithLyrics(
-    release: Release
-): Release {
+export function hydrateReleaseWithLyrics(release: Release): Release {
     if (!release.tracks?.length) return release;
 
     const lyricsForRelease = lyricsByRelease[release.slug];
@@ -28,7 +26,6 @@ export function hydrateReleaseWithLyrics(
                 lyrics: entry.lyrics,
                 linerNotes: entry.linerNotes,
             };
-
         }),
     };
 }
