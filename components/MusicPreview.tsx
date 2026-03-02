@@ -6,8 +6,9 @@ import {
     singleReleases,
     albumReleases,
     videoReleases,
-    Release,
 } from "@/lib/releases";
+import { Release,
+} from "@/lib/types";
 import MusicCard from "./MusicCard";
 import Link from "next/link";
 import { useMotionSection } from "./useMotionSection";

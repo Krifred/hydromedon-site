@@ -1,6 +1,8 @@
 import MusicTabs from "@/components/MusicTabs";
 import { singleReleases, albumReleases, videoReleases } from "@/lib/releases";
 
+export const dynamicParams = false;
+
 export default function MusicPage() {
     return (
         <main className="min-h-screen bg-black text-white">
@@ -13,12 +15,13 @@ export default function MusicPage() {
                     Singles, albums, and videos from the Biblical Graffiti universe.
                 </p>
 
-                {/* ⭐ UPDATED SPACING HERE */}
                 <div className="flex justify-center gap-10 mb-12">
-                    <MusicTabs singles={singleReleases()} albums={albumReleases()} videos={videoReleases()} />
+                    <MusicTabs
+                        singles={singleReleases()}
+                        albums={albumReleases()}
+                        videos={videoReleases()}
+                    />
                 </div>
-
-                {/* Your content below */}
             </section>
         </main>
     );

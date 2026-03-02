@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Release } from "@/lib/releases";
+import type { Release } from "@/lib/types";
 
 function typeToCategory(type: Release["type"]) {
     switch (type) {

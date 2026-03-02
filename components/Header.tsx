@@ -12,7 +12,7 @@ const navItems = [
         label: "About",
         children: [
             { label: "About Hydromedon", href: "/about#about" },
-            { label: "Behind the Name", href: "/about#behind-the-name" },
+            { label: "Recommended Sites", href: "/about/recommended-sites" }, // <-- NEW ITEM
             { label: "Statement of Faith", href: "/about#statement-of-faith" },
         ],
     },

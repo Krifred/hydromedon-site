@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { Release } from "@/lib/releases";
+import type { Release } from "@/lib/types";
 import MusicGrid from "./MusicGrid";
 
 type TabKey = "Singles" | "Albums" | "Videos";

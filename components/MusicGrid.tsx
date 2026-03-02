@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import FadeIn from "./FadeIn";
-import type { Release } from "@/lib/releases";
+import type { Release } from "@/lib/types";
 import MusicCard from "./MusicCard";
 import { useMotionSection } from "./useMotionSection";
 

@@ -2,7 +2,7 @@
 
 import FadeIn from "./FadeIn";
 import Link from "next/link";
-import type { Release } from "@/lib/releases";
+import type { Release } from "@/lib/types";
 import { useEffect, useMemo, useState } from "react";
 
 function formatReleaseDate(dateStr: string) {

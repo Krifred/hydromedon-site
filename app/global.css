@@ -42,6 +42,14 @@ body {
     text-rendering: optimizeLegibility;
 }
 
+/*body {
+    background-image: url('/noise.svg');
+    background-size: 512px 512px; 
+    background-repeat: repeat;
+    filter: brightness(1.25);
+}*/
+
+
 /* ============================================================
    Reduced motion: FadeIn utility
    ============================================================ */
@@ -191,7 +199,7 @@ body {
 
 /* Fine grain texture */
 .bg-noise {
-    background-image: url("/textures/noise.png");
+    background-image: url("/textures/noise.svg");
     background-repeat: repeat;
     opacity: 0.08;
 }

@@ -1,5 +1,4 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import FadeIn from "@/components/FadeIn";
 import { getReleaseBySlug, releases } from "@/lib/releases";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -49,10 +48,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: { slug: string };
 }) {
-    const { slug } = await params;
-    const release = getReleaseBySlug(slug);
+    const release = getReleaseBySlug(params.slug);
 
     return {
         title: release ? `${release.title} — Hydromedon` : "Hydromedon",
@@ -63,12 +61,12 @@ export async function generateMetadata({
    Page
    ========================= */
 
-export default async function SongPage({
+export default function AlbumPage({
     params,
 }: {
-    params: Promise<{ slug: string }>;
+    params: { slug: string };
 }) {
-    const { slug } = await params;
+    const { slug } = params;
     const release = getReleaseBySlug(slug);
 
     if (!release) notFound();
@@ -103,11 +101,13 @@ export default async function SongPage({
                         <div className="grid grid-cols-1 gap-8 items-start">
                             {/* Album Artwork + CTA */}
                             <div className="flex flex-col items-center">
-                                <img
-                                    src={release.cover}
-                                    alt={release.title}
-                                    className="w-[220px] h-[220px] object-contain rounded-xl border border-white/10 shadow-xl"
-                                />
+                                {release.cover && (
+                                    <img
+                                        src={release.cover}
+                                        alt={release.title}
+                                        className="w-[220px] h-[220px] object-contain rounded-xl border border-white/10 shadow-xl"
+                                    />
+                                )}
 
                                 {(() => {
                                     const cta = getPrimaryListenLink(release);
@@ -165,9 +165,7 @@ export default async function SongPage({
                             {/* Tracklist */}
                             {Array.isArray(release.tracks) && (
                                 <div className="text-left">
-                                    <div className="mb-4 text-sm text-gray-400">
-                                        Tracklist
-                                    </div>
+                                    <div className="mb-4 text-sm text-gray-400">Tracklist</div>
 
                                     <ol className="space-y-3">
                                         {release.tracks.map((track, idx) => {
@@ -237,45 +235,9 @@ export default async function SongPage({
                 )}
             </section>
 
-            {/* Lyrics */}
-            {Array.isArray(release.tracks) &&
-                release.tracks.some((t) => t.lyrics) && (
-                    <div className="mt-12 max-w-3xl mx-auto px-4">
-                        <FadeIn delayMs={200} durationMs={1400} y={16}>
-                            <h2 className="text-xl font-bold text-yellow-400 mb-4">
-                                Lyrics
-                            </h2>
-                        </FadeIn>
-
-                        <div className="space-y-10">
-                            {release.tracks
-                                .filter((t) => t.lyrics)
-                                .map((track, idx) => (
-                                    <FadeIn
-                                        key={`${track.title}-lyrics-${idx}`}
-                                        delayMs={320 + idx * 120}
-                                        durationMs={1100}
-                                        y={12}
-                                    >
-                                        <div className="rounded-lg border border-white/10 bg-black/30 px-5 py-4">
-                                            <div className="mb-3 text-sm font-semibold text-yellow-300 tracking-wide">
-                                                {track.title}
-                                            </div>
-
-                                            <pre className="whitespace-pre-wrap font-serif text-gray-200 leading-relaxed">
-                                                {track.lyrics}
-                                            </pre>
-                                        </div>
-                                    </FadeIn>
-                                ))}
-                        </div>
-
-                        <p className="text-xs text-gray-500 mt-12 mb-4 text-center opacity-70">
-                            © {new Date().getFullYear()} Hydromedon. All lyrics are
-                            copyrighted. All rights reserved.
-                        </p>
-                    </div>
-                )}
+            {/* ✅ Lyrics intentionally NOT rendered here.
+          Lyrics live exclusively at /lyrics/[slug]. */}
         </main>
     );
 }
+``
