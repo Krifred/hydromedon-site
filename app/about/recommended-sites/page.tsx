@@ -14,34 +14,22 @@ export default function RecommendedSitesPage() {
 
     const sites = [
         {
-            name: "The Bible Project",
+            name: "The Ancient Way",
             description:
-                "Short, beautifully animated explanations of Scripture, theology, and biblical themes.",
-            url: "https://bibleproject.com",
+                "The Ancient Way invites followers of Jesus to walk the ancient paths of Scripture, celebrating the seven appointed times God established to meet with His people.",
+            url: "https://www.theancientway.org",
         },
         {
-            name: "Sovereign Grace Music",
+            name: "Kavodah",
             description:
-                "Christ-centered worship music with rich theology and accessible arrangements.",
-            url: "https://sovereigngracemusic.org",
+                "Kavodah creates soulful Messianic electronic music inspired by Scripture, blending modern beats with worship rooted in the Psalms and lived faith.",
+            url: "https://www.kavodah.com/",
         },
         {
-            name: "Daily Grace Co.",
+            name: "Revayah Paper Co.",
             description:
-                "Bible studies, devotionals, and Christian lifestyle resources.",
-            url: "https://thedailygraceco.com",
-        },
-        {
-            name: "Seeds Family Worship",
-            description:
-                "Scripture memory songs for kids and families.",
-            url: "https://www.seedsfamilyworship.com",
-        },
-        {
-            name: "Worship Tutorials",
-            description:
-                "Guitar, vocal, and production resources for worship musicians.",
-            url: "https://worshiptutorials.com",
+                "A creative homeschool site providing thoughtfully crafted resources that help families teach Scripture, the biblical feasts, and God’s appointed times with beauty and intention.",
+            url: "https://www.revayah.co/",
         },
     ];
 
