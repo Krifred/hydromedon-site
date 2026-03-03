@@ -19,13 +19,12 @@ export default function AboutSection() {
                 <FadeIn delayMs={180}>
                     <p className="text-left leading-relaxed opacity-90 mb-6">
                         Hydromedon was born in the quiet places where words fail and music
-                        becomes the only language left. It is not a band, not a brand, and
-                        not a mission to persuade — it is a vessel for the cries, questions,
-                        and fragile hopes that rise from the deepest parts of the soul.
-                        These songs were written in seasons marked by loss, uncertainty, and
-                        the kind of silence that makes you wonder if God is still listening.
-                        Yet in those same seasons, faith became the thread that held
-                        everything together.
+                        becomes the only language left. It is not a band, not a brand — it is 
+                        a vessel for the cries, questions, and fragile hopes that rise from 
+                        the deepest parts of the soul. These songs were written in seasons 
+                        marked by loss, uncertainty, and the kind of silence that makes you 
+                        wonder if God is still listening. Yet in those same seasons, faith 
+                        became the thread that held everything together.
                     </p>
                 </FadeIn>
 
@@ -36,12 +35,13 @@ export default function AboutSection() {
                         unexpected grace that meets us in the depths. The music reflects
                         that tension: cinematic and intimate, ethereal and grounded, shaped
                         by the textures of dreampop, the reverence of sacred music, and the
-                        raw honesty of lament and prayer. Hydromedon does not exist to
-                        preach or proselytize. There is no agenda, no attempt to convince or
-                        correct. These songs are simply the overflow of lived experience —
-                        the nights of wrestling, the mornings of fragile hope, the moments
-                        when faith was held with trembling hands. They are confessions, not
-                        arguments; testimonies, not instructions.
+                        raw honesty of lament and prayer. In seasons of struggle and
+                        difficulty, Hydromedon discovered that their love for the One who
+                        accompanied them did not merely endure — it grew beyond anything
+                        they expected. These songs are the natural overflow of that lived
+                        experience — the nights of wrestling, the mornings of fragile hope,
+                        the moments when faith was held with trembling hands. They are
+                        confessions, not arguments; testimonies, not instructions.
                     </p>
                 </FadeIn>
 
