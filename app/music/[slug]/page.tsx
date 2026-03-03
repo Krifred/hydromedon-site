@@ -1,9 +1,10 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FadeIn from "@/components/FadeIn";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+
 import { getReleaseBySlug, releases } from "@/lib/releases";
 import { hydrateReleaseWithLyrics } from "@/lib/hydrateRelease";
-import { notFound } from "next/navigation";
-import Link from "next/link";
 
 /* =========================
    Next.js config
@@ -15,10 +16,12 @@ export async function generateStaticParams() {
     return releases.map((r) => ({ slug: r.slug }));
 }
 
-export async function generateMetadata(
-    { params }: { params: { slug: string } }
-) {
-    const { slug } = params;
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params; // ✅ unwrap params (Next 15+)
     const release = getReleaseBySlug(slug);
 
     return {
@@ -30,10 +33,12 @@ export async function generateMetadata(
    Page
    ========================= */
 
-export default async function SongPage(
-    { params }: { params: { slug: string } }
-) {
-    const { slug } = params;
+export default async function SongPage({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params; // ✅ unwrap params
     const release = getReleaseBySlug(slug);
 
     if (!release) notFound();

@@ -18,16 +18,10 @@ export default function Breadcrumbs({ release }: { release: Release }) {
     const category = typeToCategory(release.type);
 
     return (
-        <nav
-            aria-label="Breadcrumb"
-            className="mb-4 text-sm text-gray-400"
-        >
+        <nav aria-label="Breadcrumb" className="mb-4 text-sm text-gray-400">
             <ol className="flex items-center gap-2">
                 <li>
-                    <Link
-                        href="/music"
-                        className="hover:text-yellow-400 transition"
-                    >
+                    <Link href="/music" className="hover:text-yellow-400 transition">
                         Music
                     </Link>
                 </li>
@@ -35,10 +29,7 @@ export default function Breadcrumbs({ release }: { release: Release }) {
                 <li className="opacity-60">/</li>
 
                 <li>
-                    <Link
-                        href={category.href}
-                        className="hover:text-yellow-400 transition"
-                    >
+                    <Link href={category.href} className="hover:text-yellow-400 transition">
                         {category.label}
                     </Link>
                 </li>
