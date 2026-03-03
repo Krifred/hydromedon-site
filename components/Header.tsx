@@ -8,7 +8,8 @@ const navItems = [
     { label: "Home", href: "/" },
     { label: "Latest Release", href: "/#latest" },
     { label: "Music", href: "/music" },
-    {
+    { label: "Merch", href: "/merch" },
+   {
         label: "About",
         children: [
             { label: "About Hydromedon", href: "/about#about" },
@@ -240,7 +241,9 @@ export default function Header() {
                         const active =
                             item.href === "/"
                                 ? pathname === "/" && !activeAnchor // ✅ Home active when no section is active
-                                : item.href === pathname || isHomeHashActive(item.href);
+                                : item.href.startsWith("/#")
+                                ? isHomeHashActive(item.href)
+                                : pathname === item.href || pathname.startsWith(item.href + "/");
 
                         return (
                             <Link
@@ -342,7 +345,9 @@ export default function Header() {
                             const active =
                                 item.href === "/"
                                     ? pathname === "/" && !activeAnchor
-                                    : item.href === pathname || isHomeHashActive(item.href);
+                                    : item.href.startsWith("/#")
+                                    ? isHomeHashActive(item.href)
+                                    : pathname === item.href || pathname.startsWith(item.href + "/");
 
                             return (
                                 <Link
