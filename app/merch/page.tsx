@@ -11,6 +11,7 @@ import MerchDivider from "@/components/merch/MerchDivider";
 import ObjectsGrid from "@/components/merch/ObjectsGrid";
 import ArtworkGrid from "@/components/merch/ArtworkGrid";
 
+export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
     title: "Merch — Hydromedon",
     description: "Objects and artwork from Hydromedon.",
