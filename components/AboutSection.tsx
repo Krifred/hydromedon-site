@@ -32,16 +32,17 @@ export default function AboutSection() {
                     <p className="text-left leading-relaxed opacity-90 mb-6">
                         The name Hydromedon carries the imagery of storms and waters — the
                         overwhelming tides of life that threaten to pull us under, and the
-                        unexpected grace that meets us in the depths. The music reflects
-                        that tension: cinematic and intimate, ethereal and grounded, shaped
-                        by the textures of dreampop, the reverence of sacred music, and the
-                        raw honesty of lament and prayer. In seasons of struggle and
-                        difficulty, Hydromedon discovered that their love for the One who
-                        accompanied them did not merely endure — it grew beyond anything
-                        they expected. These songs are the natural overflow of that lived
-                        experience — the nights of wrestling, the mornings of fragile hope,
-                        the moments when faith was held with trembling hands. They are
-                        confessions, not arguments; testimonies, not instructions.
+                        unexpected grace that meets us in the depths. The music reflects that 
+                        tension: cinematic and intimate, ethereal and grounded, shaped by the 
+                        textures of dreampop, the reverence of sacred music, and the raw honesty 
+                        of lament and prayer. In seasons of struggle and difficulty, Hydromedon 
+                        discovered that their love for the One who accompanied them did not merely 
+                        endure—it was transformed, unfolding into unexpected victories and an 
+                        intimacy with the Lord deeper than anything they had known before. These 
+                        songs are the natural overflow of that lived experience — the nights of 
+                        wrestling, the mornings of fragile hope, the moments when faith was held 
+                        with trembling hands. They are confessions, not arguments; testimonies, 
+                        not instructions.
                     </p>
                 </FadeIn>
 
