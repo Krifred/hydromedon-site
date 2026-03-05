@@ -8,7 +8,7 @@ export default function MerchIntro() {
             <p className="font-cinzel text-xs tracking-[0.3em] text-yellow-500/60 uppercase mb-4">
                 Hydromedon
             </p>
-            <h1 className="font-cinzel text-4xl sm:text-5xl text-white/90 tracking-tight mb-6">
+            <h1 className="text-4xl font-bold text-yellow-400 mb-4">
                 Objects &amp; Artwork
             </h1>
             <p className="text-sm text-white/50 leading-relaxed max-w-prose mx-auto">

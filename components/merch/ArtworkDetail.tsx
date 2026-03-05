@@ -1,6 +1,6 @@
 /* ==========================================================
-   ArtworkDetail — full product detail for an artwork print
-   Client component: manages selected variant state
+   ArtworkDetail — artwork detail view (Gumroad-powered)
+   Client component: manages selected size state
    ========================================================== */
 
 "use client";
@@ -9,27 +9,13 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import VariantSelector from "./VariantSelector";
-import PurchaseButton from "./PurchaseButton";
-import PriceTag from "./PriceTag";
-import type { Product } from "@/lib/shopify/types";
+import GumroadButton from "./GumroadButton";
+import type { GumroadItem } from "@/lib/gumroad/catalog";
 
-export default function ArtworkDetail({ product }: { product: Product }) {
-    // Default to the first available variant
-    const defaultVariant =
-        product.variants.find((v) => v.availableForSale) ??
-        product.variants[0] ??
-        null;
+const PRINT_SIZES = ["12×12", "18×18"];
 
-    const [selectedId, setSelectedId] = useState<string | null>(
-        defaultVariant?.id ?? null
-    );
-
-    const selectedVariant =
-        product.variants.find((v) => v.id === selectedId) ?? null;
-
-    const image = product.featuredImage;
-    const images = product.images ?? [];
-    const primaryImage = image ?? images[0] ?? null;
+export default function ArtworkDetail({ item }: { item: GumroadItem }) {
+    const [selectedSize, setSelectedSize] = useState(PRINT_SIZES[0]);
 
     return (
         <div className="max-w-5xl mx-auto px-6 py-14">
@@ -50,22 +36,14 @@ export default function ArtworkDetail({ product }: { product: Product }) {
                                border border-white/8 bg-black/20
                                shadow-[0_0_60px_rgba(212,175,55,0.08)]"
                 >
-                    {primaryImage ? (
-                        <Image
-                            src={primaryImage.url}
-                            alt={primaryImage.altText ?? product.title}
-                            fill
-                            priority
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover"
-                        />
-                    ) : (
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-white/20 text-xs tracking-widest uppercase">
-                                No image
-                            </span>
-                        </div>
-                    )}
+                    <Image
+                        src={item.imageSrc}
+                        alt={item.title}
+                        fill
+                        priority
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover"
+                    />
                 </div>
 
                 {/* ---- Details ---- */}
@@ -76,33 +54,33 @@ export default function ArtworkDetail({ product }: { product: Product }) {
                             Artwork
                         </p>
                         <h1 className="font-cinzel text-3xl sm:text-4xl text-white/90 tracking-tight leading-tight">
-                            {product.title}
+                            {item.title}
                         </h1>
                     </div>
 
                     {/* Price */}
-                    {selectedVariant ? (
-                        <div>
-                            <PriceTag price={selectedVariant.price} />
-                        </div>
-                    ) : null}
+                    {item.priceText && (
+                        <span className="text-sm text-yellow-400/80 font-light tracking-wide">
+                            {item.priceText}
+                        </span>
+                    )}
 
                     {/* Description */}
-                    {product.description && (
+                    {item.description && (
                         <p className="text-sm text-white/50 leading-relaxed">
-                            {product.description}
+                            {item.description}
                         </p>
                     )}
 
-                    {/* Variant selector */}
+                    {/* Size selector (UI only — all sizes link to the same Gumroad product) */}
                     <VariantSelector
-                        variants={product.variants}
-                        selectedId={selectedId}
-                        onChange={setSelectedId}
+                        sizes={PRINT_SIZES}
+                        selected={selectedSize}
+                        onChange={setSelectedSize}
                     />
 
-                    {/* Purchase */}
-                    <PurchaseButton variantId={selectedId} />
+                    {/* Purchase via Gumroad overlay */}
+                    <GumroadButton href={item.gumroadUrl} />
 
                     {/* Fine print */}
                     <p className="text-xs text-white/25 leading-relaxed pt-2">
@@ -114,3 +92,4 @@ export default function ArtworkDetail({ product }: { product: Product }) {
         </div>
     );
 }
+

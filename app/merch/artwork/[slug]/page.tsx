@@ -1,11 +1,11 @@
 /* ==========================================================
    app/merch/artwork/[slug]/page.tsx — Artwork detail
-   Server Component — fetches product by handle
+   Static Server Component — looks up artwork from catalog
    ========================================================== */
 
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getProductByHandle } from "@/lib/shopify/cache";
+import { getArtworkBySlug } from "@/lib/gumroad/catalog";
 import ArtworkDetail from "@/components/merch/ArtworkDetail";
 
 interface Props {
@@ -14,39 +14,30 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { slug } = await params;
-    const product = await getProductByHandle(slug);
+    const item = getArtworkBySlug(slug);
 
-    if (!product) {
+    if (!item) {
         return { title: "Artwork — Hydromedon" };
     }
 
     return {
-        title: `${product.title} — Hydromedon`,
-        description: product.description || "Original artwork by Hydromedon.",
-        openGraph: product.featuredImage
-            ? {
-                  images: [
-                      {
-                          url: product.featuredImage.url,
-                          width: product.featuredImage.width ?? undefined,
-                          height: product.featuredImage.height ?? undefined,
-                          alt: product.featuredImage.altText ?? product.title,
-                      },
-                  ],
-              }
-            : undefined,
+        title: `${item.title} — Hydromedon`,
+        description: item.description || "Original artwork by Hydromedon.",
+        openGraph: {
+            images: [{ url: item.imageSrc, alt: item.title }],
+        },
     };
 }
 
 export default async function ArtworkDetailPage({ params }: Props) {
     const { slug } = await params;
-    const product = await getProductByHandle(slug);
+    const item = getArtworkBySlug(slug);
 
-    if (!product) notFound();
+    if (!item) notFound();
 
     return (
         <main className="min-h-screen">
-            <ArtworkDetail product={product} />
+            <ArtworkDetail item={item} />
         </main>
     );
 }

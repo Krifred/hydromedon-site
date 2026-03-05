@@ -1,25 +1,25 @@
 /* ==========================================================
-   ArtworkGrid — grid for Artwork items
+   SheetsGrid — grid for Music Sheet items
    ========================================================== */
 
-import ArtworkCard from "./ArtworkCard";
+import SheetCard from "./SheetCard";
 import EmptyState from "./EmptyState";
 import type { GumroadItem } from "@/lib/gumroad/catalog";
 
-interface ArtworkGridProps {
+interface SheetsGridProps {
     items: GumroadItem[];
 }
 
-export default function ArtworkGrid({ items }: ArtworkGridProps) {
+export default function SheetsGrid({ items }: SheetsGridProps) {
     if (items.length === 0) {
-        return <EmptyState label="No artwork available yet" />;
+        return <EmptyState label="No sheet music available yet" />;
     }
 
     return (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 p-0 m-0 list-none">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-5 p-0 m-0 list-none">
             {items.map((item) => (
                 <li key={item.slug}>
-                    <ArtworkCard item={item} />
+                    <SheetCard item={item} />
                 </li>
             ))}
         </ul>

@@ -1,27 +1,27 @@
 /* ==========================================================
-   ProductCard — minimal card for an Object item
-   Links externally to the Gumroad product page.
+   SheetCard — card for a sheet music item
+   Shows image, title, one-line description, and a Gumroad
+   purchase button inline (no separate detail page).
    ========================================================== */
 
 import Image from "next/image";
+import GumroadButton from "./GumroadButton";
 import type { GumroadItem } from "@/lib/gumroad/catalog";
+import ItemLabel from "./ItemLabel";
 
-interface ProductCardProps {
+interface SheetCardProps {
     item: GumroadItem;
 }
 
-export default function ProductCard({ item }: ProductCardProps) {
+export default function SheetCard({ item }: SheetCardProps) {
     return (
-        <a
-            href={item.gumroadUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block rounded-sm overflow-hidden border border-white/8
+        <div
+            className="group rounded-sm overflow-hidden border border-white/8
                        bg-white/[0.03] transition-all duration-300 ease-out
                        hover:border-yellow-500/30
                        hover:shadow-[0_0_32px_rgba(212,175,55,0.22)]"
         >
-            {/* Image */}
+            {/* Cover image */}
             <div className="relative aspect-square bg-black/20 overflow-hidden">
                 <Image
                     src={item.imageSrc}
@@ -31,19 +31,30 @@ export default function ProductCard({ item }: ProductCardProps) {
                     className="object-cover transition-transform duration-500
                                group-hover:scale-[1.03]"
                 />
+                <ItemLabel
+                    label={item.slug.includes("song-bundle") ? "Song Bundle" : "Lead Sheet"}
+                />
             </div>
 
-            {/* Meta */}
-            <div className="px-4 py-4">
-                <p className="text-sm text-white/75 leading-snug tracking-wide mb-1">
-                    {item.title}
-                </p>
+            {/* Meta + purchase */}
+            <div className="px-4 py-5 flex flex-col gap-3">
+                <div>
+                    <p className="text-sm text-white/75 leading-snug tracking-wide">
+                        {item.title}
+                    </p>
+                    <p className="mt-1 text-xs text-white/40 leading-snug line-clamp-1">
+                        {item.description}
+                    </p>
+                </div>
+
                 {item.priceText && (
                     <span className="text-sm text-yellow-400/80 font-light tracking-wide">
                         {item.priceText}
                     </span>
                 )}
+
+                <GumroadButton href={item.gumroadUrl} label="Purchase" />
             </div>
-        </a>
+        </div>
     );
 }

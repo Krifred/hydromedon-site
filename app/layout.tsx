@@ -10,7 +10,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className="relative">
+            <body className="relative min-h-screen overflow-x-hidden">
                 <SmallLogo />   {/* <-- This handles the conditional display */}
 
                 <AtmosphereBackground />

@@ -19,7 +19,7 @@ export default function MerchSection({
         <section className="max-w-6xl mx-auto px-6 py-14">
             {/* Section heading */}
             <div className="mb-10">
-                <h2 className="font-cinzel text-2xl sm:text-3xl text-white/85 tracking-wide">
+                <h2 className="text-2xl sm:text-3xl font-bold text-yellow-400">
                     {title}
                 </h2>
                 {subtitle && (
