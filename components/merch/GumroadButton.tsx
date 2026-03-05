@@ -15,11 +15,11 @@ interface GumroadButtonProps {
 
 export default function GumroadButton({
     href,
-    label = "Purchase",
+    label = "Acquire",
 }: GumroadButtonProps) {
     return (
         <>
-            {/* next/script deduplicates by id  safe to render in multiple instances */}
+            {/* next/script deduplicates by id — safe to render in multiple instances */}
             <Script
                 id="gumroad-js"
                 src="https://gumroad.com/js/gumroad.js"
@@ -32,7 +32,13 @@ export default function GumroadButton({
                 className={[
                     "gumroad-button",
                     "inline-flex items-center justify-center",
-                    "px-8 py-3 text-sm tracking-widest uppercase font-light",
+
+                    // ✅ Mobile-first: smaller, quieter button
+                    "px-4 py-2 text-xs font-medium tracking-widest uppercase",
+
+                    // ✅ Tablet & up: restore original sizing
+                    "sm:px-8 sm:py-3 sm:text-sm sm:font-light",
+
                     "border border-yellow-500/50 text-yellow-400 rounded-sm",
                     "transition-all duration-300",
                     "hover:bg-yellow-500/10 hover:border-yellow-400/70",
