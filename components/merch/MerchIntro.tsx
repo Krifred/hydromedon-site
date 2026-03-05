@@ -5,9 +5,6 @@
 export default function MerchIntro() {
     return (
         <section className="max-w-4xl mx-auto px-6 pt-24 pb-12 text-center">
-            <p className="font-cinzel text-xs tracking-[0.3em] text-yellow-500/60 uppercase mb-4">
-                Hydromedon
-            </p>
             <h1 className="text-4xl font-bold text-yellow-400 mb-4">
                 Objects &amp; Artwork
             </h1>
