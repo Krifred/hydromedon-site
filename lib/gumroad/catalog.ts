@@ -15,20 +15,20 @@ export type FourthwallItem = {
 export const objects: FourthwallItem[] = [
   {
     kind: "object",
-    slug: "sigil-tee",
-    title: "Hydromedon Sigil Tee",
+    slug: "tees",
+    title: "Tees",
     description: "A quiet garment bearing the mark of the Hydromedon project.",
-    imageSrc: "/merch/sigil-tee.jpg",
-    storeUrl: "https://store.hydromedon.com/sigil-tee",
+    imageSrc: "/brand/merch/tee-front-full.png",
+    storeUrl: "https://store.hydromedon.com/collections/tees",
     priceText: "",
   },
   {
     kind: "object",
-    slug: "lament-hoodie",
-    title: "Lament Hoodie",
+    slug: "hoodies",
+    title: "Hoodies",
     description: "A weightier piece, created for colder days and quieter seasons.",
-    imageSrc: "/merch/lament-hoodie.jpg",
-    storeUrl: "https://store.hydromedon.com/lament-hoodie",
+    imageSrc: "/brand/merch/hoodie-front-full.png",
+    storeUrl: "https://store.hydromedon.com/collections/hoodies",
     priceText: "",
   },
 ];
