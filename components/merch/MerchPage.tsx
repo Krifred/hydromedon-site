@@ -3,10 +3,10 @@ import MerchSection from "./MerchSection";
 import MerchDivider from "./MerchDivider";
 import ObjectsGrid from "./ObjectsGrid";
 import ArtworkGrid from "./ArtworkGrid";
-import type { GumroadItem } from "@/lib/gumroad/catalog";
+import type { GumroadItem, FourthwallItem } from "@/lib/gumroad/catalog";
 
 interface MerchPageProps {
-    objects: GumroadItem[];
+    objects: FourthwallItem[];
     artworks: GumroadItem[];
 }
 

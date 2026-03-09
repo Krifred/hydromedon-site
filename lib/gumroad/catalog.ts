@@ -1,22 +1,25 @@
 // lib/gumroad/catalog.ts
-export type GumroadItem = {
+
+// ── Fourthwall (physical objects) ────────────────────────────────────────────
+export type FourthwallItem = {
   slug: string;
   title: string;
   description: string;
-  imageSrc: string;      // local path in /public or remote URL
-  gumroadUrl: string;    // e.g. https://gum.co/XXXXX or https://hydromedon.gumroad.com/l/XXXXX
-  priceText?: string;    // optional display text e.g. "$38"
-  kind: "object" | "artwork" | "sheetmusic";
+  imageSrc: string;
+  /** Full URL to the product on store.hydromedon.com */
+  storeUrl: string;
+  priceText?: string;
+  kind: "object";
 };
 
-export const objects: GumroadItem[] = [
+export const objects: FourthwallItem[] = [
   {
     kind: "object",
     slug: "sigil-tee",
     title: "Hydromedon Sigil Tee",
     description: "A quiet garment bearing the mark of the Hydromedon project.",
     imageSrc: "/merch/sigil-tee.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME",
+    storeUrl: "https://store.hydromedon.com/sigil-tee",
     priceText: "",
   },
   {
@@ -25,10 +28,21 @@ export const objects: GumroadItem[] = [
     title: "Lament Hoodie",
     description: "A weightier piece, created for colder days and quieter seasons.",
     imageSrc: "/merch/lament-hoodie.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME",
+    storeUrl: "https://store.hydromedon.com/lament-hoodie",
     priceText: "",
   },
 ];
+
+// ── Gumroad (digital items) ───────────────────────────────────────────────────
+export type GumroadItem = {
+  slug: string;
+  title: string;
+  description: string;
+  imageSrc: string;
+  gumroadUrl: string;
+  priceText?: string;
+  kind: "artwork" | "sheetmusic";
+};
 
 export const artworks: GumroadItem[] = [
   {

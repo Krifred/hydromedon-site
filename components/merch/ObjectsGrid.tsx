@@ -4,10 +4,10 @@
 
 import ProductCard from "./ProductCard";
 import EmptyState from "./EmptyState";
-import type { GumroadItem } from "@/lib/gumroad/catalog";
+import type { FourthwallItem } from "@/lib/gumroad/catalog";
 
 interface ObjectsGridProps {
-    items: GumroadItem[];
+    items: FourthwallItem[];
 }
 
 export default function ObjectsGrid({ items }: ObjectsGridProps) {

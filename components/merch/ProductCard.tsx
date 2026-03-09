@@ -1,19 +1,19 @@
 /* ==========================================================
    ProductCard — minimal card for an Object item
-   Links externally to the Gumroad product page.
+   Links externally to store.hydromedon.com (Fourthwall).
    ========================================================== */
 
 import Image from "next/image";
-import type { GumroadItem } from "@/lib/gumroad/catalog";
+import type { FourthwallItem } from "@/lib/gumroad/catalog";
 
 interface ProductCardProps {
-    item: GumroadItem;
+    item: FourthwallItem;
 }
 
 export default function ProductCard({ item }: ProductCardProps) {
     return (
         <a
-            href={item.gumroadUrl}
+            href={item.storeUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="group block rounded-sm overflow-hidden border border-white/8

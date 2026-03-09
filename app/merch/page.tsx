@@ -23,7 +23,7 @@ export default function MerchPage() {
             <MerchIntro />
 
             <MerchSection
-                title="Objects"
+                title="Artifacts"
                 subtitle="A small collection of items that carry the identity of the project."
             >
                 <ObjectsGrid items={objects} />
