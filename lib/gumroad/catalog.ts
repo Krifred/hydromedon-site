@@ -69,176 +69,102 @@ export function getObjectBySlug(slug: string) {
 // Downloadable sheet music / lead sheets for individual tracks.
 
 export const sheets: GumroadItem[] = [
-  // ====== Album Bundle (worship-ready) ======
+  // 1) Biblical Graffiti (Album)
   {
     kind: "sheetmusic",
-    slug: "biblical-graffiti-album-bundle",
-    title: "Biblical Graffiti — Worship‑Ready Sheet Music Bundle",
+    slug: "biblical-graffiti-resources",
+    title: "Biblical Graffiti — Worship\u2011Ready Sheet Music Bundle",
     description: "All songs + all parts in consistent formatting — built for rehearsal and service.",
     imageSrc: "/covers/biblical-graffiti.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_ALBUM_BUNDLE",
+    gumroadUrl: "https://store.hydromedon.com/collections/collection-biblical-graffiti-resources",
     priceText: "",
   },
 
-  // ====== Per-song offerings ======
-
-  // 1) Your Peace Surpasses All Understanding
+  // 2) Your Peace Surpasses All Understanding
   {
     kind: "sheetmusic",
-    slug: "your-peace-lead-sheet",
+    slug: "your-peace-resources",
     title: "Your Peace Surpasses All Understanding",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/your-peace-surpasses-all-understanding.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/zbljst",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "your-peace-song-bundle",
-    title: "Your Peace Surpasses All Understanding",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/your-peace-surpasses-all-understanding.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/weqzl",
+    gumroadUrl: "https://store.hydromedon.com/collections/your-peace-surpasses-all-understanding-resources",
     priceText: "",
   },
 
-  // 2) Under Your Wings
+  // 3) Under Your Wings
   {
     kind: "sheetmusic",
-    slug: "under-your-wings-lead-sheet",
+    slug: "under-your-wings-resources",
     title: "Under Your Wings",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/under-your-wings.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/gwoxeu",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "under-your-wings-song-bundle",
-    title: "Under Your Wings",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/under-your-wings.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/rhitbt",
+    gumroadUrl: "https://store.hydromedon.com/collections/under-your-wings-resources",
     priceText: "",
   },
 
-  // 3) The Lord Bless You and Keep You
+  // 4) The Lord Bless You and Keep You
   {
     kind: "sheetmusic",
-    slug: "the-lord-bless-you-and-keep-you-lead-sheet",
+    slug: "the-lord-bless-you-and-keep-you-resources",
     title: "The Lord Bless You and Keep You",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/the-lord-bless-you.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/ginpat",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "the-lord-bless-you-and-keep-you-song-bundle",
-    title: "The Lord Bless You and Keep You",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/the-lord-bless-you.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/rdcscy",
+    gumroadUrl: "https://store.hydromedon.com/collections/the-lord-bless-you-and-keep-you-resources",
     priceText: "",
   },
 
-  // 4) Make a Way
+  // 5) Make a Way
   {
     kind: "sheetmusic",
-    slug: "make-a-way-lead-sheet",
+    slug: "make-a-way-resources",
     title: "Make a Way",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/make-a-way.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_MAKE_A_WAY_LEAD",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "make-a-way-song-bundle",
-    title: "Make a Way",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/make-a-way.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_MAKE_A_WAY_BUNDLE",
+    gumroadUrl: "https://store.hydromedon.com/collections/make-a-way-resources",
     priceText: "",
   },
 
-  // 5) Change Me, Mold Me, Make Me New
+  // 6) Change Me, Mold Me, Make Me New
   {
     kind: "sheetmusic",
-    slug: "change-me-mold-me-make-me-new-lead-sheet",
+    slug: "change-me-mold-me-make-me-new-resources",
     title: "Change Me, Mold Me, Make Me New",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/change-me-mold-me.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_CHANGE_ME_LEAD",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "change-me-mold-me-make-me-new-song-bundle",
-    title: "Change Me, Mold Me, Make Me New",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/change-me-mold-me.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_CHANGE_ME_BUNDLE",
+    gumroadUrl: "https://store.hydromedon.com/collections/change-me-mold-me-make-me-new-resources",
     priceText: "",
   },
 
-  // 6) Armor of Light
+  // 7) Armor of Light
   {
     kind: "sheetmusic",
-    slug: "armor-of-light-lead-sheet",
+    slug: "armor-of-light-resources",
     title: "Armor of Light",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/armor-of-light.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/thuiy",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "armor-of-light-song-bundle",
-    title: "Armor of Light",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/armor-of-light.jpg",
-    gumroadUrl: "https://hydromedon.gumroad.com/l/dnejt",
+    gumroadUrl: "https://store.hydromedon.com/collections/armor-of-light-resources",
     priceText: "",
   },
 
-  // 7) Beauty for Ashes
+  // 8) Beauty for Ashes
   {
     kind: "sheetmusic",
-    slug: "beauty-for-ashes-lead-sheet",
+    slug: "beauty-for-ashes-resources",
     title: "Beauty for Ashes",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/beauty-for-ashes.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_BEAUTY_LEAD",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "beauty-for-ashes-song-bundle",
-    title: "Beauty for Ashes",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/beauty-for-ashes.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_BEAUTY_BUNDLE",
+    gumroadUrl: "https://store.hydromedon.com/collections/beauty-for-ashes-resources",
     priceText: "",
   },
 
-  // 8) Arise, O Lord
+  // 9) Arise, O Lord
   {
     kind: "sheetmusic",
-    slug: "arise-o-lord-lead-sheet",
+    slug: "arise-o-lord-resources",
     title: "Arise, O Lord",
-    description: "Melody, lyrics, and chords — a simple entry point for teams.",
+    description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/arise-o-lord.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_ARISE_LEAD",
-    priceText: "",
-  },
-  {
-    kind: "sheetmusic",
-    slug: "arise-o-lord-song-bundle",
-    title: "Arise, O Lord",
-    description: "Full score + individual parts + key & tempo reference.",
-    imageSrc: "/covers/arise-o-lord.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME_ARISE_BUNDLE",
+    gumroadUrl: "https://store.hydromedon.com/collections/arise-o-lord-resources",
     priceText: "",
   },
 ];

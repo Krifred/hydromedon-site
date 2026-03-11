@@ -16,7 +16,7 @@ export default function ArtworkGrid({ items }: ArtworkGridProps) {
     }
 
     return (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-5 p-0 m-0 list-none">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-5 p-0 m-0 list-none">
             {items.map((item) => (
                 <li key={item.slug}>
                     <ArtworkCard item={item} />

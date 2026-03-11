@@ -5,9 +5,7 @@
    ========================================================== */
 
 import Image from "next/image";
-import GumroadButton from "./GumroadButton";
 import type { GumroadItem } from "@/lib/gumroad/catalog";
-import ItemLabel from "./ItemLabel";
 
 interface SheetCardProps {
     item: GumroadItem;
@@ -31,9 +29,7 @@ export default function SheetCard({ item }: SheetCardProps) {
                     className="object-cover transition-transform duration-500
                                group-hover:scale-[1.03]"
                 />
-                <ItemLabel
-                    label={item.slug.includes("song-bundle") ? "Song Bundle" : "Lead Sheet"}
-                />
+
             </div>
 
             {/* Meta + purchase */}
@@ -53,7 +49,16 @@ export default function SheetCard({ item }: SheetCardProps) {
                     </span>
                 )}
 
-                <GumroadButton href={item.gumroadUrl} label="Purchase" />
+                <a
+                    href={item.gumroadUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 px-7 py-2 border border-yellow-500 text-yellow-500
+                               rounded hover:bg-yellow-500 hover:text-black
+                               transition font-semibold inline-flex items-center justify-center text-sm"
+                >
+                    Purchase
+                </a>
             </div>
         </div>
     );

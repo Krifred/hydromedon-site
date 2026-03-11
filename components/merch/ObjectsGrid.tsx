@@ -16,12 +16,12 @@ export default function ObjectsGrid({ items }: ObjectsGridProps) {
     }
 
     return (
-        <div className="flex flex-wrap gap-5">
+        <ul className="grid grid-cols-2 sm:grid-cols-3 gap-5 p-0 m-0 list-none">
             {items.map((item) => (
-                <div key={item.slug} className="w-56">
+                <li key={item.slug}>
                     <ProductCard item={item} />
-                </div>
+                </li>
             ))}
-        </div>
+        </ul>
     );
 }
