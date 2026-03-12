@@ -41,25 +41,8 @@ export type GumroadItem = {
   imageSrc: string;
   gumroadUrl: string;
   priceText?: string;
-  kind: "artwork" | "sheetmusic";
+  kind: "sheetmusic";
 };
-
-export const artworks: GumroadItem[] = [
-  {
-    kind: "artwork",
-    slug: "biblical-graffiti",
-    title: "Biblical Graffiti — Artwork Print",
-    description: "Original artwork created for Biblical Graffiti. A visual companion to the music.",
-    imageSrc: "/artwork/biblical-graffiti.jpg",
-    gumroadUrl: "https://gum.co/REPLACE_ME",
-    priceText: "",
-  },
-  // Add future singles/albums here; archive grows permanently.
-];
-
-export function getArtworkBySlug(slug: string) {
-  return artworks.find(a => a.slug === slug) ?? null;
-}
 
 export function getObjectBySlug(slug: string) {
   return objects.find(o => o.slug === slug) ?? null;

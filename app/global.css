@@ -1,6 +1,16 @@
 @import "tailwindcss";
 
 /* ============================================================
+   Theme extensions
+   ============================================================ */
+
+@theme {
+    /* Light backgrounds for dark product images */
+    --color-light-artifact: #f5f2ec;
+    --color-light-artifact2: #e8e4d9;
+}
+
+/* ============================================================
    Root theme variables
    ============================================================ */
 
