@@ -1,0 +1,56 @@
+﻿/* ==========================================================
+   MerchCard — card for a Fourthwall collection
+   ========================================================== */
+
+import type { FWCollection } from "@/lib/fourthwall";
+
+interface MerchCardProps {
+    collection: FWCollection;
+}
+
+export default function MerchCard({ collection }: MerchCardProps) {
+    return (
+        <div
+            className="group rounded-sm overflow-hidden border border-white/8
+                       bg-white/[0.03] transition-all duration-300 ease-out
+                       hover:border-yellow-500/30
+                       hover:shadow-[0_0_32px_rgba(212,175,55,0.22)]"
+        >
+            {/* Cover image — fixed warm-grey background */}
+            <div
+                className="relative aspect-square overflow-hidden"
+                style={{ backgroundColor: "#D9D9D9" }}
+            >
+                {collection.primaryImage ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                        src={collection.primaryImage.url}
+                        alt={collection.name}
+                        className="absolute inset-0 w-full h-full object-contain p-2
+                                   transition-transform duration-500 group-hover:scale-[1.03]"
+                    />
+                ) : (
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/[0.02]" />
+                )}
+            </div>
+
+            {/* Meta + button */}
+            <div className="px-4 py-5 flex flex-col gap-3">
+                <p className="text-sm text-white/75 leading-snug tracking-wide">
+                    {collection.name}
+                </p>
+
+                <a
+                    href={collection.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="h-11 px-7 py-2 border border-yellow-500 text-yellow-500
+                               rounded hover:bg-yellow-500 hover:text-black
+                               transition font-semibold inline-flex items-center justify-center text-sm"
+                >
+                    Explore Collection
+                </a>
+            </div>
+        </div>
+    );
+}
