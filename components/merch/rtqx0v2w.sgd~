@@ -1,5 +1,5 @@
 /* ==========================================================
-   MerchIntro - cinematic header for the merch page
+   MerchIntro — top-of-page header for the merch section
    ========================================================== */
 
 import FadeIn from "@/components/FadeIn";

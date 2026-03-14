@@ -13,7 +13,7 @@ export const releases: Release[] = [
         type: "Video",
         releaseDate: "2025-12-13",
         year: "2025",
-        cover: "/covers/armor-of-light.jpg",
+        cover: "/covers/armor-of-light-video.jpg",
         hyperfollow: undefined,
         spotify: undefined,
         youtube: "https://youtu.be/nlaqCtY2a-c?si=nvx5Kadt32XLhb68",

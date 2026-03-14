@@ -1,0 +1,63 @@
+/* ==========================================================
+   app/merch/page.tsx — Merch index
+   Artifacts section fetches live Fourthwall collections from
+   lib/fourthwall.ts, filtering to those tagged "artifacts".
+   Music Sheets section uses the local catalog — untouched.
+   ========================================================== */
+
+import type { Metadata } from "next";
+import { getCollections } from "@/lib/fourthwall";
+import type { FWCollection } from "@/lib/fourthwall";
+import { sheets } from "@/lib/gumroad/catalog";
+import MerchIntro from "@/components/merch/MerchIntro";
+import MerchSection from "@/components/merch/MerchSection";
+import MerchDivider from "@/components/merch/MerchDivider";
+import MerchGrid from "@/components/merch/MerchGrid";
+import SheetsGrid from "@/components/merch/SheetsGrid";
+
+export const metadata: Metadata = {
+    title: "Merch — Hydromedon",
+    description: "Merch from Hydromedon.",
+};
+
+export default async function MerchPage() {
+    let artifacts: FWCollection[] = [];
+    try {
+        const collections = await getCollections();
+        // Filter to collections tagged "artifacts".
+        // lib/fourthwall.ts assigns tags: ["artifacts"] to every non-excluded
+        // collection until the Storefront API exposes real collection tags.
+        artifacts = collections.filter((c) => c.tags.includes("artifacts"));
+    } catch (err) {
+        console.error("[MerchPage] Fourthwall API error:", err);
+    }
+
+    return (
+        <main className="min-h-screen">
+            <MerchIntro />
+
+            <MerchSection
+                title="Artifacts"
+                subtitle="A small collection of items that carry the identity of the project."
+            >
+                <MerchGrid
+                    collections={artifacts}
+                    emptyLabel="No artifacts available yet."
+                />
+            </MerchSection>
+
+            <MerchDivider />
+
+            {/* Music Sheets — unchanged */}
+            <MerchSection
+                title="Music Sheets"
+                subtitle="Lead sheets and transcriptions for individual tracks."
+            >
+                <SheetsGrid items={sheets} />
+            </MerchSection>
+        </main>
+    );
+}
+
+
+

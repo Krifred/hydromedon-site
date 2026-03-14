@@ -16,7 +16,7 @@ export default function SheetCard({ item }: SheetCardProps) {
         <div
             className="group rounded-sm overflow-hidden border border-white/8
                        bg-white/[0.03] transition-all duration-300 ease-out
-                       hover:border-yellow-500/20 active:opacity-90
+                       hover:border-yellow-500/20
                        hover:shadow-[0_0_28px_rgba(212,175,55,0.10)]"
         >
             {/* Cover image */}
@@ -33,7 +33,7 @@ export default function SheetCard({ item }: SheetCardProps) {
             </div>
 
             {/* Meta + purchase */}
-            <div className="px-4 py-6 flex flex-col gap-3">
+            <div className="px-4 py-5 flex flex-col gap-3">
                 <div>
                     <p className="text-sm font-medium tracking-[0.05em] text-white/80 leading-snug">
                         {item.title}
@@ -53,9 +53,9 @@ export default function SheetCard({ item }: SheetCardProps) {
                     href={item.gumroadUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="h-12 px-6 py-2 border border-yellow-500/40 text-yellow-400/60
+                    className="h-11 px-6 py-2 border border-yellow-500/40 text-yellow-400/60
                                rounded hover:border-yellow-500/70 hover:text-yellow-400/90
-                               active:opacity-75 transition-colors duration-300 font-medium
+                               transition-colors duration-300 font-medium
                                inline-flex items-center justify-center text-sm"
                 >
                     Open the Bundle
