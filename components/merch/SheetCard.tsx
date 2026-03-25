@@ -1,7 +1,7 @@
 /* ==========================================================
    SheetCard — card for a sheet music item
-   Shows image, title, one-line description, and a Gumroad
-   purchase button inline (no separate detail page).
+   Shows image, title, description, and a Gumroad purchase
+   button. The entire card is clickable.
    ========================================================== */
 
 import Image from "next/image";
@@ -13,24 +13,23 @@ interface SheetCardProps {
 
 export default function SheetCard({ item }: SheetCardProps) {
     return (
-        <div
-            className="group rounded-sm overflow-hidden border border-white/8
+        <a
+            href={item.gumroadUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block rounded-sm overflow-hidden border border-white/8
                        bg-white/[0.03] transition-all duration-300 ease-out
-                       hover:border-yellow-500/20 active:opacity-90
-                       hover:shadow-[0_0_28px_rgba(212,175,55,0.10)]"
+                       hover:-translate-y-0.5 active:opacity-90
+                       hover:border-yellow-500/30
+                       hover:shadow-[0_8px_24px_rgba(0,0,0,0.12),0_0_32px_rgba(212,175,55,0.22)]"
         >
-            {/* Cover image */}
-            <div className="relative aspect-square bg-black/20 overflow-hidden">
-                <Image
-                    src={item.imageSrc}
-                    alt={item.title}
-                    fill
-                    sizes="(max-width: 768px) 50vw, 33vw"
-                    className="object-cover opacity-[0.97] group-hover:opacity-100
-                               transition-opacity duration-500"
-                />
-
-            </div>
+            <Image
+                src={item.imageSrc}
+                alt={item.title}
+                width={800}
+                height={800}
+                className="w-full h-auto rounded-lg"
+            />
 
             {/* Meta + purchase */}
             <div className="px-4 py-6 flex flex-col gap-3">
@@ -38,9 +37,11 @@ export default function SheetCard({ item }: SheetCardProps) {
                     <p className="text-sm font-medium tracking-[0.05em] text-white/80 leading-snug">
                         {item.title}
                     </p>
-                    <p className="mt-1.5 text-xs text-white/30 leading-relaxed">
-                        Built for worship and service.
-                    </p>
+                    {item.description && (
+                        <p className="mt-1.5 text-xs text-white/30 leading-relaxed">
+                            {item.description}
+                        </p>
+                    )}
                 </div>
 
                 {item.priceText && (
@@ -49,18 +50,15 @@ export default function SheetCard({ item }: SheetCardProps) {
                     </span>
                 )}
 
-                <a
-                    href={item.gumroadUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <div
                     className="h-12 px-6 py-2 border border-yellow-500/40 text-yellow-400/60
-                               rounded hover:border-yellow-500/70 hover:text-yellow-400/90
-                               active:opacity-75 transition-colors duration-300 font-medium
+                               rounded group-hover:border-yellow-500/70 group-hover:text-yellow-400/90
+                               transition-colors duration-300 font-medium
                                inline-flex items-center justify-center text-sm"
                 >
                     Open the Bundle
-                </a>
+                </div>
             </div>
-        </div>
+        </a>
     );
 }

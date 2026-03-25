@@ -81,9 +81,9 @@ export default async function MerchPage() {
                 </FadeIn>
 
                 {objects.length > 0 ? (
-                    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5 p-0 m-0 list-none relative">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-0 m-0 list-none relative">
                         {objects.map((c, idx) => (
-                            <li key={c.id} className={idx === 0 ? "sm:col-span-2" : ""}>
+                            <li key={c.id}>
                                 <FadeIn delayMs={80 + idx * 70}>
                                     <MerchCard collection={c} />
                                 </FadeIn>

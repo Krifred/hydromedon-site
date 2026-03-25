@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    remotePatterns: [
+      // Allow Next.js Image optimisation for all HTTPS sources (Fourthwall CDN, etc.)
+      { protocol: "https", hostname: "**" },
+    ],
+  },
 };
 
 export default nextConfig;
