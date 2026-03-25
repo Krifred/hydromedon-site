@@ -11,9 +11,7 @@ import { getCollections } from "@/lib/fourthwall";
 import type { FWCollection } from "@/lib/fourthwall";
 import { sheets } from "@/lib/gumroad/catalog";
 import MerchIntro from "@/components/merch/MerchIntro";
-import MerchCard from "@/components/merch/MerchCard";
 import MerchGrid from "@/components/merch/MerchGrid";
-import EmptyState from "@/components/merch/EmptyState";
 import SheetsGrid from "@/components/merch/SheetsGrid";
 import FadeIn from "@/components/FadeIn";
 import MerchParallax from "@/components/merch/MerchParallax";
@@ -23,9 +21,10 @@ export const metadata: Metadata = {
     description: "Merch from Hydromedon.",
 };
 
-// Slugs treated as wearables for the Cloth & Signal section.
-// All other non-excluded collections fall into Tidebound Objects.
-const WEARABLE_SLUGS = new Set(["hoodies", "tees"]);
+// Wearables (garments).
+const WEARABLE_SLUGS = new Set(["hoodies", "tees", "sweatshirts"]);
+// Desk & studio artifacts.
+const DESK_SLUGS = new Set(["mouse-pad-light", "mouse-pad-dark", "desk-mat", "mousepad", "deskmat", "accessories"]);
 
 function SectionDivider() {
     return (
@@ -47,8 +46,9 @@ export default async function MerchPage() {
         console.error("[MerchPage] Fourthwall API error:", err);
     }
 
-    const objects = artifacts.filter((c) => !WEARABLE_SLUGS.has(c.slug));
     const wearables = artifacts.filter((c) => WEARABLE_SLUGS.has(c.slug));
+    const deskItems  = artifacts.filter((c) => DESK_SLUGS.has(c.slug));
+    const objects    = artifacts.filter((c) => !WEARABLE_SLUGS.has(c.slug) && !DESK_SLUGS.has(c.slug));
 
     return (
         <main
@@ -80,19 +80,7 @@ export default async function MerchPage() {
                     </p>
                 </FadeIn>
 
-                {objects.length > 0 ? (
-                    <ul className="grid grid-cols-1 sm:grid-cols-3 gap-5 p-0 m-0 list-none relative">
-                        {objects.map((c, idx) => (
-                            <li key={c.id} className={idx === 0 ? "sm:col-span-2" : ""}>
-                                <FadeIn delayMs={80 + idx * 70}>
-                                    <MerchCard collection={c} />
-                                </FadeIn>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <EmptyState label="No artifacts available yet." />
-                )}
+                <MerchGrid collections={objects} emptyLabel="No artifacts available yet." variant="artifact" />
             </section>
 
             <SectionDivider />
@@ -125,6 +113,32 @@ export default async function MerchPage() {
             </section>
 
             <SectionDivider />
+
+            {deskItems.length > 0 && (
+                <>
+                    <section className="relative max-w-6xl mx-auto px-6 pt-12 sm:pt-20 pb-10 sm:pb-16">
+                        <div className="pointer-events-none absolute inset-0">
+                            <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 80% 50%, rgba(180,170,160,0.06), transparent 60%)" }} />
+                            <div className="absolute inset-0" style={{ backgroundImage: "url('/textures/noise.svg')", backgroundRepeat: "repeat", opacity: 0.04 }} />
+                        </div>
+                        <FadeIn delayMs={120} durationMs={500} className="mb-6 sm:mb-10 relative js-merch-intro">
+                            <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
+                                Desk &amp; Studio
+                            </p>
+                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 leading-tight tracking-[0.01em]">
+                                Desk Artifacts
+                            </h2>
+                            <p className="mt-3 text-xs sm:text-sm leading-relaxed" style={{ color: "#6A6864" }}>
+                                Surfaces and tools for the devotional workspace.
+                            </p>
+                        </FadeIn>
+                        <div className="relative">
+                            <MerchGrid collections={deskItems} emptyLabel="No desk artifacts yet." variant="artifact" />
+                        </div>
+                    </section>
+                    <SectionDivider />
+                </>
+            )}
 
             {/* ?? Section 3 — Songs for Service ??????????????????????? */}
             <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-32 pb-16 sm:pb-28">
