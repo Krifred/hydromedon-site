@@ -51,7 +51,12 @@ export default function MerchCard({ collection, variant = "artifact" }: MerchCar
                         className={`absolute inset-0 w-full h-full object-contain p-2 opacity-[0.97] group-hover:opacity-100 transition-[transform,opacity] duration-500 ${imgScale}`}
                     />
                 ) : (
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-white/[0.02]" />
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                        src="/images/placeholder-merch.svg"
+                        alt={collection.name}
+                        className="absolute inset-0 w-full h-full object-contain p-10 opacity-[0.25]"
+                    />
                 )}
             </div>
 

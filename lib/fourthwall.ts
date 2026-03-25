@@ -57,19 +57,30 @@ function buildUrl(path: string, params: Record<string, string> = {}): string {
     return `${STOREFRONT_BASE}${path}?${qs.toString()}`;
 }
 
-/** Fetch the primary image URL from the first product in a collection. */
+/** Fetch the primary image URL from the first product in a collection.
+ * Tries top-level product images first, then variant images (needed for
+ * wearables like hoodies/tees where images live on variants). */
 async function fetchPrimaryImage(slug: string): Promise<{ url: string } | null> {
     try {
         const res = await fetch(
-            buildUrl(`/collections/${encodeURIComponent(slug)}/products`, { pageSize: "1" }),
+            buildUrl(`/collections/${encodeURIComponent(slug)}/products`, { pageSize: "3" }),
             fetchOptions()
         );
         if (!res.ok) return null;
         const data: {
-            results: Array<{ images: Array<{ url: string }> }>;
+            results: Array<{
+                images?: Array<{ url: string }>;
+                variants?: Array<{ images?: Array<{ url: string }> }>;
+            }>;
         } = await res.json();
-        const imageUrl = data.results?.[0]?.images?.[0]?.url ?? null;
-        return imageUrl ? { url: imageUrl } : null;
+        for (const product of data.results ?? []) {
+            const url =
+                product.images?.[0]?.url ??
+                product.variants?.[0]?.images?.[0]?.url ??
+                null;
+            if (url) return { url };
+        }
+        return null;
     } catch {
         return null;
     }
@@ -84,19 +95,31 @@ async function fetchPrimaryImage(slug: string): Promise<{ url: string } | null> 
  * automatically on the next ISR revalidation (1 h).
  */
 export async function getCollections(): Promise<FWCollection[]> {
-    const res = await fetch(
-        buildUrl("/collections", { pageSize: "50" }),
-        fetchOptions()
-    );
-    if (!res.ok) {
-        throw new Error(`Fourthwall getCollections failed: ${res.status} ${res.statusText}`);
+    const allResults: Array<{ id: string; name: string; slug: string; description: string }> = [];
+    let pageNumber = 0;
+
+    // The Storefront API caps page size at 10 regardless of the requested value.
+    // Paginate until hasNextPage is false to collect every collection.
+    while (true) {
+        const res = await fetch(
+            buildUrl("/collections", { pageSize: "10", pageNumber: String(pageNumber) }),
+            fetchOptions()
+        );
+        if (!res.ok) {
+            throw new Error(`Fourthwall getCollections failed: ${res.status} ${res.statusText}`);
+        }
+
+        const data: {
+            results: Array<{ id: string; name: string; slug: string; description: string }>;
+            paging: { hasNextPage: boolean };
+        } = await res.json();
+
+        allResults.push(...(data.results ?? []));
+        if (!data.paging?.hasNextPage) break;
+        pageNumber++;
     }
 
-    const data: {
-        results: Array<{ id: string; name: string; slug: string; description: string }>;
-    } = await res.json();
-
-    const filtered = (data.results ?? []).filter((c) => !EXCLUDED_SLUGS.has(c.slug));
+    const filtered = allResults.filter((c) => !EXCLUDED_SLUGS.has(c.slug));
 
     return Promise.all(
         filtered.map(async (c): Promise<FWCollection> => ({
