@@ -1,19 +1,18 @@
 
 /* ==========================================================
    app/merch/page.tsx — Merch index
-   Three sections: Tidebound Objects (artifacts), Cloth & Signal
-   (wearables), Songs for Service (music sheets).
-   Fourthwall API calls and data fetching are unchanged.
+   Fourthwall collections are grouped dynamically by the
+   category prefix in their slug (<category>-0-<name>).
+   One section is rendered per category, ordered alphabetically.
+   The final section (Songs for Service) is always Gumroad sheets.
    ========================================================== */
 
 import type { Metadata } from "next";
-import { getCollections } from "@/lib/fourthwall";
+import { getCollections, parseCollectionSlug } from "@/lib/fourthwall";
 import type { FWCollection } from "@/lib/fourthwall";
 import { sheets } from "@/lib/gumroad/catalog";
 import MerchIntro from "@/components/merch/MerchIntro";
-import MerchCard from "@/components/merch/MerchCard";
 import MerchGrid from "@/components/merch/MerchGrid";
-import EmptyState from "@/components/merch/EmptyState";
 import SheetsGrid from "@/components/merch/SheetsGrid";
 import FadeIn from "@/components/FadeIn";
 import MerchParallax from "@/components/merch/MerchParallax";
@@ -23,9 +22,32 @@ export const metadata: Metadata = {
     description: "Merch from Hydromedon.",
 };
 
-// Slugs treated as wearables for the Cloth & Signal section.
-// All other non-excluded collections fall into Tidebound Objects.
-const WEARABLE_SLUGS = new Set(["hoodies", "tees"]);
+// ── Types ────────────────────────────────────────────────────────────────────
+
+type CategoryGroup = {
+    category: string;
+    collections: FWCollection[];
+};
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+
+/** Group collections by the category prefix of their slug. */
+function groupByCategory(collections: FWCollection[]): CategoryGroup[] {
+    const map = new Map<string, FWCollection[]>();
+    for (const c of collections) {
+        const { category } = parseCollectionSlug(c.slug);
+        if (!map.has(category)) map.set(category, []);
+        map.get(category)!.push(c);
+    }
+    return Array.from(map.entries())
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([category, cols]) => ({ category, collections: cols }));
+}
+
+/** Map a category slug to the MerchCard variant that controls CTA text. */
+function categoryVariant(category: string): "artifact" | "wearable" {
+    return category === "wearables" ? "wearable" : "artifact";
+}
 
 function SectionDivider() {
     return (
@@ -39,16 +61,13 @@ function SectionDivider() {
 }
 
 export default async function MerchPage() {
-    let artifacts: FWCollection[] = [];
+    let groups: CategoryGroup[] = [];
     try {
         const collections = await getCollections();
-        artifacts = collections.filter((c) => c.tags.includes("artifacts"));
+        groups = groupByCategory(collections);
     } catch (err) {
         console.error("[MerchPage] Fourthwall API error:", err);
     }
-
-    const objects = artifacts.filter((c) => !WEARABLE_SLUGS.has(c.slug));
-    const wearables = artifacts.filter((c) => WEARABLE_SLUGS.has(c.slug));
 
     return (
         <main
@@ -62,71 +81,35 @@ export default async function MerchPage() {
             <MerchIntro />
             <SectionDivider />
 
-            {/* ?? Section 1 — Tidebound Objects ??????????????????????? */}
-            <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-28 pb-16 sm:pb-24">
-                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 20% 10%, rgba(212,175,55,0.06), transparent 60%)" }} />
-                    <div className="bg-noise absolute inset-0" />
-                </div>
-                <FadeIn delayMs={200} className="mb-8 sm:mb-12 relative js-merch-intro">
-                    <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
-                        Artifacts
-                    </p>
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight">
-                        Tidebound Objects
-                    </h2>
-                    <p className="mt-4 text-xs sm:text-sm text-white/40 leading-relaxed max-w-sm">
-                        Objects shaped by tide and time.
-                    </p>
-                </FadeIn>
-
-                {objects.length > 0 ? (
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 p-0 m-0 list-none relative">
-                        {objects.map((c, idx) => (
-                            <li key={c.id}>
-                                <FadeIn delayMs={80 + idx * 70}>
-                                    <MerchCard collection={c} />
-                                </FadeIn>
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <EmptyState label="No artifacts available yet." />
-                )}
-            </section>
-
-            <SectionDivider />
-
-            {/* ?? Section 2 — Cloth & Signal ?????????????????????????? */}
-            <section className="relative max-w-6xl mx-auto px-6 pt-12 sm:pt-20 pb-10 sm:pb-16">
-                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 20% 50%, rgba(210,195,170,0.07), transparent 60%)" }} />
-                    <div className="absolute inset-0" style={{ backgroundImage: "url('/textures/noise.svg')", backgroundRepeat: "repeat", opacity: 0.045 }} />
-                </div>
-                <FadeIn delayMs={80} durationMs={420} className="mb-6 sm:mb-10 relative js-merch-intro">
-                    <div className="flex items-start gap-4">
-                        <div className="w-px self-stretch bg-white/[0.12] shrink-0 mt-1" />
-                        <div>
-                            <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
-                                Wearables
-                            </p>
-                            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-yellow-400 leading-tight tracking-[-0.01em]">
-                                Cloth &amp; Signal
-                            </h2>
-                            <p className="mt-3 text-xs sm:text-sm leading-relaxed" style={{ color: "#6A6864" }}>
-                                Pieces meant to be lived in.
-                            </p>
+            {/* Dynamic Fourthwall sections — one per slug category */}
+            {groups.map(({ category, collections }, groupIdx) => (
+                <div key={category}>
+                    <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-28 pb-16 sm:pb-24">
+                        <div className="pointer-events-none absolute inset-0">
+                            <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 20% 10%, rgba(212,175,55,0.06), transparent 60%)" }} />
+                            <div className="bg-noise absolute inset-0" />
                         </div>
-                    </div>
-                </FadeIn>
-                <div className="relative">
-                    <MerchGrid collections={wearables} emptyLabel="No wearables available yet." variant="wearable" />
+                        <FadeIn delayMs={200} className="mb-8 sm:mb-12 relative js-merch-intro">
+                            <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
+                                {category}
+                            </p>
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight capitalize">
+                                {category}
+                            </h2>
+                        </FadeIn>
+                        <MerchGrid
+                            collections={collections}
+                            emptyLabel={`No ${category} available yet.`}
+                            variant={categoryVariant(category)}
+                        />
+                    </section>
+                    {groupIdx < groups.length - 1 && <SectionDivider />}
                 </div>
-            </section>
+            ))}
 
-            <SectionDivider />
+            {groups.length > 0 && <SectionDivider />}
 
-            {/* ?? Section 3 — Songs for Service ??????????????????????? */}
+            {/* Songs for Service — Gumroad sheet music (always last) */}
             <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-32 pb-16 sm:pb-28">
                 <div className="pointer-events-none absolute inset-0">
                     <div className="absolute inset-0" style={{ background: "radial-gradient(800px 400px at 50% 0%, rgba(255,252,245,0.04), transparent 55%)" }} />

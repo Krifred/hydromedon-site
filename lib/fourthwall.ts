@@ -7,14 +7,16 @@
 //
 // API reality (verified against live store):
 //   - GET /collections returns: id, name, slug, description only.
-//   - No `tags`, `primaryImage`, or `url` fields are returned by the API.
+//   - No `primaryImage` or `url` fields are returned by the API.
 //   - `primaryImage` is resolved by fetching the first product in each
 //     collection and taking its images[0].url.
 //   - `url` is constructed from the collection slug.
-//   - `tags` is not yet exposed by the Storefront API. Every non-excluded
-//     collection is tagged ["artifacts"] here so the filter in page.tsx
-//     already works. When Fourthwall adds tag support to the API, replace
-//     the hardcoded tags assignment below with: tags: c.tags ?? [].
+//
+// Grouping convention:
+//   Collection slugs follow the pattern <category>-0-<name>.
+//   e.g. wearables-0-hoodies, artifacts-0-drinkware, music-0-arise-o-lord
+//   Use parseCollectionSlug() to split a slug into { category, name }.
+//   Collections whose slugs do not contain "-0-" land in "uncategorized".
 
 const STOREFRONT_BASE = "https://storefront-api.fourthwall.com/v1";
 const STORE_BASE = "https://store.hydromedon.com";
@@ -40,14 +42,23 @@ export type FWCollection = {
     url: string;
     /** Primary image sourced from the first product in the collection. */
     primaryImage: { url: string } | null;
-    /**
-     * Collection tags used to filter which collections appear in each section.
-     * NOTE: The Storefront API v1 does not return tags on collections.
-     * All non-excluded collections are assigned ["artifacts"] until the API
-     * exposes real tags — at that point, replace with the API value.
-     */
-    tags: string[];
 };
+
+/**
+ * Splits a Fourthwall collection slug into its category and collection name.
+ *
+ * Slugs are expected to follow the pattern: <category>-0-<name>
+ * e.g. "wearables-0-hoodies"   → { category: "wearables", name: "hoodies" }
+ *      "artifacts-0-drinkware" → { category: "artifacts", name: "drinkware" }
+ *
+ * If "-0-" is absent the whole slug is treated as the name and placed in
+ * the "uncategorized" catch-all category.
+ */
+export function parseCollectionSlug(slug: string): { category: string; name: string } {
+    const sep = slug.indexOf("-0-");
+    if (sep === -1) return { category: "uncategorized", name: slug };
+    return { category: slug.slice(0, sep), name: slug.slice(sep + 3) };
+}
 
 function buildUrl(path: string, params: Record<string, string> = {}): string {
     const token = process.env.FOURTHWALL_STOREFRONT_TOKEN;
@@ -76,12 +87,15 @@ async function fetchPrimaryImage(slug: string): Promise<{ url: string } | null> 
 }
 
 /**
- * Fetch all Fourthwall collections and enrich each with a constructed `url`,
- * a `primaryImage` resolved from the first product, and normalised `tags`.
+ * Fetch all Fourthwall collections and enrich each with a constructed `url`
+ * and a `primaryImage` resolved from the first product in the collection.
  *
  * Collections with slugs in EXCLUDED_SLUGS (e.g. "all") are omitted.
  * Any collection added to Fourthwall that is not excluded will appear
  * automatically on the next ISR revalidation (1 h).
+ *
+ * Callers can use parseCollectionSlug(c.slug) to determine which display
+ * category a collection belongs to.
  */
 export async function getCollections(): Promise<FWCollection[]> {
     const res = await fetch(
@@ -106,9 +120,6 @@ export async function getCollections(): Promise<FWCollection[]> {
             description: c.description || null,
             url: `${STORE_BASE}/collections/${c.slug}`,
             primaryImage: await fetchPrimaryImage(c.slug),
-            // Hardcoded until Fourthwall API exposes collection tags.
-            // Replace with: tags: c.tags ?? []
-            tags: ["artifacts"],
         }))
     );
 }

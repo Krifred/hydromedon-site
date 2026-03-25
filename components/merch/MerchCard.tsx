@@ -25,17 +25,19 @@ export default function MerchCard({ collection, variant = "artifact" }: MerchCar
             rel="noopener noreferrer"
             className="group block rounded-sm overflow-hidden border border-white/8 bg-white/[0.03] transition-all duration-300 ease-out hover:-translate-y-0.5 active:opacity-90 hover:border-yellow-500/30 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12),0_0_32px_rgba(212,175,55,0.22)]"
         >
-            {collection.primaryImage ? (
-                <Image
-                    src={collection.primaryImage.url}
-                    alt={collection.name}
-                    width={800}
-                    height={800}
-                    className="w-full h-auto rounded-lg"
-                />
-            ) : (
-                <div className="aspect-square bg-gradient-to-br from-white/5 to-white/[0.02]" />
-            )}
+            <div className="w-full aspect-[3/4] overflow-hidden rounded-lg">
+                {collection.primaryImage ? (
+                    <Image
+                        src={collection.primaryImage.url}
+                        alt={collection.name}
+                        width={800}
+                        height={800}
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-white/5 to-white/[0.02]" />
+                )}
+            </div>
 
             {/* Meta + button */}
             <div className="px-4 py-6 flex flex-col gap-3">
