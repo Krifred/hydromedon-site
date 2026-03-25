@@ -31,8 +31,12 @@ export default function MerchCard({ collection, variant = "artifact" }: MerchCar
     const imgScale = variant === "wearable" ? "group-hover:scale-[1.015]" : "group-hover:scale-[1.03]";
 
     return (
-        <div
-            className={`group rounded-sm overflow-hidden border border-white/8 bg-white/[0.03] transition-all duration-300 ease-out hover:-translate-y-0.5 active:opacity-90 ${hoverBorder} ${hoverShadow}`}
+        <a
+            href={collection.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${collection.name} — open collection`}
+            className={`group block rounded-sm overflow-hidden border border-white/8 bg-white/[0.03] transition-all duration-300 ease-out hover:-translate-y-0.5 active:opacity-90 ${hoverBorder} ${hoverShadow}`}
         >
             {/* Cover image — fixed warm-grey background */}
             <div
@@ -67,18 +71,15 @@ export default function MerchCard({ collection, variant = "artifact" }: MerchCar
                     )}
                 </div>
 
-                <a
-                    href={collection.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                <span
                     className="h-12 px-6 py-2 border border-yellow-500/40 text-yellow-400/60
-                               rounded hover:border-yellow-500/70 hover:text-yellow-400/90
-                               active:opacity-75 transition-colors duration-300 font-medium
+                               rounded group-hover:border-yellow-500/70 group-hover:text-yellow-400/90
+                               transition-colors duration-300 font-medium
                                inline-flex items-center justify-center text-sm"
                 >
                     {CTA_LABELS[variant]}
-                </a>
+                </span>
             </div>
-        </div>
+        </a>
     );
 }
