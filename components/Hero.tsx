@@ -102,11 +102,11 @@ return (
         />
       </div>
 
-      <FadeIn delayMs={300} durationMs={1500} y={24}>
-        <p className="mt-0 mb-2 y-0 text-xl md:text-2xl text-gray-300 max-w-xl text-center">
-          Mythic, cinematic, kingdom‑themed music experience
-        </p>
-      </FadeIn>
+      {/*<FadeIn delayMs={300} durationMs={1500} y={24}>*/}
+      {/*  <p className="mt-0 mb-2 y-0 text-xl md:text-2xl text-gray-300 max-w-xl text-center">*/}
+      {/*    Mythic, cinematic, kingdom‑themed music experience*/}
+      {/*  </p>*/}
+      {/*</FadeIn>*/}
     </div>
 
     {/* Bottom-aligned CTA row */}
