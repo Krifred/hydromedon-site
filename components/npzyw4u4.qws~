@@ -12,6 +12,8 @@ export default function Hero() {
 
     /* Scroll-based fade (content never disappears) */
     useEffect(() => {
+        setFade(1);
+
         const handleScroll = () => {
             const y = window.scrollY;
 
@@ -35,8 +37,8 @@ export default function Hero() {
         prefersReducedMotionRef.current = media.matches;
 
         if (media.matches) {
-            const id = requestAnimationFrame(() => setIsBreathing(false));
-            return () => cancelAnimationFrame(id);
+            setIsBreathing(false);
+            return;
         }
 
         const stopBreathing = () => setIsBreathing(false);
@@ -68,7 +70,7 @@ return (
         transform: `translateY(${(1 - fade) * -12}px)`,
       }}
     >
-      <div className="relative flex items-center justify-center mb-20">
+      <div className="relative flex items-center justify-center mb-20 z-10">
         {/* OUTER SACRED HALO */}
         <div
           aria-hidden

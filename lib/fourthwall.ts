@@ -44,6 +44,14 @@ export type FWCollection = {
     primaryImage: { url: string } | null;
 };
 
+export type FWProduct = {
+    id: string;
+    slug: string;
+    name: string;
+    /** Direct URL to the product page on the storefront. */
+    url: string;
+};
+
 /**
  * Splits a Fourthwall collection slug into its category and collection name.
  *
@@ -122,4 +130,57 @@ export async function getCollections(): Promise<FWCollection[]> {
             primaryImage: await fetchPrimaryImage(c.slug),
         }))
     );
+}
+
+/**
+ * Fetch every product visible on the storefront by iterating over all
+ * published collections.
+ *
+ * The Storefront API only returns published + publicly-visible products,
+ * so any product absent from this list is effectively draft or hidden —
+ * no separate isPublished / isVisible check is needed.
+ *
+ * Results are deduplicated by id for products that belong to more than
+ * one collection.
+ */
+export async function getFourthwallProducts(): Promise<FWProduct[]> {
+    let collections: FWCollection[] = [];
+    try {
+        collections = await getCollections();
+    } catch {
+        return [];
+    }
+
+    const productLists = await Promise.all(
+        collections.map(async (collection): Promise<FWProduct[]> => {
+            try {
+                const res = await fetch(
+                    buildUrl(`/collections/${encodeURIComponent(collection.slug)}/products`, {
+                        pageSize: "50",
+                    }),
+                    fetchOptions()
+                );
+                if (!res.ok) return [];
+                const data: {
+                    results: Array<{ id: string; slug: string; name: string }>;
+                } = await res.json();
+                return data.results.map((p) => ({
+                    id: p.id,
+                    slug: p.slug,
+                    name: p.name,
+                    url: `${STORE_BASE}/products/${p.slug}`,
+                }));
+            } catch {
+                return [];
+            }
+        })
+    );
+
+    // Deduplicate products that appear in multiple collections
+    const seen = new Set<string>();
+    return productLists.flat().filter((p) => {
+        if (seen.has(p.id)) return false;
+        seen.add(p.id);
+        return true;
+    });
 }

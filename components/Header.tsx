@@ -34,20 +34,11 @@ function getHashId(href: string) {
 export default function Header() {
     const pathname = usePathname();
 
-    const [visible, setVisible] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
     const [aboutOpen, setAboutOpen] = useState(false); // mobile accordion
 
     // Drives highlight (tap + scroll on /about and /)
     const [activeAnchor, setActiveAnchor] = useState<string>("");
-
-    // Header background on scroll
-    useEffect(() => {
-        const onScroll = () => setVisible(window.scrollY > 80);
-        onScroll();
-        window.addEventListener("scroll", onScroll, { passive: true });
-        return () => window.removeEventListener("scroll", onScroll);
-    }, []);
 
     // Keep activeAnchor synced with URL hash (tap links, browser back/forward)
     useEffect(() => {
@@ -137,11 +128,11 @@ export default function Header() {
         return () => observer.disconnect();
     }, [pathname]);
 
-    // ✅ When at top of Home (no hash + not scrolled), highlight Home (clear activeAnchor)
+    // ✅ When navigating to Home without a hash, clear active anchor to highlight Home
     useEffect(() => {
         if (pathname !== "/") return;
-        if (!visible && !window.location.hash) setActiveAnchor("");
-    }, [pathname, visible]);
+        if (!window.location.hash) setActiveAnchor("");
+    }, [pathname]);
 
     // Optional nicety: auto-open About accordion when opening menu on /about
     useEffect(() => {
@@ -166,10 +157,7 @@ export default function Header() {
     const aboutIsActive = useMemo(() => pathname === "/about", [pathname]);
 
     return (
-        <header
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out ${visible ? "bg-black/60 backdrop-blur-md shadow-lg" : "bg-transparent"
-                }`}
-        >
+        <header className="relative w-full z-50 bg-black/80 backdrop-blur-sm shadow-lg py-4 mb-10">
             <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3 gap-8">
                 {/* Brand */}
                 <Link
@@ -186,8 +174,7 @@ export default function Header() {
 
                 {/* Desktop navigation */}
                 <nav
-                    className={`hidden md:flex gap-10 lg:gap-12 xl:gap-16 transition-opacity duration-300 ${visible ? "opacity-100" : "opacity-75"
-                        }`}
+                    className="hidden md:flex gap-10 lg:gap-12 xl:gap-16"
                     aria-label="Main"
                 >
                     {(navItems as NavItem[]).map((item) => {

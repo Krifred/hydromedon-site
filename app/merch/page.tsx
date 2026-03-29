@@ -9,7 +9,8 @@
 
 import type { Metadata } from "next";
 import { getCollections, parseCollectionSlug } from "@/lib/fourthwall";
-import type { FWCollection } from "@/lib/fourthwall";
+import { MERCH_CATALOG, resolveMerchEntries } from "@/lib/merch-catalog";
+import type { MerchEntry } from "@/lib/merch-catalog";
 import { sheets } from "@/lib/gumroad/catalog";
 import MerchIntro from "@/components/merch/MerchIntro";
 import MerchGrid from "@/components/merch/MerchGrid";
@@ -26,22 +27,23 @@ export const metadata: Metadata = {
 
 type CategoryGroup = {
     category: string;
-    collections: FWCollection[];
+    entries: MerchEntry[];
 };
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-/** Group collections by the category prefix of their slug. */
-function groupByCategory(collections: FWCollection[]): CategoryGroup[] {
-    const map = new Map<string, FWCollection[]>();
-    for (const c of collections) {
-        const { category } = parseCollectionSlug(c.slug);
+/** Group MerchEntries by the category prefix of their slug. */
+function groupEntriesByCategory(entries: MerchEntry[]): CategoryGroup[] {
+    const map = new Map<string, MerchEntry[]>();
+    for (const entry of entries) {
+        const slug = entry.status === "live" ? entry.collection.slug : entry.slug;
+        const { category } = parseCollectionSlug(slug);
         if (!map.has(category)) map.set(category, []);
-        map.get(category)!.push(c);
+        map.get(category)!.push(entry);
     }
     return Array.from(map.entries())
         .sort(([a], [b]) => a.localeCompare(b))
-        .map(([category, cols]) => ({ category, collections: cols }));
+        .map(([category, entries]) => ({ category, entries }));
 }
 
 /** Map a category slug to the MerchCard variant that controls CTA text. */
@@ -63,8 +65,9 @@ function SectionDivider() {
 export default async function MerchPage() {
     let groups: CategoryGroup[] = [];
     try {
-        const collections = await getCollections();
-        groups = groupByCategory(collections);
+        const live = await getCollections();
+        const entries = resolveMerchEntries(live, MERCH_CATALOG);
+        groups = groupEntriesByCategory(entries);
     } catch (err) {
         console.error("[MerchPage] Fourthwall API error:", err);
     }
@@ -82,7 +85,7 @@ export default async function MerchPage() {
             <SectionDivider />
 
             {/* Dynamic Fourthwall sections — one per slug category */}
-            {groups.map(({ category, collections }, groupIdx) => (
+            {groups.map(({ category, entries }, groupIdx) => (
                 <div key={category}>
                     <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-28 pb-16 sm:pb-24">
                         <div className="pointer-events-none absolute inset-0">
@@ -98,7 +101,7 @@ export default async function MerchPage() {
                             </h2>
                         </FadeIn>
                         <MerchGrid
-                            collections={collections}
+                            entries={entries}
                             emptyLabel={`No ${category} available yet.`}
                             variant={categoryVariant(category)}
                         />

@@ -14,6 +14,8 @@ export default function RootLayout({
                 <AtmosphereBackground />
 
                 <Header />
+                {/* Spacer reserves space for the fixed header + breathing room */}
+                <div className="h-20" aria-hidden />
 
                 <AnalyticsClient>
                     {children}

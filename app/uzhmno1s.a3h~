@@ -9,7 +9,7 @@ import SectionDivider from "@/components/SectionDivider";
 export default function Home() {
     return (
         <>
-            <main id="home" className="relative min-h-screen bg-black">
+            <main id="home"
                 {/* Dark overlay for extra depth */}
                 <div className="pointer-events-none absolute inset-0 bg-black/70 z-0" />
 
