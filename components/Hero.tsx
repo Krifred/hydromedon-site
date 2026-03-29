@@ -70,7 +70,7 @@ return (
         transform: `translateY(${(1 - fade) * -12}px)`,
       }}
     >
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center mb-20">
         {/* OUTER SACRED HALO */}
         <div
           aria-hidden
@@ -91,7 +91,7 @@ return (
 
         {/* Logo */}
         <Image
-          src="/brand/logo/hydromedon_logo_light_2.svg"
+          src="/brand/logo/hydromedon_logo_light.svg"
           alt="Hydromedon logo"
           width={840}
           height={840}
