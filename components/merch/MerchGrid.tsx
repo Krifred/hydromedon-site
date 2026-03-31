@@ -13,7 +13,7 @@ import type { MerchEntry } from "@/lib/merch-catalog";
 interface MerchGridProps {
     entries: MerchEntry[];
     emptyLabel?: string;
-    variant?: "artifact" | "wearable";
+    variant?: "artifact" | "wearable" | "sheet-music";
 }
 
 export default function MerchGrid({

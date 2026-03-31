@@ -30,7 +30,14 @@ type CategoryGroup = {
     entries: MerchEntry[];
 };
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Category display order ────────────────────────────────────────────────────
+
+/**
+ * Explicit render order for category sections, using raw slug prefixes as
+ * returned by parseCollectionSlug().  Categories absent from this list are
+ * appended after the known ones, sorted alphabetically among themselves.
+ */
+const CATEGORY_ORDER = ["sheet-music", "wearables", "artifacts"];
 
 /** Group MerchEntries by the category prefix of their slug. */
 function groupEntriesByCategory(entries: MerchEntry[]): CategoryGroup[] {
@@ -42,13 +49,30 @@ function groupEntriesByCategory(entries: MerchEntry[]): CategoryGroup[] {
         map.get(category)!.push(entry);
     }
     return Array.from(map.entries())
-        .sort(([a], [b]) => a.localeCompare(b))
+        .sort(([a], [b]) => {
+            const ai = CATEGORY_ORDER.indexOf(a);
+            const bi = CATEGORY_ORDER.indexOf(b);
+            if (ai !== -1 && bi !== -1) return ai - bi;   // both listed — use declared order
+            if (ai !== -1) return -1;                      // only a is listed — a first
+            if (bi !== -1) return 1;                       // only b is listed — b first
+            return a.localeCompare(b);                     // neither listed — alphabetical
+        })
         .map(([category, entries]) => ({ category, entries }));
 }
 
 /** Map a category slug to the MerchCard variant that controls CTA text. */
-function categoryVariant(category: string): "artifact" | "wearable" {
-    return category === "wearables" ? "wearable" : "artifact";
+function categoryVariant(category: string): "artifact" | "wearable" | "sheet-music" {
+    if (category === "wearables") return "wearable";
+    if (category === "sheet-music") return "sheet-music";
+    return "artifact";
+}
+
+/** Convert a raw slug-style category prefix to a display label.
+ *  "sheet-music" → "Sheet Music",  "wearables" → "Wearables" */
+function formatCategory(category: string): string {
+    return category
+        .replace(/-/g, " ")
+        .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 function SectionDivider() {
@@ -94,15 +118,15 @@ export default async function MerchPage() {
                         </div>
                         <FadeIn delayMs={200} className="mb-8 sm:mb-12 relative js-merch-intro">
                             <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
-                                {category}
+                                {formatCategory(category)}
                             </p>
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight capitalize">
-                                {category}
+                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight">
+                                {formatCategory(category)}
                             </h2>
                         </FadeIn>
                         <MerchGrid
                             entries={entries}
-                            emptyLabel={`No ${category} available yet.`}
+                            emptyLabel={`No ${formatCategory(category)} available yet.`}
                             variant={categoryVariant(category)}
                         />
                     </section>
@@ -113,27 +137,27 @@ export default async function MerchPage() {
             {groups.length > 0 && <SectionDivider />}
 
             {/* Songs for Service — Gumroad sheet music (always last) */}
-            <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-32 pb-16 sm:pb-28">
-                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(800px 400px at 50% 0%, rgba(255,252,245,0.04), transparent 55%)" }} />
-                    <div className="absolute inset-0" style={{ backgroundImage: "url('/textures/noise.svg')", backgroundRepeat: "repeat", opacity: 0.03 }} />
-                </div>
-                <div className="mb-6 sm:mb-10 h-px w-full relative" style={{ backgroundColor: "rgba(232, 228, 223, 0.12)" }} />
-                <FadeIn delayMs={150} durationMs={680} className="mb-8 sm:mb-14 relative js-merch-intro">
-                    <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
-                        Music Sheets
-                    </p>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-[0.03em]" style={{ color: "rgba(232,228,223,0.85)" }}>
-                        Songs for Service
-                    </h2>
-                    <p className="mt-3 text-xs leading-relaxed" style={{ color: "rgba(180,176,172,0.65)" }}>
-                        Lead sheets and transcriptions built for worship and devotion.
-                    </p>
-                </FadeIn>
-                <div className="relative">
-                    <SheetsGrid items={sheets} />
-                </div>
-            </section>
+            {/*<section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-32 pb-16 sm:pb-28">*/}
+            {/*    <div className="pointer-events-none absolute inset-0">*/}
+            {/*        <div className="absolute inset-0" style={{ background: "radial-gradient(800px 400px at 50% 0%, rgba(255,252,245,0.04), transparent 55%)" }} />*/}
+            {/*        <div className="absolute inset-0" style={{ backgroundImage: "url('/textures/noise.svg')", backgroundRepeat: "repeat", opacity: 0.03 }} />*/}
+            {/*    </div>*/}
+            {/*    <div className="mb-6 sm:mb-10 h-px w-full relative" style={{ backgroundColor: "rgba(232, 228, 223, 0.12)" }} />*/}
+            {/*    <FadeIn delayMs={150} durationMs={680} className="mb-8 sm:mb-14 relative js-merch-intro">*/}
+            {/*        <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">*/}
+            {/*            Music Sheets*/}
+            {/*        </p>*/}
+            {/*        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-[0.03em]" style={{ color: "rgba(232,228,223,0.85)" }}>*/}
+            {/*            Songs for Service*/}
+            {/*        </h2>*/}
+            {/*        <p className="mt-3 text-xs leading-relaxed" style={{ color: "rgba(180,176,172,0.65)" }}>*/}
+            {/*            Lead sheets and transcriptions built for worship and devotion.*/}
+            {/*        </p>*/}
+            {/*    </FadeIn>*/}
+            {/*    <div className="relative">*/}
+            {/*        <SheetsGrid items={sheets} />*/}
+            {/*    </div>*/}
+            {/*</section>*/}
         </main>
     );
 }

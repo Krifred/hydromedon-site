@@ -85,9 +85,9 @@ async function fetchPrimaryImage(slug: string): Promise<{ url: string } | null> 
         );
         if (!res.ok) return null;
         const data: {
-            results: Array<{ images: Array<{ url: string }> }>;
+            results: Array<{ variants: Array<{ images: Array<{ url: string }> }> }>;
         } = await res.json();
-        const imageUrl = data.results?.[0]?.images?.[0]?.url ?? null;
+        const imageUrl = data.results?.[0]?.variants?.[0]?.images?.[0]?.url ?? null;
         return imageUrl ? { url: imageUrl } : null;
     } catch {
         return null;

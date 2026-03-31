@@ -15,11 +15,12 @@
    ========================================================== */
 
 import { redirect } from "next/navigation";
-import Link from "next/link";
 import type { Metadata } from "next";
-import { getCollections, getFourthwallProducts, type FWCollection, type FWProduct } from "@/lib/fourthwall";
+import { getCollections, type FWCollection } from "@/lib/fourthwall";
+import { getProduct } from "@/lib/fourthwall/client";
+import type { FourthwallVariant } from "@/lib/fourthwall/types";
 import { MERCH_CATALOG } from "@/lib/merch-catalog";
-import FadeIn from "@/components/FadeIn";
+import ComingSoon from "@/components/merch/ComingSoon";
 
 // ── ISR ───────────────────────────────────────────────────────────────────────
 // Revalidate every 60 s so a newly-published Fourthwall collection flips to
@@ -53,6 +54,14 @@ function formatSlug(slug: string): string {
         .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+/**
+ * A variant is purchasable when the API does not explicitly mark it as
+ * out-of-stock. If stock is absent the variant is print-on-demand / unlimited.
+ */
+function isVariantPurchasable(v: FourthwallVariant): boolean {
+    return v.stock?.type !== "OUT_OF_STOCK";
+}
+
 // ── Page ──────────────────────────────────────────────────────────────────────
 export default async function MerchItemPage({ params }: Props) {
     const { slug } = await params;
@@ -70,75 +79,37 @@ export default async function MerchItemPage({ params }: Props) {
     const collection = live.find((c) => c.slug === slug);
     if (collection) redirect(collection.url);
 
-    // ── Step 2: Check individual products (handles product-level slugs) ────
-    // Draft or hidden products are never returned by the Storefront API, so
-    // absence here is the same as "not published / not visible".
-    let products: FWProduct[] = [];
+    // ── Step 2: Fetch product directly by slug ───────────────────────────────
+    //
+    // getProduct() throws for any non-2xx response. The Storefront API only
+    // returns products that are published AND publicly visible, so:
+    //   - 404 → does not exist
+    //   - any throw → not published, not visible, or API error
+    // All of the above fall through to the Coming Soon page.
+    //
+    // On success we also verify at least one variant is still purchasable;
+    // a variant is out of stock when stock.type === "OUT_OF_STOCK".
     try {
-        products = await getFourthwallProducts();
+        const product = await getProduct(slug);
+
+        // Fourthwall uses "COMING SOON" in the product name as a soft
+        // placeholder — treat these as not yet available regardless of their
+        // published/visible status, so they never redirect to the store.
+        const isComingSoon = product.name.toLowerCase().includes("coming soon");
+
+        // Redirect only when: title is not flagged AND at least one variant
+        // is still purchasable (stock.type !== "OUT_OF_STOCK").
+        if (!isComingSoon && product.variants.some(isVariantPurchasable)) {
+            redirect(`https://store.hydromedon.com/products/${product.slug}`);
+        }
+        // isComingSoon title OR all variants out of stock → fall through.
     } catch {
-        // API error — fall through gracefully to "coming soon"
+        // Not found, not published, not visible, or network error.
+        // Fall through to Coming Soon.
     }
 
-    const product = products.find(
-        (p) =>
-            p.slug === slug ||
-            p.name.toLowerCase().replace(/\s+/g, "-") === slug
-    );
-    if (product) redirect(product.url);
-
-    // ── Coming soon (draft, hidden, or nonexistent) ───────────────────────
+    // ── Coming soon ──────────────────────────────────────────────────────────
     const entry = MERCH_CATALOG.find((e) => e.slug === slug);
     const title = entry?.title ?? formatSlug(slug);
-
-    return (
-        <main
-            data-page-enter
-            className="relative min-h-screen flex flex-col items-center justify-center text-center px-6"
-            style={{ animation: "merch-page-enter 700ms 100ms ease-out both" }}
-        >
-            <style>{`
-                @keyframes merch-page-enter {
-                    from { opacity: 0; transform: translateY(12px); }
-                    to   { opacity: 1; transform: translateY(0);    }
-                }
-                @media (prefers-reduced-motion: reduce) {
-                    [data-page-enter] { animation: none !important; }
-                }
-            `}</style>
-
-            {/* Subtle radial glow — matches the merch page section background */}
-            <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0"
-                style={{ background: "radial-gradient(800px 600px at 50% 40%, rgba(212,175,55,0.05), transparent 65%)" }}
-            />
-
-            <FadeIn delayMs={80} durationMs={700} y={16} className="relative flex flex-col items-center">
-                <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-4">
-                    Coming soon
-                </p>
-
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight mb-6">
-                    {title}
-                </h1>
-
-                <p className="text-xs sm:text-sm text-white/40 max-w-xs leading-relaxed">
-                    This item is not yet available on the store.
-                    <br />
-                    Check back after the official release.
-                </p>
-
-                <div className="mt-10">
-                    <Link
-                        href="/merch"
-                        className="text-xs tracking-[0.18em] text-white/30 uppercase
-                                   hover:text-white/60 transition-colors duration-200"
-                    >
-                        ← Back to Merch
-                    </Link>
-                </div>
-            </FadeIn>
-        </main>
-    );
+    return <ComingSoon title={title} />;
 }

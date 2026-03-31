@@ -2,14 +2,17 @@
    MerchCard — card for a Fourthwall collection
    ========================================================== */
 
+import Link from "next/link";
 import Image from "next/image";
 import type { FWCollection } from "@/lib/fourthwall";
+import { collectionCovers } from "@/lib/collectionCovers";
 
-type CardVariant = "artifact" | "wearable";
+type CardVariant = "artifact" | "wearable" | "sheet-music";
 
 const CTA_LABELS: Record<CardVariant, string> = {
     artifact: "View the Object",
     wearable: "Enter Collection",
+    "sheet-music": "Get the Score",
 };
 
 interface MerchCardProps {
@@ -18,24 +21,35 @@ interface MerchCardProps {
 }
 
 export default function MerchCard({ collection, variant = "artifact" }: MerchCardProps) {
+    // Priority: local cover from /public/covers → Fourthwall API image → gradient placeholder
+    const coverSrc =
+        collectionCovers[collection.slug] ??
+        collection.primaryImage?.url ??
+        null;
+
+    const isComingSoon = collection.name.toLowerCase().includes("coming soon");
+
     return (
-        <a
-            href={collection.url}
-            target="_blank"
-            rel="noopener noreferrer"
+        <Link
+            href={`/merch/${collection.slug}`}
             className="group block rounded-sm overflow-hidden border border-white/8 bg-white/[0.03] transition-all duration-300 ease-out hover:-translate-y-0.5 active:opacity-90 hover:border-yellow-500/30 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12),0_0_32px_rgba(212,175,55,0.22)]"
         >
-            <div className="w-full aspect-[3/4] overflow-hidden rounded-lg">
-                {collection.primaryImage ? (
+            <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg">
+                {coverSrc ? (
                     <Image
-                        src={collection.primaryImage.url}
+                        src={coverSrc}
                         alt={collection.name}
-                        width={800}
+                        width={600}
                         height={800}
                         className="w-full h-full object-cover"
                     />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-br from-white/5 to-white/[0.02]" />
+                )}
+                {isComingSoon && (
+                    <div className="absolute top-2 left-2 bg-black/70 text-white px-3 py-1 text-xs font-semibold tracking-wide rounded backdrop-blur-sm border border-white/20 pointer-events-none">
+                        COMING SOON
+                    </div>
                 )}
             </div>
 
@@ -61,6 +75,6 @@ export default function MerchCard({ collection, variant = "artifact" }: MerchCar
                     {CTA_LABELS[variant]}
                 </div>
             </div>
-        </a>
+        </Link>
     );
 }
