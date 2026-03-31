@@ -33,7 +33,7 @@ export default function MerchGrid({
                         {entry.status === "live" ? (
                             <MerchCard collection={entry.collection} variant={variant} />
                         ) : (
-                            <MerchCardSoon title={entry.title} />
+                            <MerchCardSoon title={entry.title} slug={entry.slug} />
                         )}
                     </FadeIn>
                 </li>

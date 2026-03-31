@@ -5,22 +5,41 @@
    same spacing, same button shape — just muted and non-interactive).
    ========================================================== */
 
+import Image from "next/image";
+import { collectionCovers } from "@/lib/collectionCovers";
+
 interface MerchCardSoonProps {
     title: string;
+    slug?: string;
 }
 
-export default function MerchCardSoon({ title }: MerchCardSoonProps) {
+export default function MerchCardSoon({ title, slug }: MerchCardSoonProps) {
+    const coverSrc = slug ? (collectionCovers[slug] ?? null) : null;
+
     return (
         <div className="block rounded-sm overflow-hidden border border-white/[0.06] bg-white/[0.02]">
-            {/* Image placeholder — mirrors MerchCard image container */}
-            <div className="w-full aspect-[3/4] overflow-hidden rounded-lg bg-gradient-to-br from-white/[0.04] to-white/[0.01] flex items-end p-4">
-                <span
-                    className="inline-block rounded-full border border-yellow-500/30
-                               px-2.5 py-1 text-[10px] tracking-[0.18em]
-                               text-yellow-400/50 uppercase"
+            {/* Image area — cover if available, gradient otherwise */}
+            <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg">
+                {coverSrc ? (
+                    <Image
+                        src={coverSrc}
+                        alt={title}
+                        width={600}
+                        height={800}
+                        className="w-full h-full object-cover opacity-60"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-white/[0.04] to-white/[0.01]" />
+                )}
+                <div
+                    className="absolute top-2 left-2
+                               bg-black/70 text-yellow-400/80
+                               px-3 py-1 text-xs font-semibold
+                               tracking-wide rounded backdrop-blur-sm
+                               border border-yellow-500/20 pointer-events-none"
                 >
-                    Available soon
-                </span>
+                    Available Soon
+                </div>
             </div>
 
             {/* Meta — mirrors MerchCard meta block */}
@@ -34,9 +53,10 @@ export default function MerchCardSoon({ title }: MerchCardSoonProps) {
                                rounded font-medium inline-flex items-center justify-center
                                text-sm cursor-not-allowed select-none"
                 >
-                    Available soon
+                    Available Soon
                 </div>
             </div>
         </div>
     );
 }
+

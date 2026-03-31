@@ -23,6 +23,14 @@ export type CatalogEntry = {
     slug: string;
     /** Fallback display title shown on the "Available soon" card. */
     title: string;
+    /**
+     * When true, forces this entry to render as an "Available soon" card
+     * even if Fourthwall publishes the collection.
+     * Use this when a collection exists on Fourthwall but is not yet
+     * ready for purchase (e.g. placeholder content, wrong variants).
+     * Remove the flag — or set it to false — to re-enable the live card.
+     */
+    comingSoon?: boolean;
 };
 
 /**
@@ -53,9 +61,10 @@ export function resolveMerchEntries(
 
     const entries: MerchEntry[] = catalog.map((entry) => {
         const collection = liveBySlug.get(entry.slug);
-        return collection
-            ? { status: "live", collection }
-            : { status: "coming_soon", slug: entry.slug, title: entry.title };
+        if (collection && !entry.comingSoon) {
+            return { status: "live", collection };
+        }
+        return { status: "coming_soon", slug: entry.slug, title: entry.title };
     });
 
     // Append live collections not declared in the catalog
@@ -80,13 +89,13 @@ export const MERCH_CATALOG: CatalogEntry[] = [
     // Live: slug is published on Fourthwall — will render as a live MerchCard.
     { slug: "sheet-music-0-arise-o-lord-resources",                         title: "Arise, O Lord"                          },
 
-    // Coming soon: not yet published — will render as an "Available soon" card.
-    { slug: "sheet-music-0-armor-of-light-resources",                       title: "Armor of Light"                         },
-    { slug: "sheet-music-0-beauty-for-ashes-resources",                     title: "Beauty for Ashes"                       },
-    { slug: "sheet-music-0-biblical-graffiti-resources",                    title: "Biblical Graffiti"                      },
-    { slug: "sheet-music-0-change-me-mold-me-make-me-new-resources",        title: "Change Me, Mold Me, Make Me New"        },
-    { slug: "sheet-music-0-make-a-way-resources",                           title: "Make a Way"                             },
-    { slug: "sheet-music-0-the-lord-bless-you-and-keep-you-resources",      title: "The Lord Bless You and Keep You"        },
-    { slug: "sheet-music-0-under-your-wings-resources",                     title: "Under Your Wings"                       },
-    { slug: "sheet-music-0-your-peace-surpasses-all-understanding-resources", title: "Your Peace Surpasses All Understanding" },
+    // Coming soon: render as "Available soon" regardless of Fourthwall publish state.
+    { slug: "sheet-music-0-armor-of-light-resources",                         title: "Armor of Light",                          comingSoon: true },
+    { slug: "sheet-music-0-beauty-for-ashes-resources",                       title: "Beauty for Ashes",                        comingSoon: true },
+    { slug: "sheet-music-0-biblical-graffiti-resources",                      title: "Biblical Graffiti",                       comingSoon: true },
+    { slug: "sheet-music-0-change-me-mold-me-make-me-new-resources",          title: "Change Me, Mold Me, Make Me New",         comingSoon: true },
+    { slug: "sheet-music-0-make-a-way-resources",                             title: "Make a Way",                              comingSoon: true },
+    { slug: "sheet-music-0-the-lord-bless-you-and-keep-you-resources",        title: "The Lord Bless You and Keep You",         comingSoon: true },
+    { slug: "sheet-music-0-under-your-wings-resources",                       title: "Under Your Wings",                        comingSoon: true },
+    { slug: "sheet-music-0-your-peace-surpasses-all-understanding-resources", title: "Your Peace Surpasses All Understanding",  comingSoon: true },
 ];
