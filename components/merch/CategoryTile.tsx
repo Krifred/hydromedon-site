@@ -13,6 +13,7 @@ interface CategoryTileProps {
     href: string;
     imageSrc: string | null;
     ctaLabel?: string;
+    description?: string;
 }
 
 export default function CategoryTile({
@@ -20,6 +21,7 @@ export default function CategoryTile({
     href,
     imageSrc,
     ctaLabel = "View Collection",
+    description,
 }: CategoryTileProps) {
     return (
         <Link
@@ -41,9 +43,15 @@ export default function CategoryTile({
             </div>
 
             <div className="px-4 py-6 flex flex-col gap-3">
-                <p className="text-sm font-medium tracking-[0.05em] text-white/80 leading-snug">
+                <h3 className="text-sm font-medium tracking-[0.05em] text-white/80 leading-snug">
                     {name}
-                </p>
+                </h3>
+
+                {description && (
+                    <p className="text-xs text-white/45 leading-relaxed">
+                        {description}
+                    </p>
+                )}
 
                 <div
                     className="h-12 px-6 py-2 border border-yellow-500/40 text-yellow-400/60
