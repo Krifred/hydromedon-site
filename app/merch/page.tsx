@@ -1,20 +1,19 @@
 
 /* ==========================================================
    app/merch/page.tsx — Merch index
-   Fourthwall collections are grouped dynamically by the
-   category prefix in their slug (<category>-0-<name>).
-   One section is rendered per category, ordered alphabetically.
-   The final section (Songs for Service) is always Gumroad sheets.
+   Shows one CategoryTile per category. Sheet Music navigates
+   to /sheet-music; other categories navigate to their first
+   live collection page.
    ========================================================== */
 
 import type { Metadata } from "next";
 import { getCollections, parseCollectionSlug } from "@/lib/fourthwall";
+import type { FWCollection } from "@/lib/fourthwall";
 import { MERCH_CATALOG, resolveMerchEntries } from "@/lib/merch-catalog";
 import type { MerchEntry } from "@/lib/merch-catalog";
-import { sheets } from "@/lib/gumroad/catalog";
 import MerchIntro from "@/components/merch/MerchIntro";
-import MerchGrid from "@/components/merch/MerchGrid";
-import SheetsGrid from "@/components/merch/SheetsGrid";
+import CategoryTile from "@/components/merch/CategoryTile";
+import { collectionCovers } from "@/lib/collectionCovers";
 import FadeIn from "@/components/FadeIn";
 import MerchParallax from "@/components/merch/MerchParallax";
 
@@ -23,77 +22,103 @@ export const metadata: Metadata = {
     description: "Merch from Hydromedon.",
 };
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// ── Category slug overrides ───────────────────────────────────────────────────
 
-type CategoryGroup = {
-    category: string;
-    entries: MerchEntry[];
+/**
+ * Exact slug → homepage category.
+ * Needed for:
+ *   – bare/legacy slugs that lack the -0- pattern (arise-o-lord-resources)
+ *   – artifacts/* collections split across multiple homepage categories
+ */
+const SLUG_CATEGORY_OVERRIDES: Record<string, string> = {
+    "arise-o-lord-resources":  "sheet-music",
+    "artifacts-0-kitchen":     "kitchen",
+    "artifacts-0-drinkware":   "kitchen",
+    "artifacts-0-gaming":      "computerware",
 };
+
+function getCollectionCategory(slug: string): string {
+    if (SLUG_CATEGORY_OVERRIDES[slug]) return SLUG_CATEGORY_OVERRIDES[slug];
+    if (slug.startsWith("sheet-music-0-") || slug.endsWith("-resources")) return "sheet-music";
+    return parseCollectionSlug(slug).category;
+}
 
 // ── Category display order ────────────────────────────────────────────────────
 
+const CATEGORY_ORDER = ["sheet-music", "wearables", "kitchen", "computerware"];
+
 /**
- * Explicit render order for category sections, using raw slug prefixes as
- * returned by parseCollectionSlug().  Categories absent from this list are
- * appended after the known ones, sorted alphabetically among themselves.
+ * Allowlist of Fourthwall Collection Names for each non–sheet-music category.
+ * When set, only collections whose API name is in the set are included.
+ * Sheet Music is absent — all sheet-music-0-* collections are always included.
+ * Names come from the Fourthwall API and should be matched exactly.
  */
-const CATEGORY_ORDER = ["sheet-music", "wearables", "artifacts"];
+const CATEGORY_ALLOWED_NAMES: Partial<Record<string, ReadonlySet<string>>> = {
+    "wearables":    new Set(["Wellness", "Hoodies", "Tees"]),
+    "kitchen":      new Set(["Kitchen", "Drinkware"]),
+    "computerware": new Set(["Gaming"]),
+};
 
-/** Group MerchEntries by the category prefix of their slug. */
-function groupEntriesByCategory(entries: MerchEntry[]): CategoryGroup[] {
-    const map = new Map<string, MerchEntry[]>();
-    for (const entry of entries) {
-        const slug = entry.status === "live" ? entry.collection.slug : entry.slug;
-        const { category } = parseCollectionSlug(slug);
-        if (!map.has(category)) map.set(category, []);
-        map.get(category)!.push(entry);
-    }
-    return Array.from(map.entries())
-        .sort(([a], [b]) => {
-            const ai = CATEGORY_ORDER.indexOf(a);
-            const bi = CATEGORY_ORDER.indexOf(b);
-            if (ai !== -1 && bi !== -1) return ai - bi;   // both listed — use declared order
-            if (ai !== -1) return -1;                      // only a is listed — a first
-            if (bi !== -1) return 1;                       // only b is listed — b first
-            return a.localeCompare(b);                     // neither listed — alphabetical
-        })
-        .map(([category, entries]) => ({ category, entries }));
-}
+const CATEGORY_DISPLAY_NAMES: Record<string, string> = {
+    "kitchen": "Kitchen & Cups",
+};
 
-/** Map a category slug to the MerchCard variant that controls CTA text. */
-function categoryVariant(category: string): "artifact" | "wearable" | "sheet-music" {
-    if (category === "wearables") return "wearable";
-    if (category === "sheet-music") return "sheet-music";
-    return "artifact";
-}
-
-/** Convert a raw slug-style category prefix to a display label.
- *  "sheet-music" → "Sheet Music",  "wearables" → "Wearables" */
 function formatCategory(category: string): string {
+    if (CATEGORY_DISPLAY_NAMES[category]) return CATEGORY_DISPLAY_NAMES[category];
     return category
         .replace(/-/g, " ")
         .replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-function SectionDivider() {
-    return (
-        <div className="max-w-6xl mx-auto px-6 py-5 sm:py-8">
-            <div
-                className="h-px w-full"
-                style={{ backgroundColor: "rgba(232, 228, 223, 0.20)" }}
-            />
-        </div>
-    );
+const CATEGORY_CTA: Record<string, string> = {
+    "sheet-music": "Browse Sheet Music",
+    "wearables": "Enter Collection",
+    "kitchen": "Explore Kitchen & Cups",
+    "computerware": "Explore Computerware",
+};
+
+/** Stable category page routes — independent of live collection availability. */
+const CATEGORY_PAGES: Record<string, string> = {
+    "sheet-music":  "/sheet-music",
+    "wearables":    "/merch/wearables",
+    "kitchen":      "/merch/kitchen",
+    "computerware": "/merch/computerware",
+};
+
+function getCategoryHref(category: string): string {
+    return CATEGORY_PAGES[category] ?? "#";
+}
+
+function getCategoryImageSrc(entries: MerchEntry[]): string | null {
+    const first = entries[0];
+    if (!first) return null;
+    if (first.status === "live") {
+        return collectionCovers[first.collection.slug] ?? first.collection.primaryImage?.url ?? null;
+    }
+    return collectionCovers[first.slug] ?? null;
 }
 
 export default async function MerchPage() {
-    let groups: CategoryGroup[] = [];
+    let allEntries: MerchEntry[] = [];
+    let liveCollections: FWCollection[] = [];
     try {
-        const live = await getCollections();
-        const entries = resolveMerchEntries(live, MERCH_CATALOG);
-        groups = groupEntriesByCategory(entries);
+        liveCollections = await getCollections();
+        allEntries = resolveMerchEntries(liveCollections, MERCH_CATALOG);
     } catch (err) {
         console.error("[MerchPage] Fourthwall API error:", err);
+    }
+
+    const entriesByCategory = new Map<string, MerchEntry[]>();
+    for (const entry of allEntries) {
+        const slug = entry.status === "live" ? entry.collection.slug : entry.slug;
+        const category = getCollectionCategory(slug);
+        const allowed = CATEGORY_ALLOWED_NAMES[category];
+        if (allowed) {
+            const name = entry.status === "live" ? entry.collection.name : entry.title;
+            if (!allowed.has(name)) continue;
+        }
+        if (!entriesByCategory.has(category)) entriesByCategory.set(category, []);
+        entriesByCategory.get(category)!.push(entry);
     }
 
     return (
@@ -106,58 +131,27 @@ export default async function MerchPage() {
             <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-gradient-to-b from-[#E8E4DF]/[0.06] to-transparent" />
             <MerchParallax />
             <MerchIntro />
-            <SectionDivider />
 
-            {/* Dynamic Fourthwall sections — one per slug category */}
-            {groups.map(({ category, entries }, groupIdx) => (
-                <div key={category}>
-                    <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-28 pb-16 sm:pb-24">
-                        <div className="pointer-events-none absolute inset-0">
-                            <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 20% 10%, rgba(212,175,55,0.06), transparent 60%)" }} />
-                            <div className="bg-noise absolute inset-0" />
-                        </div>
-                        <FadeIn delayMs={200} className="mb-8 sm:mb-12 relative js-merch-intro">
-                            <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
-                                {formatCategory(category)}
-                            </p>
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight">
-                                {formatCategory(category)}
-                            </h2>
-                        </FadeIn>
-                        <MerchGrid
-                            entries={entries}
-                            emptyLabel={`No ${formatCategory(category)} available yet.`}
-                            variant={categoryVariant(category)}
-                        />
-                    </section>
-                    {groupIdx < groups.length - 1 && <SectionDivider />}
+            <section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-28 pb-24 sm:pb-32">
+                <div className="pointer-events-none absolute inset-0">
+                    <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 20% 10%, rgba(212,175,55,0.06), transparent 60%)" }} />
+                    <div className="bg-noise absolute inset-0" />
                 </div>
-            ))}
-
-            {groups.length > 0 && <SectionDivider />}
-
-            {/* Songs for Service — Gumroad sheet music (always last) */}
-            {/*<section className="relative max-w-6xl mx-auto px-6 pt-16 sm:pt-32 pb-16 sm:pb-28">*/}
-            {/*    <div className="pointer-events-none absolute inset-0">*/}
-            {/*        <div className="absolute inset-0" style={{ background: "radial-gradient(800px 400px at 50% 0%, rgba(255,252,245,0.04), transparent 55%)" }} />*/}
-            {/*        <div className="absolute inset-0" style={{ backgroundImage: "url('/textures/noise.svg')", backgroundRepeat: "repeat", opacity: 0.03 }} />*/}
-            {/*    </div>*/}
-            {/*    <div className="mb-6 sm:mb-10 h-px w-full relative" style={{ backgroundColor: "rgba(232, 228, 223, 0.12)" }} />*/}
-            {/*    <FadeIn delayMs={150} durationMs={680} className="mb-8 sm:mb-14 relative js-merch-intro">*/}
-            {/*        <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">*/}
-            {/*            Music Sheets*/}
-            {/*        </p>*/}
-            {/*        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-[0.03em]" style={{ color: "rgba(232,228,223,0.85)" }}>*/}
-            {/*            Songs for Service*/}
-            {/*        </h2>*/}
-            {/*        <p className="mt-3 text-xs leading-relaxed" style={{ color: "rgba(180,176,172,0.65)" }}>*/}
-            {/*            Lead sheets and transcriptions built for worship and devotion.*/}
-            {/*        </p>*/}
-            {/*    </FadeIn>*/}
-            {/*    <div className="relative">*/}
-            {/*        <SheetsGrid items={sheets} />*/}
-            {/*    </div>*/}
-            {/*</section>*/}
+                <ul className="grid grid-cols-2 lg:grid-cols-4 gap-5 p-0 m-0 list-none">
+                    {CATEGORY_ORDER.map((category, i) => (
+                        <li key={category}>
+                            <FadeIn delayMs={100 + i * 80}>
+                                <CategoryTile
+                                    name={formatCategory(category)}
+                                    href={getCategoryHref(category)}
+                                    imageSrc={getCategoryImageSrc(entriesByCategory.get(category) ?? [])}
+                                    ctaLabel={CATEGORY_CTA[category] ?? "View Collection"}
+                                />
+                            </FadeIn>
+                        </li>
+                    ))}
+                </ul>
+            </section>
         </main>
     );
 }
