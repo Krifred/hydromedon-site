@@ -29,9 +29,19 @@ export default function MerchCard({ collection, variant = "artifact" }: MerchCar
 
     const isComingSoon = collection.name.toLowerCase().includes("coming soon");
 
+    // Sheet music slugs follow: sheet-music-{N}-{name}-resources
+    // Map to the internal /sheet-music/[slug]/resources route
+    const internalSlug = collection.slug
+        .replace(/^sheet-music-\d+-/, "")
+        .replace(/-resources$/, "");
+    const href =
+        variant === "sheet-music"
+            ? `/sheet-music/${internalSlug}/resources`
+            : `/merch/${collection.slug}`;
+
     return (
         <Link
-            href={`/merch/${collection.slug}`}
+            href={href}
             className="group block rounded-sm overflow-hidden border border-white/8 bg-white/[0.03] transition-all duration-300 ease-out hover:-translate-y-0.5 active:opacity-90 hover:border-yellow-500/30 hover:shadow-[0_8px_24px_rgba(0,0,0,0.12),0_0_32px_rgba(212,175,55,0.22)]"
         >
             <div className="relative w-full aspect-[3/4] overflow-hidden rounded-lg">

@@ -1,83 +1,115 @@
-/* ==========================================================
-   app/sheet-music/page.tsx — Sheet Music collection grid
-   Fetches all sheet-music Fourthwall collections and renders
-   them in a grid, including "Available soon" placeholder cards
-   for collections declared in MERCH_CATALOG but not yet live.
-   ========================================================== */
+const sheetMusicData = [
+  {
+    slug: "arise-o-lord",
+    title: "Arise, O Lord",
+    subtitle: "Psalm 3 — Worship Anthem",
+    coverImage: "/covers/arise-o-lord.jpg",
+    status: "available",
+    description: "A cinematic worship anthem based on Psalm 3."
+  }
+  // Additional compositions can be added here later
+];
 
-import type { Metadata } from "next";
-import Link from "next/link";
-import { getCollections, parseCollectionSlug } from "@/lib/fourthwall";
-import { MERCH_CATALOG, resolveMerchEntries } from "@/lib/merch-catalog";
-import type { MerchEntry } from "@/lib/merch-catalog";
-import MerchGrid from "@/components/merch/MerchGrid";
-import FadeIn from "@/components/FadeIn";
+export default function SheetMusicIndexPage() {
+  return (
+    <main className="mx-auto max-w-4xl py-20">
+      <h1 className="text-4xl font-bold mb-4">Sheet Music</h1>
+      <p className="text-lg text-gray-600 mb-12">Explore all available and upcoming Hydromedon compositions.</p>
 
-export const metadata: Metadata = {
-    title: "Sheet Music — Hydromedon",
-    description: "Sheet music and lead sheets from Hydromedon.",
-};
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-12">
+        {sheetMusicData.map((item, i) => (
+          <div
+            key={i}
+            className={`space-y-3 ${
+              item.status === "coming-soon" ? "opacity-60 pointer-events-none" : ""
+            }`}
+          >
+            <h2 className="text-2xl font-semibold tracking-tight">{item.title}</h2>
+            <p className="text-gray-600">{item.subtitle}</p>
 
-/**
- * Assigns sheet-music category to any slug matching the sheet-music pattern.
- * All Hydromedon sheet music slugs follow: sheet-music-0-<name>-resources
- */
-function getCollectionCategory(slug: string): string {
-    if (slug.startsWith("sheet-music-0-") || slug.endsWith("-resources")) return "sheet-music";
-    return parseCollectionSlug(slug).category;
-}
-
-export default async function SheetMusicPage() {
-    let entries: MerchEntry[] = [];
-    try {
-        const live = await getCollections();
-        const sheetMusicLive = live.filter(
-            (c) => getCollectionCategory(c.slug) === "sheet-music"
-        );
-        const sheetMusicCatalog = MERCH_CATALOG.filter(
-            (e) => getCollectionCategory(e.slug) === "sheet-music"
-        );
-        entries = resolveMerchEntries(sheetMusicLive, sheetMusicCatalog);
-    } catch (err) {
-        console.error("[SheetMusicPage] Fourthwall API error:", err);
-    }
-
-    return (
-        <main
-            data-page-enter
-            className="relative min-h-screen"
-            style={{ animation: "merch-page-enter 700ms 100ms ease-out both" }}
-        >
-            <style>{`@keyframes merch-page-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){[data-page-enter]{animation:none!important}}`}</style>
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-gradient-to-b from-[#E8E4DF]/[0.06] to-transparent" />
-
-            <section className="relative max-w-6xl mx-auto px-6 pt-28 sm:pt-36 pb-16 sm:pb-24">
-                <div className="pointer-events-none absolute inset-0">
-                    <div className="absolute inset-0" style={{ background: "radial-gradient(900px 500px at 20% 10%, rgba(212,175,55,0.06), transparent 60%)" }} />
-                    <div className="bg-noise absolute inset-0" />
-                </div>
-
-                <FadeIn delayMs={100} className="mb-8 sm:mb-12 relative">
-                    <Link
-                        href="/merch"
-                        className="inline-flex items-center gap-2 text-xs tracking-[0.15em] text-white/30 uppercase hover:text-white/60 transition-colors mb-6"
-                    >
-                        ← Merch
-                    </Link>
-                    <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">
-                        Sheet Music
-                    </p>
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-yellow-400 leading-none tracking-tight">
-                        Sheet Music
-                    </h1>
-                </FadeIn>
-
-                <MerchGrid
-                    entries={entries}
-                    variant="sheet-music"
-                    emptyLabel="No Sheet Music available yet."
+            {item.status === "available" ? (
+              <a href={`/sheet-music/${item.slug}`}>
+                <img
+                  src={item.coverImage}
+                  alt={item.title}
+                  className="rounded-lg shadow-sm hover:shadow-md transition cursor-pointer"
                 />
-            </section>
-        </main>
-    );
+              </a>
+            ) : (
+              <div className="relative">
+                <img
+                  src={item.coverImage}
+                  alt={item.title}
+                  className="rounded-lg shadow-sm"
+                />
+                <span className="absolute bottom-2 right-2 bg-black text-white text-xs px-2 py-1 rounded">
+                  Coming Soon
+                </span>
+              </div>
+            )}
+
+            <p className="text-gray-700">{item.description}</p>
+            <p className="text-sm text-gray-500 capitalize">Status: {item.status}</p>
+          </div>
+        ))}
+      </section>
+      {/* JSON-LD: WebPage */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Sheet Music",
+            "description": "Explore all available and upcoming Hydromedon compositions.",
+            "url": "https://hydromedon.com/sheet-music"
+          })
+        }}
+      />
+
+      {/* JSON-LD: BreadcrumbList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Sheet Music",
+                "item": "https://hydromedon.com/sheet-music"
+              }
+            ]
+          })
+        }}
+      />
+
+      {/* JSON-LD: ItemList of Compositions */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "name": "Hydromedon Sheet Music Catalog",
+            "itemListElement": sheetMusicData.map((item, index) => ({
+              "@type": "ListItem",
+              "position": index + 1,
+              "name": item.title,
+              "url": `https://hydromedon.com/sheet-music/${item.slug}`,
+              "description": item.description,
+              "additionalProperty": {
+                "@type": "PropertyValue",
+                "name": "status",
+                "value": item.status
+              }
+            }))
+          })
+        }}
+      />
+
+    </main>
+  );
 }

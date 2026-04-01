@@ -91,6 +91,41 @@ const jsonLdCollectionPage = {
     "publisher": { "@type": "Organization", "name": "Hydromedon" },
 } as const;
 
+const jsonLdOrganization = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Hydromedon",
+    "url": "https://www.hydromedon.com",
+    "logo": "https://www.hydromedon.com/og/merch.jpg",
+    "sameAs": [],
+} as const;
+
+const jsonLdSearchAction = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "url": "https://www.hydromedon.com",
+    "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://www.hydromedon.com/search?q={search_term_string}",
+        },
+        "query-input": "required name=search_term_string",
+    },
+} as const;
+
+const jsonLdOfferCatalog = {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    "name": "Hydromedon Merch Catalog",
+    "itemListElement": [
+        { "@type": "OfferCatalog", "name": "Sheet Music",    "url": "https://www.hydromedon.com/sheet-music" },
+        { "@type": "OfferCatalog", "name": "Wearables",      "url": "https://www.hydromedon.com/merch/wearables" },
+        { "@type": "OfferCatalog", "name": "Kitchen & Cups", "url": "https://www.hydromedon.com/merch/kitchen" },
+        { "@type": "OfferCatalog", "name": "Computerware",   "url": "https://www.hydromedon.com/merch/computerware" },
+    ],
+} as const;
+
 // ── Category slug overrides ───────────────────────────────────────────────────
 
 /**
@@ -162,7 +197,13 @@ function getCategoryHref(category: string): string {
     return CATEGORY_PAGES[category] ?? "#";
 }
 
-function getCategoryImageSrc(entries: MerchEntry[]): string | null {
+/** Per-category image override — takes priority over the first-entry cover lookup. */
+const CATEGORY_IMAGE_OVERRIDES: Record<string, string> = {
+    "sheet-music": "/covers/biblical-graffiti.jpg",
+};
+
+function getCategoryImageSrc(category: string, entries: MerchEntry[]): string | null {
+    if (CATEGORY_IMAGE_OVERRIDES[category]) return CATEGORY_IMAGE_OVERRIDES[category];
     const first = entries[0];
     if (!first) return null;
     if (first.status === "live") {
@@ -208,6 +249,9 @@ export default async function MerchPage() {
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdItemList) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdTideboundProduct) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdCollectionPage) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOrganization) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdSearchAction) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdOfferCatalog) }} />
 
             <div className="pointer-events-none absolute inset-x-0 top-0 h-[360px] bg-gradient-to-b from-[#E8E4DF]/[0.06] to-transparent" />
             <MerchParallax />
@@ -240,7 +284,7 @@ export default async function MerchPage() {
                                 <CategoryTile
                                     name={formatCategory(category)}
                                     href={getCategoryHref(category)}
-                                    imageSrc={getCategoryImageSrc(entriesByCategory.get(category) ?? [])}
+                                    imageSrc={getCategoryImageSrc(category, entriesByCategory.get(category) ?? [])}
                                     ctaLabel={CATEGORY_CTA[category] ?? "View Collection"}
                                     description={CATEGORY_DESCRIPTIONS[category]}
                                 />
