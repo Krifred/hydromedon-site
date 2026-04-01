@@ -19,15 +19,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * Collections whose slugs do not follow the <category>-0-<name> convention.
- * Mirrors the override in app/merch/page.tsx — must be kept in sync.
+ * Assigns sheet-music category to any slug matching the sheet-music pattern.
+ * All Hydromedon sheet music slugs follow: sheet-music-0-<name>-resources
  */
-const SLUG_CATEGORY_OVERRIDES: Record<string, string> = {
-    "arise-o-lord-resources": "sheet-music",
-};
-
 function getCollectionCategory(slug: string): string {
-    if (SLUG_CATEGORY_OVERRIDES[slug]) return SLUG_CATEGORY_OVERRIDES[slug];
     if (slug.startsWith("sheet-music-0-") || slug.endsWith("-resources")) return "sheet-music";
     return parseCollectionSlug(slug).category;
 }

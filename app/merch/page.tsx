@@ -26,12 +26,9 @@ export const metadata: Metadata = {
 
 /**
  * Exact slug → homepage category.
- * Needed for:
- *   – bare/legacy slugs that lack the -0- pattern (arise-o-lord-resources)
- *   – artifacts/* collections split across multiple homepage categories
+ * Needed for artifacts/* collections split across multiple homepage categories.
  */
 const SLUG_CATEGORY_OVERRIDES: Record<string, string> = {
-    "arise-o-lord-resources":  "sheet-music",
     "artifacts-0-kitchen":     "kitchen",
     "artifacts-0-drinkware":   "kitchen",
     "artifacts-0-gaming":      "computerware",

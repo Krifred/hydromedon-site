@@ -1,39 +1,53 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-const aboutChildren = [
-    { label: "About Hydromedon", href: "/about#about" },
-    { label: "Recommended Sites", href: "/about/recommended-sites" },
-    { label: "Statement of Faith", href: "/about#statement-of-faith" },
-];
+type NavChild = { label: string; href: string };
+type NavItem =
+    | { label: string; href: string; children?: undefined }
+    | { label: string; href?: undefined; children: NavChild[] };
 
-const navLinks = [
-    { label: "Home", href: "/", children: undefined },
-    { label: "Latest Release", href: "/#latest", children: undefined },
-    { label: "Music", href: "/music", children: undefined },
-    { label: "Merch", href: "/merch", children: undefined },
-    { label: "About", href: "/about", children: aboutChildren },
-    { label: "Contact", href: "/#contact", children: undefined },
+const navLinks: NavItem[] = [
+    { label: "Home",               href: "/" },
+    { label: "Music",              href: "/music" },
+    {
+        label: "Merch",
+        children: [
+            { label: "Sheet Music",    href: "/sheet-music" },
+            { label: "Wearables",      href: "/merch/wearables" },
+            { label: "Kitchen & Cups", href: "/merch/kitchen" },
+            { label: "Computerware",   href: "/merch/computerware" },
+        ],
+    },
+    { label: "About Hydromedon",   href: "/about" },
+    { label: "Statement of Faith", href: "/about#statement-of-faith" },
+    { label: "Recommended Sites",  href: "/about/recommended-sites" },
+    { label: "Stay in the Light",  href: "/light" },
 ];
 
 export default function MobileNav() {
     const [open, setOpen] = useState(false);
-    const [aboutOpen, setAboutOpen] = useState(false);
+    const [openSection, setOpenSection] = useState<string | null>(null);
     const pathname = usePathname();
 
-    // Close the entire menu on route change
-    useEffect(() => {
+    // Close the entire menu when the route changes (back/forward nav or programmatic).
+    // Using "setState during render" pattern avoids calling setState inside useEffect.
+    const [prevPathname, setPrevPathname] = useState(pathname);
+    if (prevPathname !== pathname) {
+        setPrevPathname(pathname);
         setOpen(false);
-        setAboutOpen(false);
-    }, [pathname]);
+        setOpenSection(null);
+    }
 
     const close = () => {
         setOpen(false);
-        setAboutOpen(false);
+        setOpenSection(null);
     };
+
+    const toggleSection = (label: string) =>
+        setOpenSection((prev) => (prev === label ? null : label));
 
     return (
         <div className="md:hidden">
@@ -76,7 +90,7 @@ export default function MobileNav() {
                 id="mobile-nav"
                 className={`absolute left-0 right-0 top-full z-50
                             overflow-hidden transition-all duration-300 ease-out
-                            ${open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"}`}
+                            ${open ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"}`}
             >
                 <nav
                     className="bg-black/95 backdrop-blur-md border-t border-white/10
@@ -84,36 +98,40 @@ export default function MobileNav() {
                     aria-label="Mobile navigation"
                 >
                     {navLinks.map((item) => {
-                        /* ── About accordion ─────────────────────────────── */
+                        /* ── Expandable section (e.g. Merch) ─────────────── */
                         if (item.children) {
+                            const isExpanded = openSection === item.label;
+                            const childActive = item.children.some(
+                                (c) => pathname === c.href || pathname.startsWith(c.href + "/")
+                            );
                             return (
                                 <div key={item.label} className="flex flex-col">
                                     <button
                                         type="button"
-                                        onClick={() => setAboutOpen((v) => !v)}
+                                        onClick={() => toggleSection(item.label)}
                                         className={`flex items-center justify-between
                                                     py-3 text-sm uppercase tracking-[0.15em]
                                                     border-b border-white/5 transition-colors
-                                                    ${pathname === "/about"
+                                                    ${childActive
                                                         ? "text-[#FFD700]"
                                                         : "text-white/85 hover:text-[#FFD700]"
                                                     }`}
-                                        aria-expanded={aboutOpen}
+                                        aria-expanded={isExpanded}
                                     >
                                         <span>{item.label}</span>
                                         <span
                                             aria-hidden
                                             className={`text-xs transition-transform duration-300
-                                                        ${aboutOpen ? "rotate-180" : ""}`}
+                                                        ${isExpanded ? "rotate-180" : ""}`}
                                         >
                                             ▾
                                         </span>
                                     </button>
 
-                                    {/* About sub-links */}
+                                    {/* Sub-links */}
                                     <div
                                         className={`overflow-hidden transition-all duration-300 ease-out
-                                                    ${aboutOpen ? "max-h-48 opacity-100" : "max-h-0 opacity-0"}`}
+                                                    ${isExpanded ? "max-h-48 opacity-100" : "max-h-0 opacity-0"}`}
                                     >
                                         <div className="ml-2 border-l border-white/10 pl-3 py-1 flex flex-col gap-0.5">
                                             {item.children.map((child) => (

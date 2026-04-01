@@ -86,8 +86,7 @@ export function resolveMerchEntries(
 
 export const MERCH_CATALOG: CatalogEntry[] = [
     // ── Sheet Music ───────────────────────────────────────────────────────────
-    // Live: slug matches the actual Fourthwall collection slug (bare form, legacy).
-    { slug: "arise-o-lord-resources",                                         title: "Arise, O Lord"                          },
+    { slug: "sheet-music-0-arise-o-lord-resources",                           title: "Arise, O Lord"                          },
 
     // Coming soon: render as "Available soon" regardless of Fourthwall publish state.
     { slug: "sheet-music-0-armor-of-light-resources",                         title: "Armor of Light",                          comingSoon: true },
