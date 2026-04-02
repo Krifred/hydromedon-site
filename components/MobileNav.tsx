@@ -4,27 +4,27 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 
-type NavChild = { label: string; href: string };
+type NavChild = { name: string; href: string };
 type NavItem =
-    | { label: string; href: string; children?: undefined }
-    | { label: string; href?: undefined; children: NavChild[] };
+    | { name: string; href: string; children?: undefined }
+    | { name: string; href?: undefined; children: NavChild[] };
 
 const navLinks: NavItem[] = [
-    { label: "Home",               href: "/" },
-    { label: "Music",              href: "/music" },
+    { name: "Home",               href: "/" },
+    { name: "Music",              href: "/music" },
     {
-        label: "Merch",
+        name: "Merch",
         children: [
-            { label: "Sheet Music",    href: "/sheet-music" },
-            { label: "Wearables",      href: "/merch/wearables" },
-            { label: "Kitchen & Cups", href: "/merch/kitchen" },
-            { label: "Computerware",   href: "/merch/computerware" },
+            { name: "Sheet Music",    href: "/sheet-music" },
+            { name: "Wearables",      href: "/merch/wearables" },
+            { name: "Kitchen & Cups", href: "/merch/kitchen-and-cups" },
+            { name: "Computerware",   href: "/merch/computerware" },
         ],
     },
-    { label: "About Hydromedon",   href: "/about" },
-    { label: "Statement of Faith", href: "/about#statement-of-faith" },
-    { label: "Recommended Sites",  href: "/about/recommended-sites" },
-    { label: "Stay in the Light",  href: "/light" },
+    { name: "About Hydromedon",   href: "/about" },
+    { name: "Statement of Faith", href: "/about/statement-of-faith" },
+    { name: "Recommended Sites",  href: "/about/recommended-sites" },
+    { name: "Stay in the Light",  href: "/light" },
 ];
 
 export default function MobileNav() {
@@ -100,15 +100,15 @@ export default function MobileNav() {
                     {navLinks.map((item) => {
                         /* ── Expandable section (e.g. Merch) ─────────────── */
                         if (item.children) {
-                            const isExpanded = openSection === item.label;
+                            const isExpanded = openSection === item.name;
                             const childActive = item.children.some(
                                 (c) => pathname === c.href || pathname.startsWith(c.href + "/")
                             );
                             return (
-                                <div key={item.label} className="flex flex-col">
+                                <div key={item.name} className="flex flex-col">
                                     <button
                                         type="button"
-                                        onClick={() => toggleSection(item.label)}
+                                        onClick={() => toggleSection(item.name)}
                                         className={`flex items-center justify-between
                                                     py-3 text-sm uppercase tracking-[0.15em]
                                                     border-b border-white/5 transition-colors
@@ -118,7 +118,7 @@ export default function MobileNav() {
                                                     }`}
                                         aria-expanded={isExpanded}
                                     >
-                                        <span>{item.label}</span>
+                                        <span>{item.name}</span>
                                         <span
                                             aria-hidden
                                             className={`text-xs transition-transform duration-300
@@ -141,7 +141,7 @@ export default function MobileNav() {
                                                     onClick={close}
                                                     className="py-2 text-sm text-white/60 hover:text-[#FFD700] transition-colors"
                                                 >
-                                                    {child.label}
+                                                    {child.name}
                                                 </Link>
                                             ))}
                                         </div>
@@ -171,8 +171,8 @@ export default function MobileNav() {
                                             }`}
                                 aria-current={active ? "page" : undefined}
                             >
-                                {item.label}
-                            </Link>
+                                    {item.name}
+                                </Link>
                         );
                     })}
                 </nav>

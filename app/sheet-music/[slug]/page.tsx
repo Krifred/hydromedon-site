@@ -1,3 +1,5 @@
+import React from 'react';
+
 const compositionData = {
   title: "Arise, O Lord",
   subtitle: "Lead Sheet",
@@ -10,8 +12,8 @@ const compositionData = {
 
   coverImage: "/images/sheet-music/arise-o-lord/cover.jpg",
 
-  spotifyUrl: "https://open.spotify.com/track/placeholder",
-  youtubeUrl: "https://youtube.com/watch?v=placeholder",
+  spotifyUrl: "https://open.spotify.com/track/3ut8WjurvXkLDsT24joSSO",
+  youtubeUrl: "https://youtu.be/YuNm0FGE8AU",
 
   leadSheetProductUrl: "https://store.hydromedon.com/products/arise-o-lord-lead-sheet",
 
@@ -50,74 +52,73 @@ export default function CompositionPage({ params: { slug } }: { params: { slug: 
     <main className="mx-auto max-w-3xl py-20">
 
       {/* 1. Hero */}
-      <section className="mb-12 space-y-4">
-        <a href={`/sheet-music/${slug}/resources`}>
-          <img src={compositionData.coverImage} alt={compositionData.title} className="w-full rounded-lg" />
-        </a>
-        <h1 className="text-4xl font-bold mt-6">{compositionData.title}</h1>
-        {compositionData.subtitle && <h2 className="text-xl text-gray-600">{compositionData.subtitle}</h2>}
-        <p className="mt-4">{compositionData.description[0]}</p>
-        <a href={`/sheet-music/${slug}/resources`} className="inline-block mt-6 px-4 py-2 bg-black text-white rounded">Get the Score</a>
+      <section className="mb-12 space-y-6">
+        <h1 className="text-4xl font-bold tracking-tight mb-6 text-yellow-400">{compositionData.title}</h1>
+        {compositionData.subtitle && <h2 className="text-2xl font-semibold tracking-tight mb-3 text-white/60">{compositionData.subtitle}</h2>}
+        <p className="mt-4 text-white/55 leading-relaxed">{compositionData.description[0]}</p>
+        <a href={`/sheet-music/${slug}/resources`} className="inline-flex items-center gap-2 h-11 px-7 border border-yellow-500/40 text-yellow-400/70 text-sm rounded hover:border-yellow-500/70 hover:text-yellow-400 transition-colors duration-300">Get the Score</a>
       </section>
 
       {/* 2. Streaming Preview */}
-      <section className="mb-12 space-y-4">
-        <h2 className="text-2xl font-semibold">Listen</h2>
-        {compositionData.spotifyUrl && (
-          <a href={compositionData.spotifyUrl} target="_blank" rel="noopener noreferrer" className="inline-block mr-4 px-4 py-2 border rounded">Listen on Spotify</a>
-        )}
-        {compositionData.youtubeUrl && (
-          <a href={compositionData.youtubeUrl} target="_blank" rel="noopener noreferrer" className="inline-block mr-4 px-4 py-2 border rounded">Watch on YouTube</a>
-        )}
+      <section className="mb-12 space-y-6">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Listen</h2>
+        <div className="flex gap-3">
+          {compositionData.spotifyUrl && (
+            <a href={compositionData.spotifyUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center h-11 px-7 rounded bg-yellow-500 text-black font-semibold text-sm shadow hover:bg-yellow-400 transition">Listen on Spotify</a>
+          )}
+          {compositionData.youtubeUrl && (
+            <a href={compositionData.youtubeUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center h-11 px-7 rounded border border-yellow-500 text-yellow-500 font-semibold text-sm hover:bg-yellow-500 hover:text-black transition">Watch on YouTube</a>
+          )}
+        </div>
       </section>
 
       {/* 3. Description */}
       <section className="mb-12 space-y-3">
-        <h2 className="text-2xl font-semibold">About This Composition</h2>
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">About This Composition</h2>
         {compositionData.description.slice(1).map((para, i) => (
-          <p key={i}>{para}</p>
+          <p key={i} className="text-white/55 leading-relaxed">{para}</p>
         ))}
       </section>
 
       {/* 4. Product Options */}
-      <section className="mb-12 space-y-4">
-        <h2 className="text-2xl font-semibold">Available Scores</h2>
+      <section className="mb-12 space-y-6">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Available Scores</h2>
 
         {/* Lead Sheet Card */}
-        <div className="border p-4 rounded-lg space-y-2">
-          <h3>Lead Sheet</h3>
-          <p>The primary lead sheet for this composition.</p>
-          <a href={`/sheet-music/${slug}/resources`}>Get the Lead Sheet</a>
+        <div className="border border-white/8 bg-white/[0.02] p-4 rounded-lg space-y-3">
+          <h3 className="text-lg font-semibold tracking-tight text-white/80">Lead Sheet</h3>
+          <p className="text-white/55 leading-relaxed">The primary lead sheet for this composition.</p>
+          <a href={`/sheet-music/${slug}/resources`} className="inline-flex items-center gap-2 h-11 px-7 border border-yellow-500/40 text-yellow-400/70 text-sm rounded hover:border-yellow-500/70 hover:text-yellow-400 transition-colors duration-300">Get the Lead Sheet</a>
         </div>
 
         {/* Full Score + Instrument Parts Card */}
-        <div className="border p-4 rounded-lg space-y-2">
-          <h3>Full Score + Instrument Parts</h3>
-          <p>The full arrangement including all instrumental parts.</p>
+        <div className="border border-white/8 bg-white/[0.02] p-4 rounded-lg space-y-3">
+          <h3 className="text-lg font-semibold tracking-tight text-white/80">Full Score + Instrument Parts</h3>
+          <p className="text-white/55 leading-relaxed">The full arrangement including all instrumental parts.</p>
 
           {compositionData.fullScoreComingSoon ? (
             <>
-              <p><strong>Coming Soon</strong></p>
-              <p>This arrangement is currently in production.</p>
+              <p className="text-yellow-400/70 font-semibold text-sm">Coming Soon</p>
+              <p className="text-white/55 leading-relaxed">This arrangement is currently in production.</p>
             </>
           ) : (
-            <a href={compositionData.fullScoreProductUrl}>Get the Full Score</a>
+            <a href={compositionData.fullScoreProductUrl} className="inline-flex items-center gap-2 h-11 px-7 border border-yellow-500/40 text-yellow-400/70 text-sm rounded hover:border-yellow-500/70 hover:text-yellow-400 transition-colors duration-300">Get the Full Score</a>
           )}
         </div>
       </section>
 
       {/* 5. Sample Pages */}
-      <section className="mb-12 space-y-4 grid grid-cols-1 gap-4">
-        <h2 className="text-2xl font-semibold">Sample Pages</h2>
+      <section className="mb-12 space-y-6 grid grid-cols-1 gap-4">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Sample Pages</h2>
         {compositionData.sampleImages.map((src, i) => (
-          <img key={i} src={src} alt={`Sample page ${i + 1}`} className="w-full rounded-lg" />
+          <img key={i} src={src} alt={`Sample page ${i + 1}`} className="w-full rounded-lg shadow-sm hover:shadow-md transition cursor-pointer" />
         ))}
       </section>
 
       {/* 6. Technical Details */}
-      <section className="mb-12 space-y-4">
-        <h2 className="text-2xl font-semibold">Technical Details</h2>
-        <ul className="list-disc ml-6 space-y-1">
+      <section className="mb-12 space-y-6">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Technical Details</h2>
+        <ul className="list-disc ml-6 space-y-1 text-white/55">
           {compositionData.technical.key && <li>Key: {compositionData.technical.key}</li>}
           {compositionData.technical.tempo && <li>Tempo: {compositionData.technical.tempo}</li>}
           {compositionData.technical.timeSignature && <li>Time Signature: {compositionData.technical.timeSignature}</li>}
@@ -131,32 +132,32 @@ export default function CompositionPage({ params: { slug } }: { params: { slug: 
 
       {/* 7. Lyrics (optional) */}
       {compositionData.lyrics && (
-        <section className="mb-12 space-y-2">
-          <h2 className="text-2xl font-semibold">Lyrics</h2>
+        <section className="mb-12 space-y-3">
+          <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Lyrics</h2>
           {compositionData.lyrics.map((line, i) => (
-            <p key={i}>{line}</p>
+            <p key={i} className="text-white/55">{line}</p>
           ))}
-          <p>Lyrics © Hydromedon</p>
+          <p className="text-white/30 text-sm">Lyrics © Hydromedon</p>
         </section>
       )}
 
       {/* 8. Coming Soon (optional) */}
       {compositionData.comingSoon && (
-        <section className="mb-12 space-y-4">
-          <h2 className="text-2xl font-semibold">Coming Soon</h2>
+        <section className="mb-12 space-y-6">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Coming Soon</h2>
           {compositionData.comingSoon.map((item, i) => (
-            <div key={i} className="border p-4 rounded-lg space-y-2">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-              <p>Coming Soon</p>
+            <div key={i} className="border border-white/8 bg-white/[0.02] p-4 rounded-lg space-y-3">
+              <h3 className="text-lg font-semibold tracking-tight text-white/80">{item.title}</h3>
+              <p className="text-white/55 leading-relaxed">{item.description}</p>
+              <p className="text-white/40 text-sm">Coming Soon</p>
             </div>
           ))}
         </section>
       )}
 
       {/* 9. Footer */}
-      <section className="mt-12 text-sm text-gray-600">
-        <a href="/sheet-music" className="underline">← Back to Sheet Music</a>
+      <section className="mt-12 text-sm text-white/30">
+        <a href="/sheet-music" className="text-white/40 hover:text-white/70 transition-colors">← Back to Sheet Music</a>
       </section>
 
       {/* JSON-LD */}

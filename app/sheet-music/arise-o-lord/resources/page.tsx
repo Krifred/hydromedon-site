@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 const resourcesData = {
   title: "Arise, O Lord — Resources",
@@ -38,22 +38,22 @@ export default function ResourcesPage() {
 
             {/* HERO SECTION */}
             <section className="mb-12 space-y-6">
-                <h1 className="text-4xl font-bold">{resourcesData.title}</h1>
+                <h1 className="text-4xl font-bold tracking-tight mb-6">{resourcesData.title}</h1>
                 <p className="text-lg text-gray-600 leading-relaxed">{resourcesData.description[0]}</p>
                 <p className="text-lg text-gray-700 leading-relaxed">{resourcesData.description[1]}</p>
             </section>
 
             {/* AVAILABLE RESOURCES */}
             <section className="mb-12 space-y-6">
-                <h2 className="text-2xl font-semibold tracking-tight">Available Resources</h2>
+                <h2 className="text-2xl font-semibold tracking-tight mb-3">Available Resources</h2>
 
                 {/* Lead Sheet */}
                 <div className="border p-4 rounded-lg space-y-2 transition hover:shadow-md">
-                    <h3 className="font-medium">Lead Sheet</h3>
+                    <h3 className="text-lg font-semibold tracking-tight">Lead Sheet</h3>
                     <p className="text-gray-600">A clean, musician-ready 6-page lead sheet with full melody, chords, dynamics, and phrasing.</p>
                     <a
                         href={resourcesData.leadSheetUrl}
-                        className="inline-block px-4 py-2 bg-black text-white rounded"
+                        className="inline-block px-4 py-2 bg-black text-white rounded hover:shadow-md transition"
                     >
                         Get the Lead Sheet
                     </a>
@@ -62,7 +62,7 @@ export default function ResourcesPage() {
 
             {/* COMING SOON */}
             <section className="mb-12 space-y-6 pt-4 border-t border-gray-200">
-                <h2 className="text-2xl font-semibold tracking-tight">Coming Soon</h2>
+                <h2 className="text-2xl font-semibold tracking-tight mb-3">Coming Soon</h2>
 
                 {resourcesData.items
                     .filter(item => item.status === "coming-soon")
@@ -71,7 +71,7 @@ export default function ResourcesPage() {
                             key={i}
                             className="border p-4 rounded-lg space-y-2 opacity-60 transition hover:shadow-md"
                         >
-                            <h3 className="font-medium">{item.title}</h3>
+                            <h3 className="text-lg font-semibold tracking-tight">{item.title}</h3>
                             <p className="text-gray-600">This resource is currently in preparation and will be added soon.</p>
                             {itemDescriptions[item.title] && <p className="text-gray-600">{itemDescriptions[item.title]}</p>}
                         </div>
@@ -80,7 +80,7 @@ export default function ResourcesPage() {
 
             {/* SAMPLE PAGES */}
             <section className="mb-12 space-y-4">
-                <h2 className="text-2xl font-semibold tracking-tight">Sample Pages</h2>
+                <h2 className="text-2xl font-semibold tracking-tight mb-3">Sample Pages</h2>
 
                 <div className="grid grid-cols-2 gap-4">
                     <img
