@@ -107,12 +107,10 @@ export default function CompositionPage({ params: { slug } }: { params: { slug: 
         </div>
       </section>
 
-      {/* 5. Sample Pages */}
-      <section className="mb-12 space-y-6 grid grid-cols-1 gap-4">
-        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Sample Pages</h2>
-        {compositionData.sampleImages.map((src, i) => (
-          <img key={i} src={src} alt={`Sample page ${i + 1}`} className="w-full rounded-lg shadow-sm hover:shadow-md transition cursor-pointer" />
-        ))}
+      {/* 5. Lead Sheet Preview */}
+      <section className="mb-12 space-y-6">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Lead Sheet Preview</h2>
+        <img src="/samples/arise-o-lord.jpg" alt="Arise, O Lord — Lead Sheet Preview" className="rounded-lg shadow-sm hover:shadow-md transition cursor-pointer" />
       </section>
 
       {/* 6. Technical Details */}
@@ -130,16 +128,69 @@ export default function CompositionPage({ params: { slug } }: { params: { slug: 
         </ul>
       </section>
 
-      {/* 7. Lyrics (optional) */}
-      {compositionData.lyrics && (
-        <section className="mb-12 space-y-3">
-          <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Lyrics</h2>
-          {compositionData.lyrics.map((line, i) => (
-            <p key={i} className="text-white/55">{line}</p>
-          ))}
-          <p className="text-white/30 text-sm">Lyrics © Hydromedon</p>
-        </section>
-      )}
+      {/* 7. Lyrics */}
+      <section className="mb-12 space-y-6">
+        <h2 className="text-2xl font-semibold tracking-tight mb-3 text-yellow-400">Lyrics</h2>
+        <div className="space-y-4">
+          <p className="text-gray-200 leading-relaxed">
+            Almighty God, my shelter and shield<br />
+            My defender, my strength in the field<br />
+            I come not quiet, but bold in my cry<br />
+            There are battles I can&#39;t win, though I try
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            You are the God who rescues and saves<br />
+            You step in when the storm misbehaves<br />
+            So I lift my voice and call on Your name<br />
+            Jesus, fight for me again
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            Arise, O Lord, scatter my foes<br />
+            Silence the lies only heaven knows<br />
+            You are my justice, my refuge, my peace<br />
+            You speak for me when my words cease<br />
+            Arise, O Lord, surround me like flame<br />
+            Let every trial glorify Your name
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            You dress a table where enemies see<br />
+            That You, O Lord, have fought for me<br />
+            You heal the wounds no one can trace<br />
+            You pour Your oil on every place
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            Arise and let no false word stand<br />
+            No witness rise by human hand<br />
+            You are my shield, my holy flame<br />
+            You guard my soul, You know my name
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            Hope is rising in the waiting<br />
+            Faith is growing in the fire<br />
+            You are working in the silence<br />
+            Turning ashes into choir<br />
+            Every tear sown in sorrow<br />
+            Will bloom in joy tomorrow<br />
+            You are faithful, You are near<br />
+            My Redeemer, I won&#39;t fear
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            Arise, O Lord, scatter my foes<br />
+            Silence the lies only heaven knows<br />
+            You are my justice, my refuge, my peace<br />
+            You speak for me when my words cease<br />
+            Arise, O Lord, surround me like flame<br />
+            Let every trial glorify Your name
+          </p>
+          <p className="text-gray-200 leading-relaxed">
+            Let my story stir dry bones awake<br />
+            Let my breakthrough show the path You make<br />
+            You still redeem, You still renew<br />
+            And I will trust the fight to You
+          </p>
+        </div>
+        <p className="text-white/30 text-sm">Lyrics © Hydromedon</p>
+      </section>
 
       {/* 8. Coming Soon (optional) */}
       {compositionData.comingSoon && (
