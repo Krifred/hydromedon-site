@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { notFound } from 'next/navigation';
 import { compositions } from '@/data/compositions';
 
-export default function ResourcesPage
+export default function ResourcesPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = React.use(params);
     const [lightboxImage, setLightboxImage] = useState<string | null>(null);
 
