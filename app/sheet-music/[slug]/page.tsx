@@ -1,6 +1,11 @@
 import { notFound } from "next/navigation";
 import { compositions } from "@/data/compositions";
 import FadeIn from "@/components/FadeIn";
+import {
+  buildMusicCompositionJsonLd,
+  buildScoreProductJsonLd,
+  buildBreadcrumbJsonLdForComposition,
+} from "@/lib/schema/sheetMusic";
 
 export default async function CompositionPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -142,6 +147,38 @@ export default async function CompositionPage({ params }: { params: Promise<{ sl
         </section>
 
       </div>
+
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              buildMusicCompositionJsonLd(composition, slug)
+            ),
+          }}
+        />
+
+        {composition.scores.map((score) => (
+          <script
+            key={score.type}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(
+                buildScoreProductJsonLd(composition, slug, score)
+              ),
+            }}
+          />
+        ))}
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(
+              buildBreadcrumbJsonLdForComposition(composition, slug)
+            ),
+          }}
+        />
+      </>
     </main>
   );
 }

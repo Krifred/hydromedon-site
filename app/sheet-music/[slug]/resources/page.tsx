@@ -2,6 +2,11 @@
 import React, { useState } from 'react';
 import { notFound } from 'next/navigation';
 import { compositions } from '@/data/compositions';
+import {
+  buildScoreProductJsonLd,
+  buildBreadcrumbJsonLdForResources,
+  buildResourcesWebPageJsonLd,
+} from "@/lib/schema/sheetMusic";
 
 export default function ResourcesPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = React.use(params);
@@ -22,7 +27,7 @@ export default function ResourcesPage({ params }: { params: Promise<{ slug: stri
 
             {/* HERO SECTION */}
             <section className="mb-12 space-y-6">
-                <h1 className="text-4xl font-bold tracking-tight mb-6">{composition.title} — Resources</h1>
+                <h1 className="text-4xl font-bold tracking-tight mb-6">{composition.title} â€” Resources</h1>
                 <p className="text-lg text-gray-600 leading-relaxed">{composition.description}</p>
             </section>
 
@@ -65,7 +70,7 @@ export default function ResourcesPage({ params }: { params: Promise<{ slug: stri
                 <div className="grid grid-cols-2 gap-4">
                     <img
                         src={composition.sampleImage}
-                        alt={`${composition.title} — Sample Page`}
+                        alt={`${composition.title} â€” Sample Page`}
                         className="rounded-lg cursor-pointer hover:opacity-80 transition"
                         onClick={() => setLightboxImage(composition.sampleImage)}
                     />
@@ -75,79 +80,9 @@ export default function ResourcesPage({ params }: { params: Promise<{ slug: stri
             {/* FOOTER */}
             <section className="mt-12 text-sm text-gray-600">
                 <a href={`/sheet-music/${slug}`} className="underline opacity-70 hover:opacity-100 transition">
-                    ← Back to Composition Page
+                    â† Back to Composition Page
                 </a>
             </section>
-
-            {/* JSON-LD: WebPage */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "WebPage",
-                        "name": `${composition.title} — Resources`,
-                        "description": composition.description,
-                        "url": `https://hydromedon.com/sheet-music/${slug}/resources`
-                    })
-                }}
-            />
-
-            {/* JSON-LD: BreadcrumbList */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "BreadcrumbList",
-                        "itemListElement": [
-                            {
-                                "@type": "ListItem",
-                                "position": 1,
-                                "name": "Sheet Music",
-                                "item": "https://hydromedon.com/sheet-music"
-                            },
-                            {
-                                "@type": "ListItem",
-                                "position": 2,
-                                "name": composition.title,
-                                "item": `https://hydromedon.com/sheet-music/${slug}`
-                            },
-                            {
-                                "@type": "ListItem",
-                                "position": 3,
-                                "name": "Resources",
-                                "item": `https://hydromedon.com/sheet-music/${slug}/resources`
-                            }
-                        ]
-                    })
-                }}
-            />
-
-            {/* JSON-LD: ItemList of Resources */}
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        "@context": "https://schema.org",
-                        "@type": "ItemList",
-                        "name": `${composition.title} Resources`,
-                        "itemListElement": composition.scores.map((score, index) => ({
-                            "@type": "ListItem",
-                            "position": index + 1,
-                            "name": score.type,
-                            "url": "url" in score ? score.url : `https://hydromedon.com/sheet-music/${slug}/resources`,
-                            "additionalProperty": [
-                                {
-                                    "@type": "PropertyValue",
-                                    "name": "Availability",
-                                    "value": score.status === "coming-soon" ? "PreOrder" : "InStock"
-                                }
-                            ]
-                        }))
-                    })
-                }}
-            />
 
             {lightboxImage && (
                 <div
@@ -162,6 +97,37 @@ export default function ResourcesPage({ params }: { params: Promise<{ slug: stri
                 </div>
             )}
 
+            <>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(
+                            buildResourcesWebPageJsonLd(composition, slug)
+                        ),
+                    }}
+                />
+
+                {composition.scores.map((score) => (
+                    <script
+                        key={score.type}
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{
+                            __html: JSON.stringify(
+                                buildScoreProductJsonLd(composition, slug, score)
+                            ),
+                        }}
+                    />
+                ))}
+
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(
+                            buildBreadcrumbJsonLdForResources(composition, slug)
+                        ),
+                    }}
+                />
+            </>
         </main>
     );
 }

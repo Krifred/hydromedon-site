@@ -88,3 +88,6 @@ And I will trust the fight to You`,
     ],
   },
 ];
+
+export type Composition = (typeof compositions)[number];
+export type Score = Composition["scores"][number];
