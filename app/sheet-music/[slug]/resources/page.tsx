@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { compositions } from '@/data/compositions';
 import {
@@ -68,12 +69,16 @@ export default function ResourcesPage({ params }: { params: Promise<{ slug: stri
                 <h2 className="text-2xl font-semibold tracking-tight mb-3">Sample Pages</h2>
 
                 <div className="grid grid-cols-2 gap-4">
-                    <img
-                        src={composition.sampleImage}
-                        alt={`${composition.title} â€” Sample Page`}
-                        className="rounded-lg cursor-pointer hover:opacity-80 transition"
-                        onClick={() => setLightboxImage(composition.sampleImage)}
-                    />
+                    <div className="relative w-full aspect-[3/4] cursor-pointer rounded-lg overflow-hidden hover:opacity-80 transition"
+                         onClick={() => setLightboxImage(composition.sampleImage)}>
+                        <Image
+                            src={composition.sampleImage}
+                            alt={`${composition.title} - Sample Page`}
+                            fill
+                            sizes="(max-width: 768px) 50vw, 400px"
+                            className="object-cover"
+                        />
+                    </div>
                 </div>
             </section>
 
@@ -89,11 +94,15 @@ export default function ResourcesPage({ params }: { params: Promise<{ slug: stri
                     className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
                     onClick={() => setLightboxImage(null)}
                 >
-                    <img
-                        src={lightboxImage}
-                        alt="Preview"
-                        className="max-w-3xl w-full rounded-lg shadow-lg"
-                    />
+                    <div className="relative w-full max-w-3xl aspect-[3/4]">
+                        <Image
+                            src={lightboxImage}
+                            alt="Preview"
+                            fill
+                            sizes="90vw"
+                            className="object-contain rounded-lg shadow-lg"
+                        />
+                    </div>
                 </div>
             )}
 

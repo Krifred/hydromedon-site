@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { compositions } from "@/data/compositions";
 import FadeIn from "@/components/FadeIn";
+import Image from "next/image";
 import {
   buildMusicCompositionJsonLd,
   buildScoreProductJsonLd,
@@ -138,9 +139,11 @@ export default async function CompositionPage({ params }: { params: Promise<{ sl
           <FadeIn delayMs={80}>
             <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">Preview</p>
             <h2 className="text-2xl font-bold text-yellow-400 leading-tight tracking-tight mb-6">Sample Pages</h2>
-            <img
+            <Image
               src={composition.sampleImage}
               alt={`Sample pages for ${composition.title}`}
+              width={800}
+              height={1100}
               className="rounded-sm w-full shadow-md"
             />
           </FadeIn>

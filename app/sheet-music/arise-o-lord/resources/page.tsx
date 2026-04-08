@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 
 const resourcesData = {
   title: "Arise, O Lord — Resources",
@@ -83,18 +84,14 @@ export default function ResourcesPage() {
                 <h2 className="text-2xl font-semibold tracking-tight mb-3">Sample Pages</h2>
 
                 <div className="grid grid-cols-2 gap-4">
-                    <img
-                        src="/sample-pages/arise-o-lord-page1.jpg"
-                        alt="Sample Page 1"
-                        className="rounded-lg cursor-pointer hover:opacity-80 transition"
-                        onClick={() => setLightboxImage('/sample-pages/arise-o-lord-page1.jpg')}
-                    />
-                    <img
-                        src="/sample-pages/arise-o-lord-page2.jpg"
-                        alt="Sample Page 2"
-                        className="rounded-lg cursor-pointer hover:opacity-80 transition"
-                        onClick={() => setLightboxImage('/sample-pages/arise-o-lord-page2.jpg')}
-                    />
+                    <div className="relative w-full aspect-[3/4] cursor-pointer rounded-lg overflow-hidden hover:opacity-80 transition"
+                         onClick={() => setLightboxImage('/sample-pages/arise-o-lord-page1.jpg')}>
+                        <Image src="/sample-pages/arise-o-lord-page1.jpg" alt="Sample Page 1" fill sizes="(max-width: 768px) 50vw, 400px" className="object-cover" />
+                    </div>
+                    <div className="relative w-full aspect-[3/4] cursor-pointer rounded-lg overflow-hidden hover:opacity-80 transition"
+                         onClick={() => setLightboxImage('/sample-pages/arise-o-lord-page2.jpg')}>
+                        <Image src="/sample-pages/arise-o-lord-page2.jpg" alt="Sample Page 2" fill sizes="(max-width: 768px) 50vw, 400px" className="object-cover" />
+                    </div>
                 </div>
             </section>
 
@@ -176,11 +173,15 @@ export default function ResourcesPage() {
                     className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50"
                     onClick={() => setLightboxImage(null)}
                 >
-                    <img
-                        src={lightboxImage}
-                        alt="Preview"
-                        className="max-w-3xl w-full rounded-lg shadow-lg"
-                    />
+                    <div className="relative w-full max-w-3xl aspect-[3/4]">
+                        <Image
+                            src={lightboxImage}
+                            alt="Preview"
+                            fill
+                            sizes="90vw"
+                            className="object-contain rounded-lg shadow-lg"
+                        />
+                    </div>
                 </div>
             )}
 

@@ -3,6 +3,7 @@ import FadeIn from "@/components/FadeIn";
 import { getReleaseBySlug, releases } from "@/lib/releases";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 /* =========================
    Helpers
@@ -103,10 +104,12 @@ export default async function SongPage({
                         <div className="grid grid-cols-1 gap-8 items-start">
                             {/* Album Artwork + CTA */}
                             <div className="flex flex-col items-center">
-                                <img
-                                    src={release.cover}
+                                <Image
+                                    src={release.cover ?? ""}
                                     alt={release.title}
-                                    className="w-[220px] h-[220px] object-contain rounded-xl border border-white/10 shadow-xl"
+                                    width={220}
+                                    height={220}
+                                    className="object-contain rounded-xl border border-white/10 shadow-xl"
                                 />
 
                                 {(() => {

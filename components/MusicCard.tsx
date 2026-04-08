@@ -2,6 +2,7 @@
 
 import FadeIn from "./FadeIn";
 import Link from "next/link";
+import Image from "next/image";
 import type { Release } from "@/lib/types";
 import { useEffect, useMemo, useState } from "react";
 
@@ -67,11 +68,12 @@ export default function MusicCard({ rel, idx }: { rel: Release; idx: number }) {
                         <div className="relative w-full aspect-square bg-zinc-900 rounded-lg overflow-hidden flex items-center justify-center cursor-pointer">
                             {badge}
                             {comingSoonBadge}
-                            <img
-                                src={rel.cover}
+                            <Image
+                                src={rel.cover ?? ""}
                                 alt={rel.title}
-                                className="object-cover w-full h-full group-hover:shadow-[0_0_32px_0_rgba(212,175,55,0.25)] transition"
-                                loading="lazy"
+                                fill
+                                sizes="(max-width: 768px) 50vw, 300px"
+                                className="object-cover group-hover:shadow-[0_0_32px_0_rgba(212,175,55,0.25)] transition"
                             />
                         </div>
                     </Wrapper>

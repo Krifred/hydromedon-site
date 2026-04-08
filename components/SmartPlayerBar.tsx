@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { singleReleases } from "@/lib/releases";
 // If not used, you can remove this import:
 // import Link from "next/link";
@@ -51,9 +52,11 @@ export default function SmartPlayerBar() {
             ${isFading ? "opacity-0 scale-[0.97]" : "opacity-100 scale-100"}
           `}
                 >
-                    <img
-                        src={current.cover}
+                    <Image
+                        src={current.cover ?? ""}
                         alt={current.title}
+                        width={56}
+                        height={56}
                         className="w-full h-full object-cover"
                     />
                 </div>
