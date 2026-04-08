@@ -1,0 +1,73 @@
+/* ==========================================================
+   app/merch/page.tsx — Merch index
+   Artifacts section fetches live Fourthwall collections tagged
+   "artifacts". Music Sheets section uses local catalog.
+   ========================================================== */
+
+import type { Metadata } from "next";
+import { getCollections, getCollectionCoverImage } from "@/lib/fourthwall/client";
+import type { FourthwallCollection } from "@/lib/fourthwall/types";
+import { sheets } from "@/lib/gumroad/catalog";
+import MerchIntro from "@/components/merch/MerchIntro";
+import MerchSection from "@/components/merch/MerchSection";
+import MerchDivider from "@/components/merch/MerchDivider";
+import MerchGrid from "@/components/merch/MerchGrid";
+import SheetsGrid from "@/components/merch/SheetsGrid";
+
+export const metadata: Metadata = {
+    title: "Merch — Hydromedon",
+    description: "Merch from Hydromedon.",
+};
+
+export default async function MerchPage() {
+    let allCollections: FourthwallCollection[] = [];
+    try {
+        allCollections = await getCollections();
+    } catch (err) {
+        console.error("[MerchPage] Fourthwall API error:", err);
+    }
+
+    // Only collections tagged "artifacts" appear in this section.
+    const artifacts = allCollections.filter((c) =>
+        c.tags?.map((t) => t.toLowerCase()).includes("artifacts")
+    );
+
+    // Fetch the primary cover image for each artifact collection in parallel.
+    const imageEntries = await Promise.all(
+        artifacts.map(async (c) => {
+            const imageUrl = await getCollectionCoverImage(c.slug);
+            return [c.slug, imageUrl] as const;
+        })
+    );
+    const artifactImages = Object.fromEntries(
+        imageEntries.filter((e): e is [string, string] => e[1] !== null)
+    );
+
+    return (
+        <main className="min-h-screen">
+            <MerchIntro />
+
+            <MerchSection
+                title="Artifacts"
+                subtitle="A small collection of items that carry the identity of the project."
+            >
+                <MerchGrid
+                    collections={artifacts}
+                    images={artifactImages}
+                    emptyLabel="No artifacts available yet."
+                />
+            </MerchSection>
+
+            <MerchDivider />
+
+            <MerchSection
+                title="Music Sheets"
+                subtitle="Lead sheets and transcriptions for individual tracks."
+            >
+                <SheetsGrid items={sheets} />
+            </MerchSection>
+        </main>
+    );
+}
+
+

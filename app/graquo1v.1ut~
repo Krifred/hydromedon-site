@@ -1,0 +1,26 @@
+import "./global.css";
+import AnalyticsClient from "./providers/AnalyticsClient";
+import AtmosphereBackground from "@/components/AtmosphereBackground";
+import Header from "@/components/Header";
+
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode;
+}) {
+    return (
+        <html lang="en">
+            <body className="relative min-h-screen overflow-x-hidden">
+                <AtmosphereBackground />
+
+                <Header />
+                {/* Spacer reserves space for the fixed header + breathing room */}
+                <div className="h-20" aria-hidden />
+
+                <AnalyticsClient>
+                    {children}
+                </AnalyticsClient>
+            </body>
+        </html>
+    );
+}

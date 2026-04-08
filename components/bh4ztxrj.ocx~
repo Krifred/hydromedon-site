@@ -1,0 +1,240 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import MobileNav from "./MobileNav";
+
+const navItems = [
+    { label: "Home", href: "/" },
+    { label: "Latest Release", href: "/#latest" },
+    { label: "Music", href: "/music" },
+    { label: "Merch", href: "/merch" },
+   {
+        label: "About",
+        children: [
+            { label: "About Hydromedon", href: "/about#about" },
+            { label: "Recommended Sites", href: "/about/recommended-sites" }, // <-- NEW ITEM
+            { label: "Statement of Faith", href: "/about#statement-of-faith" },
+        ],
+    },
+    { label: "Contact", href: "/#contact" },
+];
+
+type NavItem =
+    | { label: string; href: string; children?: never }
+    | { label: string; children: { label: string; href: string }[]; href?: never };
+
+const ABOUT_SECTION_IDS = ["about", "recommended-sites", "statement-of-faith"] as const;
+
+function getHashId(href: string) {
+    const idx = href.indexOf("#");
+    return idx >= 0 ? href.slice(idx + 1) : "";
+}
+
+export default function Header() {
+    const pathname = usePathname();
+
+    // Drives highlight (tap + scroll on /about and /)
+    const [activeAnchor, setActiveAnchor] = useState<string>("");
+
+    // Keep activeAnchor synced with URL hash (tap links, browser back/forward)
+    useEffect(() => {
+        const syncFromHash = () => {
+            const h = window.location.hash?.replace("#", "") || "";
+            if (h) setActiveAnchor(h);
+        };
+
+        syncFromHash();
+        window.addEventListener("hashchange", syncFromHash);
+        return () => window.removeEventListener("hashchange", syncFromHash);
+    }, []);
+
+    // Scroll-based active section detection for /about
+    useEffect(() => {
+        if (pathname !== "/about") return;
+
+        // If no hash, default to first section
+        if (!window.location.hash) setActiveAnchor("about");
+
+        const elements = ABOUT_SECTION_IDS.map((id) => document.getElementById(id)).filter(
+            Boolean
+        ) as HTMLElement[];
+
+        if (elements.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleEntries = entries
+                    .filter((e) => e.isIntersecting)
+                    .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+
+                const top = visibleEntries[0]?.target as HTMLElement | undefined;
+                if (top?.id) setActiveAnchor(top.id);
+            },
+            {
+                root: null,
+                threshold: [0.12, 0.2, 0.35, 0.5],
+                rootMargin: "-20% 0px -55% 0px",
+            }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+        return () => observer.disconnect();
+    }, [pathname]);
+
+    // ✅ Scroll-based active section detection for Home page (/#latest, /#contact)
+    useEffect(() => {
+        if (pathname !== "/") return;
+
+        // If user loaded with a hash, honor it
+        const currentHash = window.location.hash?.replace("#", "") || "";
+        if (currentHash) setActiveAnchor(currentHash);
+
+        // Find all top-level "#..." ids from navItems (Latest Release, Contact, etc.)
+        const homeIds = (navItems as NavItem[])
+            .flatMap((item) => {
+                const href = "href" in item ? item.href : undefined;
+
+                return typeof href === "string" && href.startsWith("/#")
+                    ? [getHashId(href)]
+                    : [];
+            })
+            .filter(Boolean);
+
+
+        const elements = homeIds.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+        if (elements.length === 0) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                const visibleEntries = entries
+                    .filter((e) => e.isIntersecting)
+                    .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+
+                const top = visibleEntries[0]?.target as HTMLElement | undefined;
+                if (top?.id) setActiveAnchor(top.id);
+            },
+            {
+                root: null,
+                threshold: [0.12, 0.2, 0.35, 0.5],
+                rootMargin: "-20% 0px -60% 0px",
+            }
+        );
+
+        elements.forEach((el) => observer.observe(el));
+        return () => observer.disconnect();
+    }, [pathname]);
+
+    // ✅ When navigating to Home without a hash, clear active anchor to highlight Home
+    useEffect(() => {
+        if (pathname !== "/") return;
+        if (!window.location.hash) setActiveAnchor("");
+    }, [pathname]);
+
+    const isHomeHashActive
+        const id = getHashId(href); // e.g. "/#latest" -> "latest"
+        return pathname === "/" && !!id && activeAnchor === id;
+    };
+
+    const isAboutHashActive = (href: string) => {
+        const id = getHashId(href);
+        return pathname === "/about" && !!id && activeAnchor === id;
+    };
+
+    const aboutIsActive = useMemo(() => pathname === "/about", [pathname]);
+
+    return (
+        <header className="relative w-full z-50 bg-black/80 backdrop-blur-sm shadow-lg py-4 mb-10">
+            <div className="max-w-6xl mx-auto flex items-center justify-between px-4 py-3 gap-8">
+                {/* Brand */}
+                <Link
+                    href="/"
+                    className="uppercase tracking-[0.3em] text-sm font-semibold text-white/90 hover:text-[#FFD700] transition"
+                    aria-label="Home"
+                >
+                    <span className="sr-only">Hydromedon</span>
+                    <span aria-hidden className="hidden sm:inline">
+
+                    </span>
+                </Link>
+
+                {/* Desktop navigation */}
+                <nav
+                    className="hidden md:flex gap-10 lg:gap-12 xl:gap-16"
+                    aria-label="Main"
+                >
+                    {(navItems as NavItem[]).map((item) => {
+                        // Dropdown item (About)
+                        if ("children" in item) {
+                            return (
+                                <div key={item.label} className="relative group">
+                                    <button
+                                        type="button"
+                                        className={`px-3 py-2 uppercase tracking-wide text-sm transition-colors flex items-center gap-2 ${aboutIsActive
+                                                ? "text-[#FFD700]"
+                                                : "text-white/90 hover:text-[#FFD700] focus:text-[#FFD700]"
+                                            }`}
+                                        aria-haspopup="menu"
+                                        aria-expanded="false"
+                                    >
+                                        {item.label}
+                                        <span
+                                            aria-hidden
+                                            className={`transition ${aboutIsActive ? "text-[#FFD700]" : "text-white/60 group-hover:text-[#FFD700]"
+                                                }`}
+                                        >
+                                            ▾
+                                        </span>
+                                    </button>
+
+                                    {/* Dropdown panel */}
+                                    <div className="absolute left-0 top-full mt-2 hidden group-hover:block group-focus-within:block">
+                                        <div className="min-w-[220px] rounded-md border border-white/10 bg-black/80 backdrop-blur-md shadow-lg overflow-hidden">
+                                            {Array.isArray(item.children) &&
+                                                item.children.map((child) => {
+                                                const active = isAboutHashActive(child.href);
+                                                return (
+                                                    <Link
+                                                        key={child.href}
+                                                        href={child.href}
+                                                        className={`block px-4 py-3 text-sm transition ${active ? "text-[#FFD700] bg-white/5" : "text-white/85 hover:text-[#FFD700] hover:bg-white/5"
+                                                            }`}
+                                                    >
+                                                        {child.label}
+                                                    </Link>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        }
+
+                        // Standard desktop link
+                        const active =
+                            item.href === "/"
+                                ? pathname === "/" && !activeAnchor // ✅ Home active when no section is active
+                                : item.href.startsWith("/#")
+                                ? isHomeHashActive(item.href)
+                                : pathname === item.href || pathname.startsWith(item.href + "/");
+
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                className={`px-3 py-2 uppercase tracking-wide text-sm transition-colors ${active ? "text-[#FFD700]" : "text-white/90 hover:text-[#FFD700] focus:text-[#FFD700]"
+                                    }`}
+                                aria-current={active ? "page" : undefined}
+                            >
+                                {item.label}
+                            </Link>
+                        );
+                    })}
+                </nav>
+
+                <MobileNav />
+            </div>
+        </header>
+    );
+}

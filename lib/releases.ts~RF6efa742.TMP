@@ -1,0 +1,254 @@
+import type { Track, Release } from "./types";
+
+const SPOTIFY_ARTIST =
+    "https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM";
+
+const YOUTUBE_CHANNEL =
+    "https://www.youtube.com/@Hydromedon";
+
+export const releases: Release[] = [
+    {
+        slug: "armor-of-light-video",
+        title: "Armor of Light",
+        type: "Video",
+        releaseDate: "2025-12-13",
+        year: "2025",
+        cover: "/covers/armor-of-light-video.jpg",
+        hyperfollow: undefined,
+        spotify: undefined,
+        youtube: "https://youtu.be/nlaqCtY2a-c?si=nvx5Kadt32XLhb68",
+        subtitle: "Official single video.",
+        description: "A call to stand strong in faith and light.",
+        themes: ["Video", "Cinematic"],
+    },
+
+    {
+        slug: "beauty-for-ashes-video",
+        title: "Beauty for Ashes",
+        type: "Video",
+        releaseDate: "2025-12-20",
+        year: "2025",
+        cover: "/covers/beauty-for-ashes.jpg",
+        hyperfollow: undefined,
+        spotify: undefined,
+        youtube: "https://youtu.be/Z2YWw1KxZ8c?si=msAot6_DZFBD0wq0",
+        subtitle: "Official single video.",
+        description: "Transformation and hope from brokenness.",
+        themes: ["Video", "Cinematic"],
+    },
+
+    {
+        slug: "arise-o-lord-video",
+        title: "Arise, O Lord",
+        type: "Video",
+        releaseDate: "2025-11-29",
+        year: "2025",
+        cover: "/covers/arise-o-lord.jpg",
+        hyperfollow: undefined,
+        spotify: undefined,
+        youtube: "https://youtu.be/YuNm0FGE8AU?si=CxABMaHO5rdVD2LT",
+        subtitle: "Official single video.",
+        description: "A call to action and worship.",
+        themes: ["Video", "Cinematic"],
+    },
+
+    {
+        slug: "armor-of-light",
+        title: "Armor of Light",
+        type: "Single",
+        releaseDate: "2025-12-13",
+        year: "2025",
+        cover: "/covers/armor-of-light.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/track/03diABBKdeFLKtcF5EDOtb",
+        youtube: "https://www.youtube.com/watch?v=8I5IUga1R0w",
+        subtitle: "A call to stand strong in faith and light.",
+        description:
+            "Armor of Light is a powerful anthem about spiritual resilience and the strength found in faith.",
+        themes: ["Faith", "Resilience", "Spiritual Warfare"],
+        tracks: [{ title: "Armor of Light", duration: "9:00" }],
+    },
+
+    {
+        slug: "beauty-for-ashes",
+        title: "Beauty for Ashes",
+        type: "Single",
+        releaseDate: "2025-12-20",
+        year: "2025",
+        cover: "/covers/beauty-for-ashes.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/track/4BBQAGUamWLmnqZ69ha3ru",
+        youtube: "https://youtu.be/Z2YWw1KxZ8c",
+        subtitle: "Transformation and hope from brokenness.",
+        description:
+            "Beauty for Ashes explores renewal and hope, drawing from the biblical promise of transformation.",
+        themes: ["Renewal", "Hope", "Transformation"],
+        tracks: [{ title: "Beauty for Ashes", duration: "6:48" }],
+    },
+
+    {
+        slug: "change-me-mold-me-make-me-new",
+        title: "Change Me, Mold Me",
+        type: "Single",
+        releaseDate: "2026-01-23",
+        year: "2026",
+        cover: "/covers/change-me-mold-me.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/track/03eVArWvzKT0agDm8pGhUN",
+        youtube: "https://youtu.be/XKnJ7wzboS8",
+        subtitle: "A prayer for personal transformation.",
+        description:
+            "This song is a heartfelt prayer for change and spiritual growth.",
+        themes: ["Transformation", "Prayer", "Renewal"],
+        tracks: [{ title: "Change Me, Mold Me", duration: "5:53" }],
+    },
+
+    {
+        slug: "make-a-way",
+        title: "Make a Way",
+        type: "Single",
+        releaseDate: "2026-02-06",
+        year: "2026",
+        cover: "/covers/make-a-way.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/track/3QgZ9UuLlCopfAGoQxWXue",
+        youtube: "https://youtu.be/CfkbtDyYr3w",
+        subtitle: "Trusting God to open doors.",
+        description: "Make a Way is about trusting in God's provision.",
+        themes: ["Trust", "Provision", "Faith"],
+        tracks: [{ title: "Make a Way", duration: "4:38" }],
+    },
+
+    {
+        slug: "the-lord-bless-you-and-keep-you",
+        title: "The Lord Bless You",
+        type: "Single",
+        releaseDate: "2026-02-20",
+        year: "2026",
+        cover: "/covers/the-lord-bless-you.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/track/0dhI4VUj0sj9Dvm4KEjUo5",
+        youtube: "https://youtu.be/3bCGi9FL9bE",
+        subtitle: "A musical benediction.",
+        description: "A musical rendering of the biblical blessing.",
+        themes: ["Blessing", "Comfort", "Assurance"],
+        tracks: [{ title: "The Lord Bless You", duration: "4:44" }],
+    },
+
+    {
+        slug: "under-your-wings",
+        title: "Under Your Wings",
+        type: "Single",
+        releaseDate: "2026-03-06",
+        year: "2026",
+        cover: "/covers/under-your-wings.jpg",
+        hyperfollow: undefined,
+        spotify: SPOTIFY_ARTIST,
+        youtube: YOUTUBE_CHANNEL,
+        subtitle: "Finding refuge and safety.",
+        description:
+            "Under Your Wings speaks of finding refuge and safety in God's care.",
+        themes: ["Refuge", "Safety", "Protection"],
+        tracks: [{ title: "Under Your Wings", duration: "5:22" }],
+    },
+
+    {
+        slug: "your-peace-surpasses-all-understanding",
+        title: "Your Peace",
+        type: "Single",
+        releaseDate: "2026-03-20",
+        year: "2026",
+        cover: "/covers/your-peace-surpasses-all-understanding.jpg",
+        hyperfollow: undefined,
+        spotify: SPOTIFY_ARTIST,
+        youtube: YOUTUBE_CHANNEL,
+        subtitle: "Experiencing divine peace.",
+        description: "This song is about peace that transcends understanding.",
+        themes: ["Peace", "Calm", "Divine Presence"],
+        tracks: [
+            {
+                title: "Your Peace Surpasses All Understanding",
+                duration: "6:02",
+            },
+        ],
+    },
+
+    {
+        slug: "arise-o-lord",
+        title: "Arise O Lord",
+        type: "Single",
+        releaseDate: "2025-11-29",
+        year: "2025",
+        cover: "/covers/arise-o-lord.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/track/3ut8WjurvXkLDsT24joSSO",
+        youtube: "https://youtu.be/YuNm0FGE8AU",
+        subtitle: "A call to action and worship.",
+        description: "Arise O Lord is a song of praise and invocation.",
+        themes: ["Praise", "Action", "Worship"],
+        tracks: [{ title: "Arise O Lord", duration: "5:47" }],
+    },
+
+    {
+        slug: "biblical-graffiti",
+        title: "Biblical Graffiti",
+        type: "Album",
+        releaseDate: "2026-03-20",
+        year: "2026",
+        cover: "/covers/biblical-graffiti.jpg",
+        hyperfollow:
+            "https://distrokid.com/hyperfollow/hydromedon/biblical-graffiti",
+        spotify: SPOTIFY_ARTIST,
+        youtube: YOUTUBE_CHANNEL,
+        subtitle: "A cinematic journey through faith.",
+        description:
+            "Biblical Graffiti is a concept album weaving together themes of faith, transformation, and spiritual journey.",
+        themes: ["Faith", "Transformation", "Journey"],
+        tracks: [
+            { title: "Armor of Light", duration: "9:00" },
+            { title: "Beauty for Ashes", duration: "6:48" },
+            { title: "Change Me, Mold Me, Make Me New", duration: "5:53" },
+            { title: "Make a Way", duration: "4:38" },
+            { title: "The Lord Bless You and Keep You", duration: "4:43" },
+            { title: "Under Your Wings", duration: "5:22" },
+            {
+                title: "Your Peace Surpasses All Understanding",
+                duration: "6:02",
+            },
+            { title: "Arise O Lord", duration: "5:47" },
+        ],
+    },
+];
+
+export function getReleaseBySlug(slug: string): Release | undefined {
+    return releases.find((r) => r.slug === slug);
+}
+
+export function singleReleases(): Release[] {
+    return releases.filter((r) => r.type === "Single");
+}
+
+export function albumReleases(): Release[] {
+    return releases.filter((r) => r.type === "Album");
+}
+
+export function videoReleases(): Release[] {
+    return releases.filter((r) => r.type === "Video");
+}
+
+export function songReleases(): Release[] {
+    return singleReleases();
+}
+
+export function getLatestReleased(
+    items: Release[],
+    now: Date = new Date()
+): Release | undefined {
+    return items
+        .filter((r) => r.releaseDate && new Date(r.releaseDate) <= now)
+        .sort(
+            (a, b) =>
+                new Date(b.releaseDate ?? "").getTime() -
+                new Date(a.releaseDate ?? "").getTime()
+        )[0];
+}
