@@ -8,9 +8,8 @@ const navItems = [
     { label: "Home", href: "/" },
     { label: "Latest Release", href: "/#latest" },
     { label: "Music", href: "/music" },
-    { label: "Sheet Music", href: "/sheet-music" },
     { label: "Merch", href: "/merch" },
-    {
+   {
         label: "About",
         children: [
             { label: "About Hydromedon", href: "/about#about" },
@@ -186,8 +185,8 @@ export default function Header() {
                                     <button
                                         type="button"
                                         className={`px-3 py-2 uppercase tracking-wide text-sm transition-colors flex items-center gap-2 ${aboutIsActive
-                                            ? "text-[#FFD700]"
-                                            : "text-white/90 hover:text-[#FFD700] focus:text-[#FFD700]"
+                                                ? "text-[#FFD700]"
+                                                : "text-white/90 hover:text-[#FFD700] focus:text-[#FFD700]"
                                             }`}
                                         aria-haspopup="menu"
                                         aria-expanded="false"
@@ -207,18 +206,18 @@ export default function Header() {
                                         <div className="min-w-[220px] rounded-md border border-white/10 bg-black/80 backdrop-blur-md shadow-lg overflow-hidden">
                                             {Array.isArray(item.children) &&
                                                 item.children.map((child) => {
-                                                    const active = isAboutHashActive(child.href);
-                                                    return (
-                                                        <Link
-                                                            key={child.href}
-                                                            href={child.href}
-                                                            className={`block px-4 py-3 text-sm transition ${active ? "text-[#FFD700] bg-white/5" : "text-white/85 hover:text-[#FFD700] hover:bg-white/5"
-                                                                }`}
-                                                        >
-                                                            {child.label}
-                                                        </Link>
-                                                    );
-                                                })}
+                                                const active = isAboutHashActive(child.href);
+                                                return (
+                                                    <Link
+                                                        key={child.href}
+                                                        href={child.href}
+                                                        className={`block px-4 py-3 text-sm transition ${active ? "text-[#FFD700] bg-white/5" : "text-white/85 hover:text-[#FFD700] hover:bg-white/5"
+                                                            }`}
+                                                    >
+                                                        {child.label}
+                                                    </Link>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 </div>
@@ -230,8 +229,8 @@ export default function Header() {
                             item.href === "/"
                                 ? pathname === "/" && !activeAnchor // ✅ Home active when no section is active
                                 : item.href.startsWith("/#")
-                                    ? isHomeHashActive(item.href)
-                                    : pathname === item.href || pathname.startsWith(item.href + "/");
+                                ? isHomeHashActive(item.href)
+                                : pathname === item.href || pathname.startsWith(item.href + "/");
 
                         return (
                             <Link
@@ -296,33 +295,33 @@ export default function Header() {
                                             <div className="mt-1 ml-2 border-l border-white/10 pl-3 flex flex-col">
                                                 {Array.isArray(item.children) &&
                                                     item.children.map((child) => {
-                                                        const id = getHashId(child.href);
-                                                        const active = isAboutHashActive(child.href);
+                                                    const id = getHashId(child.href);
+                                                    const active = isAboutHashActive(child.href);
 
-                                                        return (
-                                                            <Link
-                                                                key={child.href}
-                                                                href={child.href}
-                                                                onClick={() => {
-                                                                    if (id) setActiveAnchor(id);
-                                                                    closeMenu();
-                                                                }}
-                                                                className={`relative px-2 py-2 text-sm transition rounded-md ${active
+                                                    return (
+                                                        <Link
+                                                            key={child.href}
+                                                            href={child.href}
+                                                            onClick={() => {
+                                                                if (id) setActiveAnchor(id);
+                                                                closeMenu();
+                                                            }}
+                                                            className={`relative px-2 py-2 text-sm transition rounded-md ${active
                                                                     ? "text-[#FFD700] bg-white/5 shadow-[0_0_18px_rgba(212,175,55,0.18)]"
                                                                     : "text-white/80 hover:text-[#FFD700]"
-                                                                    }`}
-                                                                aria-current={active ? "location" : undefined}
-                                                            >
-                                                                {active && (
-                                                                    <span
-                                                                        aria-hidden
-                                                                        className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[2px] bg-[#FFD700] rounded"
-                                                                    />
-                                                                )}
-                                                                <span className={active ? "pl-2" : ""}>{child.label}</span>
-                                                            </Link>
-                                                        );
-                                                    })}
+                                                                }`}
+                                                            aria-current={active ? "location" : undefined}
+                                                        >
+                                                            {active && (
+                                                                <span
+                                                                    aria-hidden
+                                                                    className="absolute left-0 top-1/2 -translate-y-1/2 h-4 w-[2px] bg-[#FFD700] rounded"
+                                                                />
+                                                            )}
+                                                            <span className={active ? "pl-2" : ""}>{child.label}</span>
+                                                        </Link>
+                                                    );
+                                                })}
                                             </div>
                                         )}
                                     </div>
@@ -334,8 +333,8 @@ export default function Header() {
                                 item.href === "/"
                                     ? pathname === "/" && !activeAnchor
                                     : item.href.startsWith("/#")
-                                        ? isHomeHashActive(item.href)
-                                        : pathname === item.href || pathname.startsWith(item.href + "/");
+                                    ? isHomeHashActive(item.href)
+                                    : pathname === item.href || pathname.startsWith(item.href + "/");
 
                             return (
                                 <Link
