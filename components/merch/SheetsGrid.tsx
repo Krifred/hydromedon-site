@@ -5,10 +5,10 @@
 import SheetCard from "./SheetCard";
 import EmptyState from "./EmptyState";
 import FadeIn from "@/components/FadeIn";
-import type { GumroadItem } from "@/lib/gumroad/catalog";
+import type { SheetMusicItem } from "@/lib/fourthwall";
 
 interface SheetsGridProps {
-    items: GumroadItem[];
+    items: SheetMusicItem[];
 }
 
 export default function SheetsGrid({ items }: SheetsGridProps) {

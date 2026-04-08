@@ -4,7 +4,7 @@
    ========================================================== */
 
 import Image from "next/image";
-import type { FourthwallItem } from "@/lib/gumroad/catalog";
+import type { FourthwallItem } from "@/lib/fourthwall";
 
 interface ProductCardProps {
     item: FourthwallItem;

@@ -184,3 +184,29 @@ export async function getFourthwallProducts(): Promise<FWProduct[]> {
         return true;
     });
 }
+
+// ── Catalog item types (formerly in lib/gumroad/catalog.ts) ──────────────────
+
+/** A physical product sold via Fourthwall. */
+export type FourthwallItem = {
+    slug: string;
+    title: string;
+    description: string;
+    imageSrc: string;
+    /** Full URL to the product on store.hydromedon.com */
+    storeUrl: string;
+    priceText?: string;
+    kind: "object";
+};
+
+/** A digital sheet music product sold via Fourthwall. */
+export type SheetMusicItem = {
+    slug: string;
+    title: string;
+    description: string;
+    imageSrc: string;
+    /** Full URL to the product/collection on store.hydromedon.com */
+    storeUrl: string;
+    priceText?: string;
+    kind: "sheetmusic";
+};

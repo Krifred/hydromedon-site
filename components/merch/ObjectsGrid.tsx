@@ -4,7 +4,7 @@
 
 import ProductCard from "./ProductCard";
 import EmptyState from "./EmptyState";
-import type { FourthwallItem } from "@/lib/gumroad/catalog";
+import type { FourthwallItem } from "@/lib/fourthwall";
 
 interface ObjectsGridProps {
     items: FourthwallItem[];

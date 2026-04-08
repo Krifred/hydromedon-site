@@ -1,16 +1,7 @@
 // lib/gumroad/catalog.ts
 
-// ── Fourthwall (physical objects) ────────────────────────────────────────────
-export type FourthwallItem = {
-  slug: string;
-  title: string;
-  description: string;
-  imageSrc: string;
-  /** Full URL to the product on store.hydromedon.com */
-  storeUrl: string;
-  priceText?: string;
-  kind: "object";
-};
+// ── Types (now defined in lib/fourthwall.ts) ─────────────────────────────────
+export type { FourthwallItem, SheetMusicItem } from "@/lib/fourthwall";
 
 export const objects: FourthwallItem[] = [
   {
@@ -33,16 +24,9 @@ export const objects: FourthwallItem[] = [
   },
 ];
 
-// ── Gumroad (digital items) ───────────────────────────────────────────────────
-export type GumroadItem = {
-  slug: string;
-  title: string;
-  description: string;
-  imageSrc: string;
-  gumroadUrl: string;
-  priceText?: string;
-  kind: "sheetmusic";
-};
+// ── Sheet music items (digital, sold via Fourthwall) ─────────────────────────
+// GumroadItem is now SheetMusicItem — aliased here for any remaining references
+export type { SheetMusicItem as GumroadItem } from "@/lib/fourthwall";
 
 export function getObjectBySlug(slug: string) {
   return objects.find(o => o.slug === slug) ?? null;
@@ -51,7 +35,7 @@ export function getObjectBySlug(slug: string) {
 // ── Music Sheets ─────────────────────────────────────────────────────────────
 // Downloadable sheet music / lead sheets for individual tracks.
 
-export const sheets: GumroadItem[] = [
+export const sheets: SheetMusicItem[] = [
   // 1) Biblical Graffiti (Album)
   {
     kind: "sheetmusic",
@@ -59,7 +43,7 @@ export const sheets: GumroadItem[] = [
     title: "Biblical Graffiti — Worship\u2011Ready Sheet Music Bundle",
     description: "All songs + all parts in consistent formatting — built for rehearsal and service.",
     imageSrc: "/covers/biblical-graffiti.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/collection-biblical-graffiti-resources",
+    storeUrl: "https://store.hydromedon.com/collections/collection-biblical-graffiti-resources",
     priceText: "",
   },
 
@@ -70,7 +54,7 @@ export const sheets: GumroadItem[] = [
     title: "Your Peace Surpasses All Understanding",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/your-peace-surpasses-all-understanding.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/your-peace-surpasses-all-understanding-resources",
+    storeUrl: "https://store.hydromedon.com/collections/your-peace-surpasses-all-understanding-resources",
     priceText: "",
   },
 
@@ -81,7 +65,7 @@ export const sheets: GumroadItem[] = [
     title: "Under Your Wings",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/under-your-wings.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/under-your-wings-resources",
+    storeUrl: "https://store.hydromedon.com/collections/under-your-wings-resources",
     priceText: "",
   },
 
@@ -92,7 +76,7 @@ export const sheets: GumroadItem[] = [
     title: "The Lord Bless You and Keep You",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/the-lord-bless-you.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/the-lord-bless-you-and-keep-you-resources",
+    storeUrl: "https://store.hydromedon.com/collections/the-lord-bless-you-and-keep-you-resources",
     priceText: "",
   },
 
@@ -103,7 +87,7 @@ export const sheets: GumroadItem[] = [
     title: "Make a Way",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/make-a-way.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/make-a-way-resources",
+    storeUrl: "https://store.hydromedon.com/collections/make-a-way-resources",
     priceText: "",
   },
 
@@ -114,7 +98,7 @@ export const sheets: GumroadItem[] = [
     title: "Change Me, Mold Me, Make Me New",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/change-me-mold-me.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/change-me-mold-me-make-me-new-resources",
+    storeUrl: "https://store.hydromedon.com/collections/change-me-mold-me-make-me-new-resources",
     priceText: "",
   },
 
@@ -125,7 +109,7 @@ export const sheets: GumroadItem[] = [
     title: "Armor of Light",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/armor-of-light.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/armor-of-light-resources",
+    storeUrl: "https://store.hydromedon.com/collections/armor-of-light-resources",
     priceText: "",
   },
 
@@ -136,7 +120,7 @@ export const sheets: GumroadItem[] = [
     title: "Beauty for Ashes",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/beauty-for-ashes.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/beauty-for-ashes-resources",
+    storeUrl: "https://store.hydromedon.com/collections/beauty-for-ashes-resources",
     priceText: "",
   },
 
@@ -147,7 +131,7 @@ export const sheets: GumroadItem[] = [
     title: "Arise, O Lord",
     description: "Lead sheet, song bundle, and all related resources.",
     imageSrc: "/covers/arise-o-lord.jpg",
-    gumroadUrl: "https://store.hydromedon.com/collections/arise-o-lord-resources",
+    storeUrl: "https://store.hydromedon.com/collections/arise-o-lord-resources",
     priceText: "",
   },
 ];

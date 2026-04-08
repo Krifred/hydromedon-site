@@ -5,16 +5,16 @@
    ========================================================== */
 
 import Image from "next/image";
-import type { GumroadItem } from "@/lib/gumroad/catalog";
+import type { SheetMusicItem } from "@/lib/fourthwall";
 
 interface SheetCardProps {
-    item: GumroadItem;
+    item: SheetMusicItem;
 }
 
 export default function SheetCard({ item }: SheetCardProps) {
     return (
         <a
-            href={item.gumroadUrl}
+            href={item.storeUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="group block rounded-sm overflow-hidden border border-white/8
