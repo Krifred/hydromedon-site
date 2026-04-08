@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { compositions } from "@/data/compositions";
 import FadeIn from "@/components/FadeIn";
 import Image from "next/image";
+import { lyricsByRelease } from "@/lib/lyrics";
 import {
   buildMusicCompositionJsonLd,
   buildScoreProductJsonLd,
@@ -13,6 +14,12 @@ export default async function CompositionPage({ params }: { params: Promise<{ sl
   const composition = compositions.find((c) => c.slug === slug);
 
   if (!composition) return notFound();
+
+  // Pull liner notes from lyricsByRelease — keyed by release slug and track title
+  const releaseEntry = lyricsByRelease[slug];
+  const linerNotes = releaseEntry
+    ? Object.values(releaseEntry)[0]?.linerNotes
+    : undefined;
 
   const leadScore = composition.scores.find((s) => s.type === "Lead Sheet");
   const fullScore = composition.scores.find((s) => s.type === "Full Score + Instrument Parts");
@@ -133,6 +140,60 @@ export default async function CompositionPage({ params }: { params: Promise<{ sl
             <p className="mt-6 text-xs text-white/30 tracking-[0.15em] uppercase">Lyrics &copy; Hydromedon</p>
           </FadeIn>
         </section>
+
+        {/* COMPOSER'S NOTES */}
+        {linerNotes && (
+          <section>
+            <FadeIn delayMs={80}>
+              <p className="text-xs tracking-[0.25em] text-white/30 uppercase mb-3">Composer's Notes</p>
+              <h2 className="text-2xl font-bold text-yellow-400 leading-tight tracking-tight mb-6">Behind the Song</h2>
+
+              <div className="space-y-8">
+
+                {linerNotes.personalContext && (
+                  <div className="border-l-2 border-yellow-500/30 pl-5">
+                    <p className="text-xs tracking-[0.2em] text-yellow-500/50 uppercase mb-3">Origin</p>
+                    <p className="text-white/55 leading-relaxed">{linerNotes.personalContext}</p>
+                  </div>
+                )}
+
+                {linerNotes.musicalChoices && (
+                  <div className="border-l-2 border-yellow-500/30 pl-5">
+                    <p className="text-xs tracking-[0.2em] text-yellow-500/50 uppercase mb-3">Musical Choices</p>
+                    <p className="text-white/55 leading-relaxed">{linerNotes.musicalChoices}</p>
+                  </div>
+                )}
+
+                {linerNotes.thematicReflection && (
+                  <div className="border-l-2 border-yellow-500/30 pl-5">
+                    <p className="text-xs tracking-[0.2em] text-yellow-500/50 uppercase mb-3">Thematic Reflection</p>
+                    <p className="text-white/55 leading-relaxed">{linerNotes.thematicReflection}</p>
+                  </div>
+                )}
+
+                {linerNotes.scriptureReferences?.length && (
+                  <div>
+                    <p className="text-xs tracking-[0.2em] text-yellow-500/50 uppercase mb-3">Scripture References</p>
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {linerNotes.scriptureReferences.map((ref, i) => (
+                        <span key={i} className="text-xs border border-yellow-500/20 text-yellow-400/60 px-3 py-1 rounded-sm">
+                          {ref}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {linerNotes.writtenDuring && (
+                  <p className="text-xs text-white/25 tracking-[0.15em] uppercase">
+                    Written during — {linerNotes.writtenDuring}
+                  </p>
+                )}
+
+              </div>
+            </FadeIn>
+          </section>
+        )}
 
         {/* SAMPLE PREVIEW */}
         <section>
