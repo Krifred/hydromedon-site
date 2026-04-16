@@ -1,16 +1,16 @@
 export const compositions = [
-    // ─────────────────────────────────────────────────────────────────────────
-    // 1. Arise, O Lord
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "arise-o-lord",
-        title: "Arise, O Lord",
-        subtitle: "Lead Sheet",
-        description:
-            "Born from the psalms of deliverance and the quiet ache of waiting, Arise, O Lord is a cry for God's intervention, strength, and justice.",
-        about:
-            "This piece carries the tension between vulnerability and boldness — a prayer that rises from the depths and refuses to fall silent.",
-        lyrics: `Almighty God, my shelter and shield
+  // ─────────────────────────────────────────────────────────────────────────
+  // 1. Arise, O Lord
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "arise-o-lord",
+    title: "Arise, O Lord",
+    subtitle: "Lead Sheet",
+    description:
+      "Born from the psalms of deliverance and the quiet ache of waiting, Arise, O Lord is a cry for God's intervention, strength, and justice.",
+    about:
+      "This piece carries the tension between vulnerability and boldness — a prayer that rises from the depths and refuses to fall silent.",
+    lyrics: `Almighty God, my shelter and shield
 My defender, my strength in the field
 I come not quiet, but bold in my cry
 There are battles I can't win, though I try
@@ -57,55 +57,55 @@ Let my story stir dry bones awake
 Let my breakthrough show the path You make
 You still redeem, You still renew
 And I will trust the fight to You`,
-        sampleImage: "/samples/arise-o-lord.jpg",
-        samplePdf: "/samples/arise-o-lord.pdf",
-        spotify: "https://open.spotify.com/track/3ut8WjurvXkLDsT24joSSO",
-        youtube: "https://youtu.be/YuNm0FGE8AU",
-        technical: {
-            key: "C♯ major",
-            tempo: "121 BPM",
-            timeSignature: "4/4",
-            difficulty: "Intermediate",
-            length: "6 pages",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "available",
-                url: "/sheet-music/arise-o-lord/resources",
-                purchaseUrl: "https://store.hydromedon.com/products/arise-o-lord-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "6 pages",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/arise-o-lord-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:05:51",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/arise-o-lord.jpg",
+    samplePdf: "/samples/arise-o-lord.pdf",
+    spotify: "https://open.spotify.com/track/3ut8WjurvXkLDsT24joSSO",
+    youtube: "https://youtu.be/YuNm0FGE8AU",
+    technical: {
+      key: "C♯ major",
+      tempo: "121 BPM",
+      timeSignature: "4/4",
+      difficulty: "Intermediate",
+      length: "6 pages",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "available",
+        url: "/sheet-music/arise-o-lord/resources",
+        purchaseUrl: "https://store.hydromedon.com/products/arise-o-lord-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "6 pages",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/arise-o-lord-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 2. Armor of Light
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "armor-of-light",
-        title: "Armor of Light",
-        subtitle: "Lead Sheet",
-        description:
-            "A powerful anthem about spiritual resilience and the strength found in faith, drawn from the imagery of Ephesians 6.",
-        about:
-            "Written during a season of spiritual warfare, this piece reflects the experience of learning to trust God's protection not as an abstract idea, but as daily survival.",
-        lyrics: `In Your name, Jesus, I rise again
+  // ─────────────────────────────────────────────────────────────────────────
+  // 2. Armor of Light
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "armor-of-light",
+    title: "Armor of Light",
+    subtitle: "Lead Sheet",
+    description:
+      "A powerful anthem about spiritual resilience and the strength found in faith, drawn from the imagery of Ephesians 6.",
+    about:
+      "Written during a season of spiritual warfare, this piece reflects the experience of learning to trust God's protection not as an abstract idea, but as daily survival.",
+    lyrics: `In Your name, Jesus, I rise again
 Clothed in Your armor, I take my stand
 Helmet of salvation, shining bright
 Breastplate of righteousness, my guiding light
@@ -163,54 +163,54 @@ Amen and amen, I rise and sing
 Covered in armor of the King
 Amen and amen, I rise and sing
 Covered in armor of the King`,
-        sampleImage: "/samples/armor-of-light.jpg",
-        samplePdf: "/samples/armor-of-light.pdf",
-        spotify: "https://open.spotify.com/track/03diABBKdeFLKtcF5EDOtb",
-        youtube: "https://youtu.be/nlaqCtY2a-c",
-        technical: {
-            key: "B major",
-            tempo: "80 BPM",
-            timeSignature: "4/4",
-            difficulty: "Intermediate",
-            length: "00:09:00",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/armor-of-light-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "TBD",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/armor-of-light-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "TBD",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/armor-of-light.jpg",
+    samplePdf: "/samples/armor-of-light.pdf",
+    spotify: "https://open.spotify.com/track/03diABBKdeFLKtcF5EDOtb",
+    youtube: "https://youtu.be/nlaqCtY2a-c",
+    technical: {
+      key: "B♭ major",
+      tempo: "76 BPM",
+      timeSignature: "4/4",
+      difficulty: "Intermediate",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/armor-of-light-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/armor-of-light-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 3. Beauty for Ashes
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "beauty-for-ashes",
-        title: "Beauty for Ashes",
-        subtitle: "Lead Sheet",
-        description:
-            "A song of renewal and hope, drawing from the biblical promise of transformation in Isaiah 61.",
-        about:
-            "Written during a season of loss and quiet rebuilding, this piece came from learning to hold sorrow honestly while still daring to believe that restoration was possible.",
-        lyrics: `The Spirit of the Lord is upon me
+  // ─────────────────────────────────────────────────────────────────────────
+  // 3. Beauty for Ashes
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "beauty-for-ashes",
+    title: "Beauty for Ashes",
+    subtitle: "Lead Sheet",
+    description:
+      "A song of renewal and hope, drawing from the biblical promise of transformation in Isaiah 61.",
+    about:
+      "Written during a season of loss and quiet rebuilding, this piece came from learning to hold sorrow honestly while still daring to believe that restoration was possible.",
+    lyrics: `The Spirit of the Lord is upon me
 He has anointed me to speak the light
 To bind the broken hearts in mercy
 And set the captives free from night
@@ -266,54 +266,54 @@ Clothed in grace, I'll not look back
 Your love has set me on this track
 Forever Yours, I'll lift Your name
 And walk in freedom, unashamed`,
-        sampleImage: "/samples/beauty-for-ashes.jpg",
-        samplePdf: "/samples/beauty-for-ashes.pdf",
-        spotify: "https://open.spotify.com/track/4BBQAGUamWLmnqZ69ha3ru",
-        youtube: "https://youtu.be/Z2YWw1KxZ8c",
-        technical: {
-            key: "F# minor",
-            tempo: "80 BPM",
-            timeSignature: "4/4",
-            difficulty: "Intermediate",
-            length: "00:06:47",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/beauty-for-ashes-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "00:06:47",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/beauty-for-ashes-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:06:47",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/beauty-for-ashes.jpg",
+    samplePdf: "/samples/beauty-for-ashes.pdf",
+    spotify: "https://open.spotify.com/track/4BBQAGUamWLmnqZ69ha3ru",
+    youtube: "https://youtu.be/Z2YWw1KxZ8c",
+    technical: {
+      key: "G major",
+      tempo: "72 BPM",
+      timeSignature: "4/4",
+      difficulty: "Intermediate",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/beauty-for-ashes-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/beauty-for-ashes-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 4. Change Me, Mold Me, Make Me New
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "change-me-mold-me-make-me-new",
-        title: "Change Me, Mold Me, Make Me New",
-        subtitle: "Lead Sheet",
-        description:
-            "A heartfelt prayer for personal transformation and spiritual growth, written in a posture of surrender.",
-        about:
-            "Written during a season of deep self-examination, this piece came from confronting personal failure and wrestling with the fear that true transformation might cost more than expected.",
-        lyrics: `Lord, I come before You now
+  // ─────────────────────────────────────────────────────────────────────────
+  // 4. Change Me, Mold Me, Make Me New
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "change-me-mold-me-make-me-new",
+    title: "Change Me, Mold Me, Make Me New",
+    subtitle: "Lead Sheet",
+    description:
+      "A heartfelt prayer for personal transformation and spiritual growth, written in a posture of surrender.",
+    about:
+      "Written during a season of deep self-examination, this piece came from confronting personal failure and wrestling with the fear that true transformation might cost more than expected.",
+    lyrics: `Lord, I come before You now
 With a heart that's full of shame
 For the person I once was
 I ask forgiveness in Your name
@@ -377,54 +377,54 @@ Make me more like Jesus, Lord
 In every thought, in every word
 Let Your will be done in me
 For Your glory, eternally`,
-        sampleImage: "/samples/change-me-mold-me-make-me-new.jpg",
-        samplePdf: "/samples/change-me-mold-me-make-me-new.pdf",
-        spotify: "https://open.spotify.com/track/03eVArWvzKT0agDm8pGhUN",
-        youtube: "https://youtu.be/XKnJ7wzboS8",
-        technical: {
-            key: "D major",
-            tempo: "123 BPM",
-            timeSignature: "4/4",
-            difficulty: "Beginner",
-            length: "00:05:54",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/change-me-mold-me-make-me-new-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "00:05:54",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/change-me-mold-me-make-me-new-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:05:54",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/change-me-mold-me-make-me-new.jpg",
+    samplePdf: "/samples/change-me-mold-me-make-me-new.pdf",
+    spotify: "https://open.spotify.com/track/03eVArWvzKT0agDm8pGhUN",
+    youtube: "https://youtu.be/XKnJ7wzboS8",
+    technical: {
+      key: "F major",
+      tempo: "68 BPM",
+      timeSignature: "4/4",
+      difficulty: "Beginner",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/change-me-mold-me-make-me-new-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/change-me-mold-me-make-me-new-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 5. Make a Way
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "make-a-way",
-        title: "Make a Way",
-        subtitle: "Lead Sheet",
-        description:
-            "A song about trusting in God's provision and guidance when the path forward is unclear.",
-        about:
-            "Written in a season marked by uncertainty and waiting, this piece came from learning to trust God not for immediate answers, but for presence in the middle of unanswered prayers.",
-        lyrics: `Lord, lift me from the pit
+  // ─────────────────────────────────────────────────────────────────────────
+  // 5. Make a Way
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "make-a-way",
+    title: "Make a Way",
+    subtitle: "Lead Sheet",
+    description:
+      "A song about trusting in God's provision and guidance when the path forward is unclear.",
+    about:
+      "Written in a season marked by uncertainty and waiting, this piece came from learning to trust God not for immediate answers, but for presence in the middle of unanswered prayers.",
+    lyrics: `Lord, lift me from the pit
 Set my feet on solid ground
 You are the God who lifts
 Where grace and love abound
@@ -493,54 +493,54 @@ Faith that sees beyond the veil
 Faith that climbs the steepest trail
 Faith that walks through shadows wide
 Hope that glows where fears reside`,
-        sampleImage: "/samples/make-a-way.jpg",
-        samplePdf: "/samples/make-a-way.pdf",
-        spotify: "https://open.spotify.com/track/3QgZ9UuLlCopfAGoQxWXue",
-        youtube: "https://youtu.be/CfkbtDyYr3w",
-        technical: {
-            key: "E major",
-            tempo: "105 BPM",
-            timeSignature: "4/4",
-            difficulty: "Intermediate",
-            length: "00:04:38",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/make-a-way-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "00:04:38",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/make-a-way-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:04:38",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/make-a-way.jpg",
+    samplePdf: "/samples/make-a-way.pdf",
+    spotify: "https://open.spotify.com/track/3QgZ9UuLlCopfAGoQxWXue",
+    youtube: "https://youtu.be/CfkbtDyYr3w",
+    technical: {
+      key: "D major",
+      tempo: "80 BPM",
+      timeSignature: "4/4",
+      difficulty: "Intermediate",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/make-a-way-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/make-a-way-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 6. The Lord Bless You and Keep You
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "the-lord-bless-you-and-keep-you",
-        title: "The Lord Bless You and Keep You",
-        subtitle: "Lead Sheet",
-        description:
-            "A musical rendering of the biblical blessing from Numbers 6 — a benediction of peace, grace, and assurance.",
-        about:
-            "Written as a moment of stillness within the album, this piece came from the desire to speak blessing rather than petition, and to rest in assurance rather than effort.",
-        lyrics: `The Lord bless me and keep me near
+  // ─────────────────────────────────────────────────────────────────────────
+  // 6. The Lord Bless You and Keep You
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "the-lord-bless-you-and-keep-you",
+    title: "The Lord Bless You and Keep You",
+    subtitle: "Lead Sheet",
+    description:
+      "A musical rendering of the biblical blessing from Numbers 6 — a benediction of peace, grace, and assurance.",
+    about:
+      "Written as a moment of stillness within the album, this piece came from the desire to speak blessing rather than petition, and to rest in assurance rather than effort.",
+    lyrics: `The Lord bless me and keep me near
 Protect my heart, dissolve my fear
 His face shines bright with boundless grace
 His love surrounds me in every place
@@ -589,54 +589,55 @@ Thank You, Lord
 Thank You, Lord
 Thank You, Thank You
 Thank You, Lord`,
-        sampleImage: "/samples/the-lord-bless-you-and-keep-you.jpg",
-        samplePdf: "/samples/the-lord-bless-you-and-keep-you.pdf",
-        spotify: "https://open.spotify.com/track/0dhI4VUj0sj9Dvm4KEjUo5",
-        youtube: "https://youtu.be/3bCGi9FL9bE",
-        technical: {
-            key: "F# minor",
-            tempo: "105 BPM",
-            timeSignature: "4/4",
-            difficulty: "Beginner",
-            length: "00:04:43",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/the-lord-bless-you-and-keep-you-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "00:04:43",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/the-lord-bless-you-and-keep-you-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:04:43",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/the-lord-bless-you-and-keep-you.jpg",
+    samplePdf: "/samples/the-lord-bless-you-and-keep-you.pdf",
+    spotify: "https://open.spotify.com/track/0dhI4VUj0sj9Dvm4KEjUo5",
+    youtube: "https://youtu.be/3bCGi9FL9bE",
+    technical: {
+      key: "E major",
+      tempo: "70 BPM",
+      timeSignature: "4/4",
+      difficulty: "Beginner",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "available",
+        url: "/sheet-music/the-lord-bless-you-and-keep-you/resources",
+        purchaseUrl: "https://store.hydromedon.com/products/the-lord-bless-you-and-keep-you-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/the-lord-bless-you-and-keep-you-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 7. Under Your Wings
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "under-your-wings",
-        title: "Under Your Wings",
-        subtitle: "Lead Sheet",
-        description:
-            "A song of refuge and safety, reflecting the biblical image of God as shelter from Psalm 91.",
-        about:
-            "Written during a season of anxiety and vulnerability, this piece came from moments of seeking shelter — emotionally and spiritually — and learning to rest rather than remain constantly guarded.",
-        lyrics: `He who dwells in God's secret place
+  // ─────────────────────────────────────────────────────────────────────────
+  // 7. Under Your Wings
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "under-your-wings",
+    title: "Under Your Wings",
+    subtitle: "Lead Sheet",
+    description:
+      "A song of refuge and safety, reflecting the biblical image of God as shelter from Psalm 91.",
+    about:
+      "Written during a season of anxiety and vulnerability, this piece came from moments of seeking shelter — emotionally and spiritually — and learning to rest rather than remain constantly guarded.",
+    lyrics: `He who dwells in God's secret place
 Shall find refuge in His loving grace
 In His care, my soul finds rest
 In His embrace, I am truly blessed
@@ -675,54 +676,54 @@ Thank You, Lord, for this sacred space
 You are my refuge, my embrace
 In You, I place all my trust and might
 Through valleys deep, You are my light`,
-        sampleImage: "/samples/under-your-wings.jpg",
-        samplePdf: "/samples/under-your-wings.pdf",
-        spotify: "https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM",
-        youtube: "https://www.youtube.com/@Hydromedon",
-        technical: {
-            key: "A# minor",
-            tempo: "74 BPM",
-            timeSignature: "4/4",
-            difficulty: "Beginner",
-            length: "00:03:48",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/under-your-wings-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "00:03:48",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/under-your-wings-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:03:48",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/under-your-wings.jpg",
+    samplePdf: "/samples/under-your-wings.pdf",
+    spotify: "https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM",
+    youtube: "https://www.youtube.com/@Hydromedon",
+    technical: {
+      key: "A major",
+      tempo: "74 BPM",
+      timeSignature: "4/4",
+      difficulty: "Beginner",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/under-your-wings-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/under-your-wings-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 
-    // ─────────────────────────────────────────────────────────────────────────
-    // 8. Your Peace Surpasses All Understanding
-    // ─────────────────────────────────────────────────────────────────────────
-    {
-        slug: "your-peace-surpasses-all-understanding",
-        title: "Your Peace Surpasses All Understanding",
-        subtitle: "Lead Sheet",
-        description:
-            "A song exploring peace as a guarding presence, drawn from Philippians 4 — the practice of dwelling on what is good and true.",
-        about:
-            "Written in moments of mental exhaustion and anxiety, this piece came from practicing trust not by eliminating fear, but by returning again and again to prayer in the midst of it.",
-        lyrics: `When my heart is heavy, and my mind is full of fear
+  // ─────────────────────────────────────────────────────────────────────────
+  // 8. Your Peace Surpasses All Understanding
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "your-peace-surpasses-all-understanding",
+    title: "Your Peace Surpasses All Understanding",
+    subtitle: "Lead Sheet",
+    description:
+      "A song exploring peace as a guarding presence, drawn from Philippians 4 — the practice of dwelling on what is good and true.",
+    about:
+      "Written in moments of mental exhaustion and anxiety, this piece came from practicing trust not by eliminating fear, but by returning again and again to prayer in the midst of it.",
+    lyrics: `When my heart is heavy, and my mind is full of fear
 I turn to You, Lord, knowing You are near
 In every situation, with thanksgiving, I will pray
 Casting all my worries, trusting You each day
@@ -766,41 +767,41 @@ Thank You, Lord, for Your peace and Your love
 For guiding me always, from heaven above
 In my prayers, I find strength and delight
 In Your presence, Lord, I find my light`,
-        sampleImage: "/samples/your-peace-surpasses-all-understanding.jpg",
-        samplePdf: "/samples/your-peace-surpasses-all-understanding.pdf",
-        spotify: "https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM",
-        youtube: "https://www.youtube.com/@Hydromedon",
-        technical: {
-            key: "F major",
-            tempo: "104 BPM",
-            timeSignature: "4/4",
-            difficulty: "Intermediate",
-            length: "00:03:50",
-            instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-        },
-        scores: [
-            {
-                type: "Lead Sheet",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/your-peace-surpasses-all-understanding-lead-sheet",
-                priceText: "$5.95",
-                details: {
-                    length: "00:03:50",
-                    instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
-                },
-            },
-            {
-                type: "Full Score + Instrument Parts",
-                status: "coming-soon",
-                purchaseUrl: "https://store.hydromedon.com/products/your-peace-surpasses-all-understanding-full-score",
-                priceText: "$34.95",
-                details: {
-                    length: "00:03:50",
-                    instrumentation: "Piano, Strings, Auxiliary Instruments",
-                },
-            },
-        ],
+    sampleImage: "/samples/your-peace-surpasses-all-understanding.jpg",
+    samplePdf: "/samples/your-peace-surpasses-all-understanding.pdf",
+    spotify: "https://open.spotify.com/artist/6uDb2bAKe11eYOQR1foFQM",
+    youtube: "https://www.youtube.com/@Hydromedon",
+    technical: {
+      key: "G major",
+      tempo: "76 BPM",
+      timeSignature: "4/4",
+      difficulty: "Intermediate",
+      length: "TBD",
+      instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
     },
+    scores: [
+      {
+        type: "Lead Sheet",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/your-peace-surpasses-all-understanding-lead-sheet",
+        priceText: "$5.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Voice, Chord Symbols, Lead Sheet Format",
+        },
+      },
+      {
+        type: "Full Score + Instrument Parts",
+        status: "coming-soon",
+        purchaseUrl: "https://store.hydromedon.com/products/your-peace-surpasses-all-understanding-full-score",
+        priceText: "$34.95",
+        details: {
+          length: "TBD",
+          instrumentation: "Piano, Strings, Auxiliary Instruments",
+        },
+      },
+    ],
+  },
 ];
 
 export type Composition = (typeof compositions)[number];
