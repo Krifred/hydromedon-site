@@ -256,15 +256,15 @@ export default function Header() {
                     aria-controls="mobile-menu"
                 >
                     <span
-                        className={`w-7 h-0.5 bg-hydra-ice transition-all duration-300 group-hover:bg-hydra-gold ${menuOpen ? "rotate-45 translate-y-2" : ""
+                        className={`w-7 h-0.5 bg-white transition-all duration-300 group-hover:bg-[#FFD700] ${menuOpen ? "rotate-45 translate-y-2" : ""
                             }`}
                     />
                     <span
-                        className={`w-7 h-0.5 bg-hydra-ice transition-all duration-300 group-hover:bg-hydra-gold ${menuOpen ? "opacity-0" : ""
+                        className={`w-7 h-0.5 bg-white transition-all duration-300 group-hover:bg-[#FFD700] ${menuOpen ? "opacity-0" : ""
                             }`}
                     />
                     <span
-                        className={`w-7 h-0.5 bg-hydra-ice transition-all duration-300 group-hover:bg-hydra-gold ${menuOpen ? "-rotate-45 -translate-y-2" : ""
+                        className={`w-7 h-0.5 bg-white transition-all duration-300 group-hover:bg-[#FFD700] ${menuOpen ? "-rotate-45 -translate-y-2" : ""
                             }`}
                     />
                 </button>
