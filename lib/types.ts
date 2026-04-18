@@ -1,4 +1,17 @@
 /* =========================
+   Genre
+   ========================= */
+
+export type GenreSlug =
+    | "dream-pop"
+    | "worship"
+    | "shoegaze"
+    | "instrumental"
+    | "ambient"
+    | "cinematic"
+    | "classical-fusion";
+
+/* =========================
    Liner Notes
    ========================= */
 
@@ -84,7 +97,31 @@ export interface Release {
     hyperfollow?: string;
 
     description?: string;
+
+    /** Lyrical / spiritual topics — existing field, unchanged */
     themes?: string[];
+
+    /** Musical style categories */
+    genres?: GenreSlug[];
+
+    /** Emotional character of the track */
+    mood?: string;
+
+    /** Primary scripture reference, e.g. "Ephesians 6:10–18" */
+    bibleRef?: string;
+
+    /** Book name only, e.g. "Ephesians" — for future filtering */
+    bibleBook?: string;
+
+    /** Controls /stories page visibility — default false */
+    storyPublished?: boolean;
+
+    /** YouTube video IDs (not full URLs) for variant video types */
+    youtubeIds?: {
+        lyric?: string;      // lyric video
+        visual?: string;     // steampunk visual video
+        makingOf?: string;   // HeyGen talking-head video
+    };
 
     /** Album tracklist or single track data */
     tracks?: Track[];
