@@ -58,7 +58,7 @@ export const releases: Release[] = [
         type: "Single",
         releaseDate: "2025-12-13",
         year: "2025",
-        cover: "/covers/armor-of-light.jpg",
+        cover: "/covers/armor-of-light-single.jpg",
         hyperfollow: undefined,
         spotify: "https://open.spotify.com/track/03diABBKdeFLKtcF5EDOtb",
         youtube: "https://www.youtube.com/watch?v=8I5IUga1R0w",
