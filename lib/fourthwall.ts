@@ -1,4 +1,5 @@
 // lib/fourthwall.ts
+import { unstable_cache } from "next/cache";
 // Fourthwall Storefront API v1 — collection fetching with image enrichment.
 //
 // Required env var:
@@ -104,8 +105,12 @@ async function fetchPrimaryImage(slug: string): Promise<{ url: string } | null> 
  *
  * Callers can use parseCollectionSlug(c.slug) to determine which display
  * category a collection belongs to.
+ *
+ * Results are cached for 1 hour via unstable_cache so the N+1 Fourthwall
+ * API calls only run once per revalidation window, even on a dynamic route.
  */
-export async function getCollections(): Promise<FWCollection[]> {
+export const getCollections: () => Promise<FWCollection[]> = unstable_cache(
+    async function _getCollections(): Promise<FWCollection[]> {
     const res = await fetch(
         buildUrl("/collections", { pageSize: "50" }),
         fetchOptions()
@@ -130,7 +135,10 @@ export async function getCollections(): Promise<FWCollection[]> {
             primaryImage: await fetchPrimaryImage(c.slug),
         }))
     );
-}
+    },
+    ["fourthwall-collections"],
+    { revalidate: REVALIDATE }
+);
 
 /**
  * Fetch every product visible on the storefront by iterating over all

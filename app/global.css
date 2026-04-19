@@ -270,3 +270,78 @@ body {
 .animate-halo-pulse {
     animation: halo-pulse 18s ease-in-out infinite;
 }
+
+/* ============================================================
+   Story prose (MDX body content)
+   ============================================================ */
+
+.prose-story {
+    color: #d1d5db;
+    line-height: 1.8;
+    font-size: 1rem;
+}
+
+.prose-story h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fde68a;
+    margin-top: 2.25rem;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+}
+
+.prose-story h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #fbbf24;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+}
+
+.prose-story p {
+    margin-bottom: 1.25rem;
+}
+
+.prose-story blockquote {
+    border-left: 2px solid #ca8a04;
+    padding-left: 1.25rem;
+    color: #9ca3af;
+    font-style: italic;
+    margin: 1.75rem 0;
+}
+
+.prose-story strong {
+    color: #f3f4f6;
+    font-weight: 600;
+}
+
+.prose-story em {
+    color: #e5e7eb;
+}
+
+.prose-story a {
+    color: #fbbf24;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: color 200ms;
+}
+
+.prose-story a:hover {
+    color: #fde68a;
+}
+
+.prose-story ul,
+.prose-story ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.prose-story li {
+    margin-bottom: 0.4rem;
+}
+
+.prose-story hr {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 2.5rem 0;
+}

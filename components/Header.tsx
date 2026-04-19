@@ -9,12 +9,15 @@ const navItems = [
     { label: "Latest Release", href: "/#latest" },
     { label: "Music", href: "/music" },
     { label: "Sheet Music", href: "/sheet-music" },
+    { label: "Videos", href: "/videos" },
+    { label: "Stories", href: "/stories" },
     { label: "Merch", href: "/merch" },
     {
         label: "About",
         children: [
             { label: "About Hydromedon", href: "/about#about" },
-            { label: "Recommended Sites", href: "/about/recommended-sites" }, // <-- NEW ITEM
+            { label: "Recommended Sites", href: "/about/recommended-sites" },
+            { label: "Faith", href: "/faith" },
             { label: "Statement of Faith", href: "/about#statement-of-faith" },
         ],
     },
