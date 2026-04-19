@@ -16,6 +16,12 @@ import SheetsGrid from "@/components/merch/SheetsGrid";
 import FadeIn from "@/components/FadeIn";
 import MerchParallax from "@/components/merch/MerchParallax";
 
+// Merch data comes from the live Fourthwall API, which is too slow to fetch
+// during `next build`. Force dynamic rendering so the page is rendered at
+// request time instead of statically generated at build time.
+// Data caching is handled inside lib/fourthwall.ts via unstable_cache (1 h).
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
     title: "Merch — Hydromedon",
     description: "Merch from Hydromedon.",

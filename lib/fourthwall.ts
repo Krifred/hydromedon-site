@@ -1,4 +1,5 @@
 // lib/fourthwall.ts
+import { unstable_cache } from "next/cache";
 // Fourthwall Storefront API v1 — collection fetching with image enrichment.
 //
 // Required env var:
@@ -91,10 +92,11 @@ async function fetchPrimaryImage(slug: string): Promise<{ url: string } | null> 
  * a `primaryImage` resolved from the first product, and normalised `tags`.
  *
  * Collections with slugs in EXCLUDED_SLUGS (e.g. "all") are omitted.
- * Any collection added to Fourthwall that is not excluded will appear
- * automatically on the next ISR revalidation (1 h).
+ * Results are cached for 1 hour via unstable_cache so the N+1 Fourthwall
+ * API calls only run once per revalidation window, even on a dynamic route.
  */
-export async function getCollections(): Promise<FWCollection[]> {
+export const getCollections: () => Promise<FWCollection[]> = unstable_cache(
+    async function _getCollections(): Promise<FWCollection[]> {
     const allResults: Array<{ id: string; name: string; slug: string; description: string }> = [];
     let pageNumber = 0;
 
@@ -134,4 +136,7 @@ export async function getCollections(): Promise<FWCollection[]> {
             tags: ["artifacts"],
         }))
     );
-}
+    },
+    ["fourthwall-collections"],
+    { revalidate: REVALIDATE }
+);
