@@ -13,7 +13,7 @@ export const releases: Release[] = [
         type: "Video",
         releaseDate: "2025-12-13",
         year: "2025",
-        cover: "/covers/armor-of-light`.jpg",
+        cover: "/covers/armor-of-light.jpg",
         hyperfollow: undefined,
         spotify: undefined,
         youtube: "https://youtu.be/nlaqCtY2a-c?si=nvx5Kadt32XLhb68",
@@ -25,7 +25,7 @@ export const releases: Release[] = [
     },
 
     {
-        slug: "beauty-for-ashes-video"
+        slug: "beauty-for-ashes-video",
         title: "Beauty for Ashes",
         type: "Video",
         releaseDate: "2025-12-20",
@@ -42,7 +42,7 @@ export const releases: Release[] = [
     },
 
     {
-        slug: "arise-o-lord-video"
+        slug: "arise-o-lord-video",
         title: "Arise, O Lord",
         type: "Video",
         releaseDate: "2025-11-29",
