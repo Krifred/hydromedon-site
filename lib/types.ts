@@ -54,6 +54,15 @@ export interface Track {
    Release
    ========================= */
 
+export type GenreSlug =
+    | "dream-pop"
+    | "worship"
+    | "shoegaze"
+    | "instrumental"
+    | "ambient"
+    | "cinematic"
+    | "classical-fusion";
+
 /**
  * A public-facing release entity.
  * Can represent a Single, Album, or Video.
@@ -88,4 +97,9 @@ export interface Release {
 
     /** Album tracklist or single track data */
     tracks?: Track[];
+
+    genres?: GenreSlug[];
+    mood?: string[];
+    bibleRef?: string;
+    bibleBook?: string;
 }

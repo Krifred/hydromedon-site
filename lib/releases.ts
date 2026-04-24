@@ -20,10 +20,12 @@ export const releases: Release[] = [
         subtitle: "Official single video.",
         description: "A call to stand strong in faith and light.",
         themes: ["Video", "Cinematic"],
+        genres: ["cinematic"],
+        mood: ["atmospheric", "cinematic"],
     },
 
     {
-        slug: "beauty-for-ashes-video",
+        slug: "beauty-for-ashes-video"
         title: "Beauty for Ashes",
         type: "Video",
         releaseDate: "2025-12-20",
@@ -35,10 +37,12 @@ export const releases: Release[] = [
         subtitle: "Official single video.",
         description: "Transformation and hope from brokenness.",
         themes: ["Video", "Cinematic"],
+        genres: ["cinematic"],
+        mood: ["atmospheric", "cinematic"],
     },
 
     {
-        slug: "arise-o-lord-video",
+        slug: "arise-o-lord-video"
         title: "Arise, O Lord",
         type: "Video",
         releaseDate: "2025-11-29",
@@ -50,6 +54,8 @@ export const releases: Release[] = [
         subtitle: "Official single video.",
         description: "A call to action and worship.",
         themes: ["Video", "Cinematic"],
+        genres: ["cinematic"],
+        mood: ["atmospheric", "cinematic"],
     },
 
     {
@@ -67,6 +73,10 @@ export const releases: Release[] = [
             "Armor of Light is a powerful anthem about spiritual resilience and the strength found in faith.",
         themes: ["Faith", "Resilience", "Spiritual Warfare"],
         tracks: [{ title: "Armor of Light", duration: "9:00" }],
+        genres: ["dream-pop", "worship"],
+        mood: ["anthemic", "triumphant", "urgent"],
+        bibleRef: "Romans 13:12",
+        bibleBook: "Romans",
     },
 
     {
@@ -84,6 +94,10 @@ export const releases: Release[] = [
             "Beauty for Ashes explores renewal and hope, drawing from the biblical promise of transformation.",
         themes: ["Renewal", "Hope", "Transformation"],
         tracks: [{ title: "Beauty for Ashes", duration: "6:48" }],
+        genres: ["dream-pop", "shoegaze"],
+        mood: ["hopeful", "tender", "redemptive"],
+        bibleRef: "Isaiah 61:3",
+        bibleBook: "Isaiah",
     },
 
     {
@@ -101,6 +115,10 @@ export const releases: Release[] = [
             "This song is a heartfelt prayer for change and spiritual growth.",
         themes: ["Transformation", "Prayer", "Renewal"],
         tracks: [{ title: "Change Me, Mold Me", duration: "5:53" }],
+        genres: ["worship", "ambient"],
+        mood: ["surrender", "contemplative", "gentle"],
+        bibleRef: "Isaiah 64:8",
+        bibleBook: "Isaiah",
     },
 
     {
@@ -117,6 +135,10 @@ export const releases: Release[] = [
         description: "Make a Way is about trusting in God's provision.",
         themes: ["Trust", "Provision", "Faith"],
         tracks: [{ title: "Make a Way", duration: "4:38" }],
+        genres: ["dream-pop", "cinematic"],
+        mood: ["faith", "expectant", "driving"],
+        bibleRef: "Isaiah 43:19",
+        bibleBook: "Isaiah",
     },
 
     {
@@ -133,6 +155,10 @@ export const releases: Release[] = [
         description: "A musical rendering of the biblical blessing.",
         themes: ["Blessing", "Comfort", "Assurance"],
         tracks: [{ title: "The Lord Bless You", duration: "4:44" }],
+        genres: ["classical-fusion", "worship"],
+        mood: ["benediction", "peaceful", "sacred"],
+        bibleRef: "Numbers 6:24-26",
+        bibleBook: "Numbers",
     },
 
     {
@@ -150,6 +176,10 @@ export const releases: Release[] = [
             "Under Your Wings speaks of finding refuge and safety in God's care.",
         themes: ["Refuge", "Safety", "Protection"],
         tracks: [{ title: "Under Your Wings", duration: "5:22" }],
+        genres: ["dream-pop", "ambient"],
+        mood: ["shelter", "intimate", "tender"],
+        bibleRef: "Psalm 91:4",
+        bibleBook: "Psalms",
     },
 
     {
@@ -171,6 +201,10 @@ export const releases: Release[] = [
                 duration: "6:02",
             },
         ],
+        genres: ["ambient", "instrumental"],
+        mood: ["transcendent", "still", "ethereal"],
+        bibleRef: "Philippians 4:7",
+        bibleBook: "Philippians",
     },
 
     {
@@ -187,6 +221,10 @@ export const releases: Release[] = [
         description: "Arise O Lord is a song of praise and invocation.",
         themes: ["Praise", "Action", "Worship"],
         tracks: [{ title: "Arise O Lord", duration: "5:47" }],
+        genres: ["worship", "cinematic"],
+        mood: ["invocation", "bold", "ascending"],
+        bibleRef: "Psalm 3:7",
+        bibleBook: "Psalms",
     },
 
     {
@@ -204,6 +242,8 @@ export const releases: Release[] = [
         description:
             "Biblical Graffiti is a concept album weaving together themes of faith, transformation, and spiritual journey.",
         themes: ["Faith", "Transformation", "Journey"],
+        genres: ["dream-pop", "worship", "cinematic"],
+        mood: ["journey", "faith", "transformation"],
         tracks: [
             { title: "Armor of Light", duration: "9:00" },
             { title: "Beauty for Ashes", duration: "6:48" },
