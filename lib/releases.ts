@@ -218,6 +218,21 @@ export const releases: Release[] = [
             { title: "Arise O Lord", duration: "5:47" },
         ],
     },
+    {
+        slug: "tears-for-bread",
+        title: "Tears for Bread",
+        type: "Single",
+        releaseDate: "2026-05-08",
+        year: "2026",
+        cover: "/covers/tears-for-bread.jpg",
+        hyperfollow: undefined,
+        spotify: "https://open.spotify.com/album/1OX1WUlkBnQq6YbBq5Hs9g?si=NJFi1EhLQ2a5bOj9g8W3zA",
+        youtube: "https://youtu.be/7rPYFsm7N_4?si=5qwS8CwIlfUoCrfq",
+        subtitle: "Closer than breath in the dark You still shine",
+        description: "The song lives in the tension between spiritual desolation and stubborn hope. You are held, remembered, and never abandoned.",
+        themes: ["Identity", "Refuge", "Belonging"],
+        tracks: [{ title: "Tears for Bread", duration: "5:50" }],
+    },
 ];
 
 export function getReleaseBySlug(slug: string): Release | undefined {
