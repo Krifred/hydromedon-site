@@ -8,6 +8,7 @@ const navItems = [
     { label: "Home", href: "/" },
     { label: "Latest Release", href: "/#latest" },
     { label: "Music", href: "/music" },
+    { label: "Explore", href: "/explore" },
     { label: "Merch", href: "/merch" },
    {
         label: "About",
