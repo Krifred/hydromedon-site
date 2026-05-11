@@ -645,7 +645,7 @@ And I will trust the fight to You
         },
     },
     "tears-for-bread": {
-        "Tear for Bread": {
+        "Tears for Bread": {
             lyrics: `
 How long, O Lord, will You hide Your face?
 I call by night, but I find no trace
