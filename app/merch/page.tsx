@@ -16,6 +16,8 @@ import SheetsGrid from "@/components/merch/SheetsGrid";
 import FadeIn from "@/components/FadeIn";
 import MerchParallax from "@/components/merch/MerchParallax";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
     title: "Merch — Hydromedon",
     description: "Merch from Hydromedon.",
