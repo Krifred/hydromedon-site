@@ -1,6 +1,7 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
 import FadeIn from "@/components/FadeIn";
 import { getReleaseBySlug, releases } from "@/lib/releases";
+import type { Release } from "@/lib/types";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
@@ -22,7 +23,7 @@ function withUTM(url?: string, source = "hydromedon-site") {
     }
 }
 
-function getPrimaryListenLink(release: any) {
+function getPrimaryListenLink(release: Release) {
     if (release.type === "Video") {
         return {
             href: withUTM(release.youtube),

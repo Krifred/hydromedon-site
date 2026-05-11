@@ -644,4 +644,74 @@ And I will trust the fight to You
             },
         },
     },
+    "tears-for-bread": {
+        "Tear for Bread": {
+            lyrics: `
+How long, O Lord, will You hide Your face?
+I call by night, but I find no trace
+My tears have been my bread each day
+They mock me still, “Where is your God?” they say
+The waters roar, the breakers fall
+Deep calls to deep, I lose it all
+Yet still I lift my eyes above
+To seek Your mercy, to trust Your love
+
+I remember the songs of old
+The mighty works my fathers told
+Though now I walk in shadowed lands
+I place my life within Your hands
+
+Where are You now, O Shepherd of mine?
+Why do You hide when the night is unkind?
+I am undone, yet I still will believe
+That You are the God who will never leave
+Though I am broken, abandoned, alone
+I will not forget You sit on the throne
+
+My soul is faint, my spirit weak
+I search for You, the God I seek
+The heavens feel like brass above
+Yet still I whisper songs of love
+For You have been my strength before
+My refuge, shield, forevermore
+Though silence lingers, I will pray
+And wait for dawn to break the day
+
+Do not be far, O Lord of my cry
+Come quickly to help, do not pass me by
+The night may linger, the silence stay
+But joy will arise with the break of day
+
+Where are You now, O Shepherd of mine?
+Closer than breath, in the dark You still shine
+I am not lost, though I stumble and fall
+You are my refuge, my Savior, my all
+Though I was broken, abandoned, undone
+Now I will sing of the victory won
+
+You are not forsaken, you are not alone.
+I have engraved you on the palms of My hands.
+Though you walk through the valley, I am with you.
+Be still… and know that I am God.
+      `.trim(),
+
+            linerNotes: {
+                personalContext:
+                    "Tears for Bread was written during a season of deep spiritual exhaustion — a time when prayer felt like it was hitting a silent sky. Lines like “How long, O Lord, will You hide Your face?” came from real nights of wrestling, longing, and waiting for God to speak. This song became a way of processing that silence, not by pretending it wasn’t painful, but by walking through it with honesty. It marks the beginning of Hydromedon’s second album, born out of months of quiet work, reflection, and rebuilding.",
+
+                musicalChoices:
+                    "The arrangement leans into a cinematic, slow‑burn atmosphere — soft pads, distant textures, and a vocal delivery that feels intimate and almost prayer‑like. The production intentionally mirrors the emotional arc of the lyrics: sparse and aching in the beginning, gradually rising into warmth and light as the song moves toward hope. Subtle rhythmic pulses echo the feeling of a heartbeat in the dark, while the final chorus opens into a fuller, brighter sound to reflect the shift from lament to assurance.",
+
+                thematicReflection:
+                    "At its core, Tears for Bread is a journey from spiritual desolation to renewed hope. It begins in lament — the feeling of calling out to God and hearing nothing in return — and slowly moves toward remembrance, trust, and the quiet realization that God has been near all along. Themes of perseverance, identity, and divine nearness shape the narrative, culminating in the declaration that even in the darkest places, “Closer than breath, in the dark You still shine.” The song holds space for both the ache and the victory.",
+
+                scriptureReferences: ["Psalm 42", "Psalm 22", "Isaiah 49:16", "Psalm 46:10"],
+
+                writtenDuring: "Composed during the early writing phase of Hydromedon’s second album — a quiet, introspective season marked by long nights, unanswered prayers, and a slow rediscovery of God’s nearness. This was one of the first songs that signaled the emotional direction of the new record.",
+
+                moodTags: ["lament", "longing", "cinematic worship", "quiet hope", "spiritual wrestling", "dawn‑after‑the‑night", "reflective", "intimate", "atmospheric", "faith‑in‑the‑dark"],
+
+            },
+        },
+    },
  };
