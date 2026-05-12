@@ -6,6 +6,7 @@ import { formatGenreLabel } from "@/components/GenreCard";
 import SongCard from "@/components/SongCard";
 import { releases } from "@/lib/releases";
 import type { GenreSlug } from "@/lib/types";
+import { abs, DEFAULT_OG_IMAGE, SITE_NAME, TWITTER_HANDLE } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -25,8 +26,28 @@ export async function generateMetadata({
     params: Promise<{ genre: string }>;
 }) {
     const { genre } = await params;
+    const label = formatGenreLabel(genre);
+    const title = `${label} Music | ${SITE_NAME}`;
+    const description = `Explore ${SITE_NAME}'s ${label} releases — cinematic, devotional music.`;
+    const url = abs(`/explore/${genre}`);
     return {
-        title: `${formatGenreLabel(genre)} Music | Hydromedon`,
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            type: "website",
+            url,
+            title,
+            description,
+            images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: label }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            site: TWITTER_HANDLE,
+            title,
+            description,
+            images: [DEFAULT_OG_IMAGE],
+        },
     };
 }
 

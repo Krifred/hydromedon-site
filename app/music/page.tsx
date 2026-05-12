@@ -1,7 +1,29 @@
+import type { Metadata } from "next";
 import MusicTabs from "@/components/MusicTabs";
 import { singleReleases, albumReleases, videoReleases } from "@/lib/releases";
+import { abs, DEFAULT_OG_IMAGE, SITE_NAME, TWITTER_HANDLE } from "@/lib/seo";
 
 export const dynamicParams = false;
+
+export const metadata: Metadata = {
+    title: `Music Library | ${SITE_NAME}`,
+    description: `Browse all singles, albums, and music videos by ${SITE_NAME} — Christian dream pop from the Biblical Graffiti universe.`,
+    alternates: { canonical: abs("/music") },
+    openGraph: {
+        type: "website",
+        url: abs("/music"),
+        title: `Music Library | ${SITE_NAME}`,
+        description: `Browse all singles, albums, and music videos by ${SITE_NAME}.`,
+        images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
+    },
+    twitter: {
+        card: "summary_large_image",
+        site: TWITTER_HANDLE,
+        title: `Music Library | ${SITE_NAME}`,
+        description: `Browse all singles, albums, and music videos by ${SITE_NAME}.`,
+        images: [DEFAULT_OG_IMAGE],
+    },
+};
 
 export default function MusicPage() {
     return (

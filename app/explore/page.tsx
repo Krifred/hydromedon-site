@@ -1,12 +1,30 @@
+import type { Metadata } from "next";
 import FadeIn from "@/components/FadeIn";
 import GenreCard from "@/components/GenreCard";
 import { releases } from "@/lib/releases";
 import type { GenreSlug } from "@/lib/types";
+import { abs, DEFAULT_OG_IMAGE, SITE_NAME, TWITTER_HANDLE } from "@/lib/seo";
 
 export const dynamicParams = false;
 
-export const metadata = {
-    title: "Explore | Hydromedon",
+export const metadata: Metadata = {
+    title: `Explore by Genre | ${SITE_NAME}`,
+    description: `Explore Hydromedon's music by genre — dream pop, cinematic worship, shoegaze, ambient, and more.`,
+    alternates: { canonical: abs("/explore") },
+    openGraph: {
+        type: "website",
+        url: abs("/explore"),
+        title: `Explore by Genre | ${SITE_NAME}`,
+        description: `Explore Hydromedon's music by genre — dream pop, cinematic worship, shoegaze, ambient, and more.`,
+        images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
+    },
+    twitter: {
+        card: "summary_large_image",
+        site: TWITTER_HANDLE,
+        title: `Explore by Genre | ${SITE_NAME}`,
+        description: `Explore Hydromedon's music by genre.`,
+        images: [DEFAULT_OG_IMAGE],
+    },
 };
 
 const GENRE_DESCRIPTORS: Record<GenreSlug, string> = {

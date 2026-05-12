@@ -2,6 +2,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import FadeIn from "@/components/FadeIn";
 import { getReleaseBySlug, releases } from "@/lib/releases";
 import type { Release } from "@/lib/types";
+import { abs, DEFAULT_OG_IMAGE, SITE_NAME, TWITTER_HANDLE } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
@@ -54,9 +55,31 @@ export async function generateMetadata({
 }) {
     const { slug } = await params;
     const release = getReleaseBySlug(slug);
+    if (!release) return { title: SITE_NAME };
+
+    const title = `${release.title} — ${SITE_NAME}`;
+    const description = release.description ?? release.subtitle ?? `Listen to ${release.title} by ${SITE_NAME}.`;
+    const ogImage = release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE;
+    const url = abs(`/single/${slug}`);
 
     return {
-        title: release ? `${release.title} — Hydromedon` : "Hydromedon",
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            type: "music.song",
+            url,
+            title,
+            description,
+            images: [{ url: ogImage, width: 1200, height: 1200, alt: release.title }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            site: TWITTER_HANDLE,
+            title,
+            description,
+            images: [ogImage],
+        },
     };
 }
 
@@ -74,7 +97,23 @@ export default async function SongPage({
 
     if (!release) notFound();
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "MusicRecording",
+        name: release.title,
+        byArtist: { "@type": "MusicGroup", name: SITE_NAME },
+        duration: release.tracks?.[0]?.duration,
+        image: release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE,
+        url: abs(`/single/${slug}`),
+        ...(release.spotify ? { sameAs: [release.spotify] } : {}),
+    };
+
     return (
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
         <main>
             <section className="max-w-5xl mx-auto px-4 py-8">
                 <Breadcrumbs release={release} />
@@ -278,5 +317,6 @@ export default async function SongPage({
                     </div>
                 )}
         </main>
+        </>
     );
 }

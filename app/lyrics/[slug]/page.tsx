@@ -2,6 +2,7 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import FadeIn from "@/components/FadeIn";
 import { getReleaseBySlug } from "@/lib/releases";
 import { lyricsByRelease } from "@/lib/lyrics";
+import { abs, DEFAULT_OG_IMAGE, SITE_NAME, TWITTER_HANDLE } from "@/lib/seo";
 import { notFound } from "next/navigation";
 
 export const dynamicParams = false;
@@ -16,9 +17,31 @@ export async function generateMetadata({
     params: { slug: string };
 }) {
     const release = getReleaseBySlug(params.slug);
+    if (!release) return { title: SITE_NAME };
+
+    const title = `${release.title} — Lyrics | ${SITE_NAME}`;
+    const description = `Read the lyrics and liner notes for "${release.title}" by ${SITE_NAME}.`;
+    const ogImage = release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE;
+    const url = abs(`/lyrics/${params.slug}`);
 
     return {
-        title: release ? `Lyrics — ${release.title} — Hydromedon` : "Lyrics — Hydromedon",
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            type: "website",
+            url,
+            title,
+            description,
+            images: [{ url: ogImage, width: 1200, height: 1200, alt: release.title }],
+        },
+        twitter: {
+            card: "summary_large_image",
+            site: TWITTER_HANDLE,
+            title,
+            description,
+            images: [ogImage],
+        },
     };
 }
 
