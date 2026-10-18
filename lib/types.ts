@@ -85,6 +85,9 @@ export interface Release {
     /** Optional subtitle or tagline */
     subtitle?: string;
 
+    /** Credited artists, in order. Defaults to Hydromedon alone when omitted. */
+    artists?: string[];
+
     /** Human-readable release date */
     releaseDate: string;
     year?: string;

@@ -714,4 +714,80 @@ Be still… and know that I am God.
             },
         },
     },
+
+    "songs-of-joy": {
+        "Songs of Joy": {
+            lyrics: `
+Verse 1
+We were walking out with open hands
+Leaving trails of tears on desert sand
+Steps uncertain, hearts beat wild
+As You lead us home from exile
+
+Pre-Chorus
+Is it happening
+Our mirage of hope made true
+Desert streams are flowing
+Zion’s joy made new
+
+Chorus
+Thought we were dreaming when You brought us home
+Laughter like a river overflowed
+It watered all You planted in the tears we sowed
+Now we reap with songs of joy
+Now we reap Your songs of joy
+Now we reap Your songs of joy
+
+Verse 2
+Restore us now like desert rain
+Streams revive our hearts again
+Those who carried seeds in pain
+Come back singing songs of joy
+
+Pre-Chorus
+Is it happening
+Our mirage of hope made true
+Desert streams are flowing
+Zion’s joy made new
+
+Chorus
+Thought we were dreaming when You brought us home
+Laughter like a river overflowed
+It watered all You planted in the tears we sowed
+Now we reap with songs of joy
+Now we reap Your songs of joy
+Now we reap Your songs of joy
+
+Bridge
+Our mouths are filled with laughter
+Our tongues with songs of praise
+Even the nations whisper
+“Adonai has made a way”
+
+Adonai has done great things for us
+Adonai, we bless Your Name
+Adonai has done great things for us
+Adonai, we sing Your praise
+
+Final Chorus
+Thought we were dreaming when You brought us home
+Laughter like a river overflowed
+It watered all You planted in the tears we sowed
+Now we reap with songs of joy
+Now we reap Your songs of joy
+Now we reap Your songs of joy
+
+Thought we were dreaming when You brought us home
+Laughter like a river overflowed
+It watered all You planted in the tears we sowed
+Now we reap with songs of joy
+Now we reap Your songs of joy
+Now we reap Your songs of joy
+      `.trim(),
+
+            linerNotes: {
+                scriptureReferences: ["Psalm 126"],
+            },
+        },
+    },
  };

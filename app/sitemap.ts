@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { releases } from "@/lib/releases";
+import { releases, isReleased } from "@/lib/releases";
 import { lyricsByRelease } from "@/lib/lyrics";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, releasePath } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
     const now = new Date();
@@ -17,9 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Released singles, albums, and videos
     const releasePages: MetadataRoute.Sitemap = releases
-        .filter((r) => !r.releaseDate || new Date(r.releaseDate) <= now)
+        .filter((r) => !r.releaseDate || isReleased(r.releaseDate, now))
         .map((r) => ({
-            url: `${SITE_URL}/single/${r.slug}`,
+            url: `${SITE_URL}${releasePath(r.slug)}`,
             lastModified: r.releaseDate ? new Date(r.releaseDate) : now,
             changeFrequency: "monthly" as const,
             priority: r.type === "Album" ? 0.9 : 0.8,
