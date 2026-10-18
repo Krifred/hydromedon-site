@@ -15,3 +15,74 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/brand/logo/hydromedon_logo_dark.png
 export function abs(path: string): string {
     return `${SITE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
+
+type SeoRelease = {
+    slug: string;
+    title: string;
+    artists?: string[];
+    description?: string;
+    subtitle?: string;
+    cover?: string;
+    spotify?: string;
+    youtube?: string;
+    tracks?: { duration?: string }[];
+};
+
+/** Canonical path for a release detail page. */
+export function releasePath(slug: string): string {
+    return `/music/${slug}`;
+}
+
+/** Credited artists; defaults to Hydromedon alone. */
+export function releaseArtists(release: SeoRelease): string[] {
+    return release.artists?.length ? release.artists : [SITE_NAME];
+}
+
+/** Release-specific metadata (title, description, canonical, OG, Twitter). */
+export function releaseMetadata(release: SeoRelease) {
+    const artists = releaseArtists(release);
+    const credit = artists.join(" × ");
+    const title = `${release.title} — ${credit}`;
+    const description =
+        release.description ?? release.subtitle ?? `Listen to ${release.title} by ${artists.join(" & ")}.`;
+    const ogImage = release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE;
+    const url = abs(releasePath(release.slug));
+    const alt = `${release.title} — ${credit} cover art`;
+
+    return {
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: {
+            type: "music.song",
+            url,
+            title,
+            description,
+            siteName: SITE_NAME,
+            images: [{ url: ogImage, alt }],
+        },
+        twitter: {
+            card: "summary_large_image" as const,
+            site: TWITTER_HANDLE,
+            title,
+            description,
+            images: [{ url: ogImage, alt }],
+        },
+    };
+}
+
+/** MusicRecording JSON-LD crediting every listed artist. */
+export function releaseJsonLd(release: SeoRelease) {
+    const artists = releaseArtists(release).map((name) => ({ "@type": "MusicGroup", name }));
+    const sameAs = [release.spotify, release.youtube].filter(Boolean);
+    return {
+        "@context": "https://schema.org",
+        "@type": "MusicRecording",
+        name: release.title,
+        byArtist: artists.length === 1 ? artists[0] : artists,
+        ...(release.tracks?.[0]?.duration ? { duration: release.tracks[0].duration } : {}),
+        image: release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE,
+        url: abs(releasePath(release.slug)),
+        ...(sameAs.length ? { sameAs } : {}),
+    };
+}

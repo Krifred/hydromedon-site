@@ -14,15 +14,16 @@ export async function generateStaticParams() {
 export async function generateMetadata({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }) {
-    const release = getReleaseBySlug(params.slug);
+    const { slug } = await params;
+    const release = getReleaseBySlug(slug);
     if (!release) return { title: SITE_NAME };
 
     const title = `${release.title} — Lyrics | ${SITE_NAME}`;
     const description = `Read the lyrics and liner notes for "${release.title}" by ${SITE_NAME}.`;
     const ogImage = release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE;
-    const url = abs(`/lyrics/${params.slug}`);
+    const url = abs(`/lyrics/${slug}`);
 
     return {
         title,
@@ -45,12 +46,12 @@ export async function generateMetadata({
     };
 }
 
-export default function LyricsPage({
+export default async function LyricsPage({
     params,
 }: {
-    params: { slug: string };
+    params: Promise<{ slug: string }>;
 }) {
-    const { slug } = params;
+    const { slug } = await params;
 
     const release = getReleaseBySlug(slug);
     if (!release) notFound();

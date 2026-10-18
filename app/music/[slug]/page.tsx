@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import { getReleaseBySlug, releases } from "@/lib/releases";
 import { hydrateReleaseWithLyrics } from "@/lib/hydrateRelease";
+import { SITE_NAME, releaseJsonLd, releaseMetadata } from "@/lib/seo";
 
 /* =========================
    Next.js config
@@ -24,9 +25,7 @@ export async function generateMetadata({
     const { slug } = await params; // ✅ unwrap params (Next 15+)
     const release = getReleaseBySlug(slug);
 
-    return {
-        title: release ? `${release.title} — Hydromedon` : "Hydromedon",
-    };
+    return release ? releaseMetadata(release) : { title: SITE_NAME };
 }
 
 /* =========================
@@ -56,6 +55,12 @@ export default async function SongPage({
 
     return (
         <main>
+            {releaseType !== "Album" && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(releaseJsonLd(hydrated)) }}
+                />
+            )}
             <section className="max-w-5xl mx-auto px-4 py-8">
                 <Breadcrumbs release={hydrated} />
 
@@ -208,6 +213,20 @@ export default async function SongPage({
                             </div>
                         )}
 
+                        {releaseType === "Single" && hydrated.cover && (
+                            <img
+                                src={hydrated.cover}
+                                alt={`${hydrated.title}${hydrated.subtitle ? ` — ${hydrated.subtitle}` : ""} cover art`}
+                                className="mx-auto mb-6 w-full max-w-[320px] aspect-square object-cover rounded-xl border border-white/10 shadow-xl"
+                            />
+                        )}
+
+                        {releaseType === "Single" && hydrated.description && (
+                            <p className="mx-auto mb-6 max-w-2xl text-gray-300 leading-relaxed">
+                                {hydrated.description}
+                            </p>
+                        )}
+
                         {/* Primary CTA for Singles/Videos */}
                         {cta.href && (
                             <a
@@ -229,6 +248,32 @@ export default async function SongPage({
                             >
                                 {cta.label}
                             </a>
+                        )}
+
+                        {releaseType === "Single" && (hydrated.spotify || hydrated.youtube) && (
+                            <div className="mt-4 flex items-center justify-center gap-4 text-xs text-gray-400">
+                                {hydrated.spotify && (
+                                    <a
+                                        href={hydrated.spotify}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-green-400 transition"
+                                    >
+                                        Spotify
+                                    </a>
+                                )}
+
+                                {hydrated.youtube && (
+                                    <a
+                                        href={hydrated.youtube}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="hover:text-red-400 transition"
+                                    >
+                                        YouTube
+                                    </a>
+                                )}
+                            </div>
                         )}
                     </div>
                 )}

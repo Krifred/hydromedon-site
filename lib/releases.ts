@@ -290,6 +290,27 @@ export const releases: Release[] = [
         storyPublished: false,
         tracks: [{ title: "Tears for Bread", duration: "5:50" }],
     },
+    {
+        slug: "songs-of-joy",
+        title: "Songs of Joy",
+        type: "Single",
+        releaseDate: "2026-10-18",
+        year: "2026",
+        cover: "/covers/songs-of-joy.png",
+        spotify: "https://open.spotify.com/album/2KyZpfXtWQVPijzPVtvCPj",
+        youtube: "https://youtu.be/8EM2bW9b_HM",
+        subtitle: "Hydromedon × Kavodah",
+        artists: ["Hydromedon", "Kavodah"],
+        description:
+            "Born from a close collaboration between Hydromedon and Kavodah, Songs of Joy celebrates God's restoration: exile gives way to homecoming, desert streams flow, and seeds sown in tears become a harvest of joy.",
+        themes: ["Restoration", "Joy", "Homecoming", "Hope", "Praise"],
+        genres: ["worship"],
+        mood: "joyful, hopeful, restorative",
+        bibleRef: "Psalm 126",
+        bibleBook: "Psalms",
+        storyPublished: false,
+        tracks: [{ title: "Songs of Joy" }],
+    },
 ];
 
 export function getReleaseBySlug(slug: string): Release | undefined {
@@ -312,12 +333,22 @@ export function songReleases(): Release[] {
     return singleReleases();
 }
 
+/**
+ * A release is available from 00:00 UTC on its releaseDate (YYYY-MM-DD).
+ * Shared by server and client code so availability is decided consistently.
+ */
+export function isReleased(releaseDate: string | undefined, now: Date | number = Date.now()): boolean {
+    if (!releaseDate) return false;
+    const releaseMs = Date.parse(releaseDate);
+    return !Number.isNaN(releaseMs) && releaseMs <= new Date(now).getTime();
+}
+
 export function getLatestReleased(
     items: Release[],
     now: Date = new Date()
 ): Release | undefined {
     return items
-        .filter((r) => r.releaseDate && new Date(r.releaseDate) <= now)
+        .filter((r) => isReleased(r.releaseDate, now))
         .sort(
             (a, b) =>
                 new Date(b.releaseDate ?? "").getTime() -

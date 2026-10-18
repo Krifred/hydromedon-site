@@ -3,7 +3,9 @@
 import FadeIn from "./FadeIn";
 import Link from "next/link";
 import type { Release } from "@/lib/types";
-import { useEffect, useMemo, useState } from "react";
+import { isReleased } from "@/lib/releases";
+import { useMemo } from "react";
+import { useClientNow } from "./useClientNow";
 
 function formatReleaseDate(dateStr: string) {
     const [y, m, d] = dateStr.split("-").map(Number);
@@ -13,16 +15,11 @@ function formatReleaseDate(dateStr: string) {
 }
 
 export default function MusicCard({ rel, idx }: { rel: Release; idx: number }) {
-    const [nowMs, setNowMs] = useState<number | null>(null);
-
-    useEffect(() => {
-        setNowMs(Date.now());
-    }, []);
+    const nowMs = useClientNow();
 
     const isFuture = useMemo(() => {
         if (nowMs == null) return false;
-        const releaseEndUtc = Date.parse(`${rel.releaseDate}T23:59:59Z`);
-        return releaseEndUtc > nowMs;
+        return !isReleased(rel.releaseDate, nowMs);
     }, [nowMs, rel.releaseDate]);
 
     const badge =

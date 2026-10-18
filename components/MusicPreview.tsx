@@ -1,11 +1,13 @@
 "use client";
 
 import { useRef } from "react";
+import { useClientNow } from "./useClientNow";
 import FadeIn from "./FadeIn";
 import {
     singleReleases,
     albumReleases,
     videoReleases,
+    isReleased,
 } from "@/lib/releases";
 import { Release,
 } from "@/lib/types";
@@ -14,12 +16,12 @@ import Link from "next/link";
 import { useMotionSection } from "./useMotionSection";
 
 function isFutureRelease(r: Release, now: Date) {
-    return new Date(r.releaseDate).getTime() > now.getTime();
+    return !isReleased(r.releaseDate, now);
 }
 
 function latestReleased(items: Release[], now: Date): Release | undefined {
     return [...items]
-        .filter((r) => new Date(r.releaseDate).getTime() <= now.getTime())
+        .filter((r) => isReleased(r.releaseDate, now))
         .sort(
             (a, b) =>
                 new Date(b.releaseDate).getTime() -
@@ -29,7 +31,7 @@ function latestReleased(items: Release[], now: Date): Release | undefined {
 
 function nextUpcoming(items: Release[], now: Date): Release | undefined {
     return [...items]
-        .filter((r) => new Date(r.releaseDate).getTime() > now.getTime())
+        .filter((r) => !isReleased(r.releaseDate, now))
         .sort(
             (a, b) =>
                 new Date(a.releaseDate).getTime() -
@@ -50,11 +52,14 @@ export default function MusicPreview() {
     const albums = albumReleases();
     const videos = videoReleases();
 
-    const now = new Date();
+    // Resolved on the client only so prerendered HTML and hydration match.
+    const nowMs = useClientNow();
+    const now = new Date(nowMs ?? 0);
+    const ready = nowMs != null;
 
-    const latestSingle = latestReleased(singles, now) ?? nextUpcoming(singles, now);
-    const latestVideo = latestReleased(videos, now) ?? nextUpcoming(videos, now);
-    const featuredAlbum = albums[0];
+    const latestSingle = ready ? latestReleased(singles, now) ?? nextUpcoming(singles, now) : undefined;
+    const latestVideo = ready ? latestReleased(videos, now) ?? nextUpcoming(videos, now) : undefined;
+    const featuredAlbum = ready ? albums[0] : undefined;
 
     const latestSingleComingSoon = latestSingle
         ? isFutureRelease(latestSingle, now)
@@ -87,7 +92,7 @@ export default function MusicPreview() {
                 </FadeIn>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12 min-h-[24rem]">
                 {latestSingle && (
                     <div>
                         <p className="mb-3 text-xs uppercase tracking-[0.2em] text-yellow-500/80 text-center">
