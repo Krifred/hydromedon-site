@@ -88,6 +88,12 @@ export interface Release {
     /** Credited artists, in order. Defaults to Hydromedon alone when omitted. */
     artists?: string[];
 
+    /** Record label, e.g. "Soundscape Records" */
+    label?: string;
+
+    /** Universal Product Code, kept as a string to preserve leading zeros */
+    upc?: string;
+
     /** Human-readable release date */
     releaseDate: string;
     year?: string;

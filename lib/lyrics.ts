@@ -715,6 +715,47 @@ Be still… and know that I am God.
         },
     },
 
+    "keeper-of-my-path": {
+        "Keeper of my Path": {
+            lyrics: `
+I lift my eyes where the mountains rise,
+My help is found in the Lord of skies.
+Through darkest nights and the fiercest wind,
+Your steady hand will not let me slip.
+
+Keeper of my path, You never sleep,
+Through every storm, Your promise I keep.
+No harm shall break what Your love has sealed,
+My soul is safe, my wounds You will heal.
+
+You see the tears that my heart has shed,
+You guard my soul when the foe has spread.
+No trial comes that You won’t restrain,
+Your grace sustains through the weight of pain.
+
+When shadows fall and the night grows cold,
+Your light will shine and my steps uphold.
+Though fear may whisper and doubts may rise,
+Your truth will silence the enemy’s lies.
+
+From valleys deep to the highest crest,
+Your mercy leads and my soul finds rest.
+No raging storm nor the tempter’s snare,
+Can steal the hope that Your love declares.
+
+From the dawn to the setting sun,
+You guard my steps till the race is run.
+Forevermore, Your watch will remain,
+My faithful God through joy and pain.
+
+I lift my eyes, my help is near,
+Your voice will calm every doubt and fear.
+Keeper of my path, my strength, my song,
+With You, my soul will forever belong.
+      `.trim(),
+        },
+    },
+
     "songs-of-joy": {
         "Songs of Joy": {
             lyrics: `

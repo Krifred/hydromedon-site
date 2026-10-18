@@ -20,7 +20,7 @@ export async function generateMetadata({
     const release = getReleaseBySlug(slug);
     if (!release) return { title: SITE_NAME };
 
-    const title = `${release.title} — Lyrics | ${SITE_NAME}`;
+    const title = `${release.title} — Lyrics`;
     const description = `Read the lyrics and liner notes for "${release.title}" by ${SITE_NAME}.`;
     const ogImage = release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE;
     const url = abs(`/lyrics/${slug}`);
