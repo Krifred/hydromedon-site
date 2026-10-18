@@ -740,7 +740,7 @@ Now we reap Your songs of joy
 
 Verse 2
 Restore us now like desert rain
-Streams revive out hearts again
+Streams revive our hearts again
 Those who carried seeds in pain
 Come back singing songs of joy
 
