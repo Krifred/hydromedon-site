@@ -25,6 +25,9 @@ type SeoRelease = {
     cover?: string;
     spotify?: string;
     youtube?: string;
+    releaseDate?: string;
+    label?: string;
+    upc?: string;
     tracks?: { duration?: string }[];
 };
 
@@ -50,7 +53,7 @@ export function releaseMetadata(release: SeoRelease) {
     const alt = `${release.title} — ${credit} cover art`;
 
     return {
-        title,
+        title: { absolute: title },
         description,
         alternates: { canonical: url },
         openGraph: {
@@ -71,18 +74,43 @@ export function releaseMetadata(release: SeoRelease) {
     };
 }
 
-/** MusicRecording JSON-LD crediting every listed artist. */
+/**
+ * MusicRecording JSON-LD crediting every listed artist.
+ * When a label or UPC is known, a MusicRelease node carries them
+ * (recordLabel and a UPC identifier), since MusicRecording has no such properties.
+ */
 export function releaseJsonLd(release: SeoRelease) {
     const artists = releaseArtists(release).map((name) => ({ "@type": "MusicGroup", name }));
     const sameAs = [release.spotify, release.youtube].filter(Boolean);
-    return {
-        "@context": "https://schema.org",
+    const url = abs(releasePath(release.slug));
+    const recording = {
         "@type": "MusicRecording",
+        "@id": `${url}#recording`,
         name: release.title,
         byArtist: artists.length === 1 ? artists[0] : artists,
         ...(release.tracks?.[0]?.duration ? { duration: release.tracks[0].duration } : {}),
+        ...(release.releaseDate ? { datePublished: release.releaseDate } : {}),
         image: release.cover ? abs(release.cover) : DEFAULT_OG_IMAGE,
-        url: abs(releasePath(release.slug)),
+        url,
         ...(sameAs.length ? { sameAs } : {}),
     };
+
+    if (!release.label && !release.upc) {
+        return { "@context": "https://schema.org", ...recording };
+    }
+
+    const musicRelease = {
+        "@type": "MusicRelease",
+        "@id": `${url}#release`,
+        name: release.title,
+        byArtist: recording.byArtist,
+        ...(release.releaseDate ? { datePublished: release.releaseDate } : {}),
+        ...(release.label ? { recordLabel: { "@type": "Organization", name: release.label } } : {}),
+        ...(release.upc
+            ? { identifier: { "@type": "PropertyValue", propertyID: "UPC", value: release.upc } }
+            : {}),
+        track: { "@id": recording["@id"] },
+    };
+
+    return { "@context": "https://schema.org", "@graph": [recording, musicRelease] };
 }
